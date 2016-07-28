@@ -39,14 +39,15 @@ public final class Chamado implements EntityModifiable {
     public Chamado(int ID) {
         this.values[0] = ID;
         this.values[1] = null;
+        
         this.INSERTABLE = false;
         this.DELETABLE = true;
         this.SELECTABLE = true;
-        this.UPGRADEABLE = !haveAutoIncrementID();
+        this.UPGRADEABLE = false;
 
     }
 
-    /**
+    /**!haveAutoIncrementID(
      * @constructor used to insert an entity in the database.
      * @param date
      * @param obs
@@ -85,7 +86,7 @@ public final class Chamado implements EntityModifiable {
         this.INSERTABLE = !haveAutoIncrementID();
         this.DELETABLE = false;
         this.SELECTABLE = false;
-        this.UPGRADEABLE = !haveAutoIncrementID();
+        this.UPGRADEABLE = true;
     }
 
     @Override
