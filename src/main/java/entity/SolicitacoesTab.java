@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tabelas;
+package entity;
 
 /**
  *
  * @author Edilson Jr
  */
-public class SolicitacoesTab implements Line {
+public class SolicitacoesTab implements EntityModifiable {
 
     private final String DB = "SisCentralRel";
     private final String TABLE = "Solicitacoes";
@@ -84,7 +84,7 @@ public class SolicitacoesTab implements Line {
      * @param status
      * @param contato_ok
      * @param Servico_cod_servico
-     * @param gesac_cod_gesac 
+     * @param gesac_cod_gesac
      */
     public SolicitacoesTab(
             String Qtde_tentativas,
@@ -128,11 +128,6 @@ public class SolicitacoesTab implements Line {
     }
 
     @Override
-    public boolean haveID() {
-        return this.HAVEID;
-    }
-
-    @Override
     public int getNumOfColumns() {
         return this.NUMCOMLUMNS;
     }
@@ -146,5 +141,30 @@ public class SolicitacoesTab implements Line {
 
         return this.COLUMNNAMES[index];
 
+    }
+
+    @Override
+    public boolean isInsertable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isDeletable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isSelectable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isUpgradeable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean haveAutoIncrementID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

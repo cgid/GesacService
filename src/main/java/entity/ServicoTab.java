@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tabelas;
+package entity;
+
+import entity.EntityModifiable;
 
 /**
  *
  * @author Edilson Jr
  */
-public class ServicoTab implements Line {
+public class ServicoTab implements EntityModifiable {
 
     private final String DB = "SisCentralRel";
     private final String TABLE = "Servico";
@@ -113,10 +115,7 @@ public class ServicoTab implements Line {
         return this.TABLE;
     }
 
-    @Override
-    public boolean haveID() {
-        return this.HAVEID;
-    }
+
 
     @Override
     public int getNumOfColumns() {
@@ -132,5 +131,30 @@ public class ServicoTab implements Line {
 
         return this.COLUMNNAMES[index];
 
+    }
+
+    @Override
+    public boolean isInsertable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isDeletable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isSelectable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isUpgradeable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean haveAutoIncrementID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
