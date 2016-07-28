@@ -51,9 +51,7 @@ public class SimpleQueries implements Queries<EntityModifiable> {
         try {
             stmt = conn.prepareStatement(sql.toString());
             for (int i = l.haveAutoIncrementID() ? 2 : 1; i <= l.getNumOfColumns(); i++) {
-                boolean teste = l.getValue(i - 1).getClass().equals(Integer.class);
-                System.out.println(teste);
-                if (teste) {
+                if (l.getValue(i - 1).getClass().equals(Integer.class)) {
                     stmt.setInt(i, (Integer) l.getValue(i - 1));
                 } else {
                     stmt.setString(i, (String) l.getValue(i - 1));
@@ -67,7 +65,9 @@ public class SimpleQueries implements Queries<EntityModifiable> {
 
     @Override
     public void delete(EntityModifiable l) throws NotIsDeletableEntityException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(!l.isDeletable())
+            throw new NotIsDeletableEntityException();
+        
     }
 
     @Override

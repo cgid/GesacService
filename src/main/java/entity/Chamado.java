@@ -4,8 +4,7 @@ package entity;
  *
  * @author murilo
  */
-public class Chamado implements EntityModifiable {
-
+public final class Chamado implements EntityModifiable {
     private final String DB = "SisCentralRel";
     private final String TABLE = "chamado";
     private final boolean AUTOINCREMENTID = true;
