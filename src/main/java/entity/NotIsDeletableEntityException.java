@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bancodedados;
+package entity;
 
 /**
  *
  * @author murilo
  */
-public class NotIsInsertableEntityException extends RuntimeException{
-    public NotIsInsertableEntityException() {
+public class NotIsDeletableEntityException extends RuntimeException {
+    public NotIsDeletableEntityException() {
         super("Nao e possivel deletetar esta entidade. Por favor, verifique seus valores.");
     }
 }

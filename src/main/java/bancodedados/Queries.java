@@ -5,6 +5,10 @@
  */
 package bancodedados;
 
+import entity.NotIsUpgradeableEntityException;
+import entity.NotIsInsertableEntityException;
+import entity.NotIsSelectableEntityException;
+import entity.NotIsDeletableEntityException;
 import entity.Entity;
 
 /**
@@ -37,8 +41,7 @@ public interface Queries<E extends Entity> {
 
     /**
      * @param l
-     * @param id
      */
-    public void especificallySelect(Entity l, int id) throws NotIsSelectableEntityException;
+    public void especificallySelect(Entity l) throws NotIsSelectableEntityException;
         
 }

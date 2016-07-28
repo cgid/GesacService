@@ -42,7 +42,7 @@ public final class Chamado implements EntityModifiable {
         this.INSERTABLE = false;
         this.DELETABLE = true;
         this.SELECTABLE = true;
-        this.UPGRADEABLE = false;
+        this.UPGRADEABLE = !haveAutoIncrementID();
 
     }
 

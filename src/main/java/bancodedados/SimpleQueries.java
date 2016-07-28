@@ -5,12 +5,17 @@
  */
 package bancodedados;
 
+import entity.NotIsUpgradeableEntityException;
+import entity.NotIsInsertableEntityException;
+import entity.NotIsSelectableEntityException;
+import entity.NotIsDeletableEntityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import persistencia.ConnectionFactory;
 import java.sql.SQLException;
 import entity.Entity;
 import entity.EntityModifiable;
+import java.sql.Statement;
 
 /**
  *
@@ -18,70 +23,57 @@ import entity.EntityModifiable;
  */
 public class SimpleQueries implements Queries<EntityModifiable> {
     @Override
-    public void insert(EntityModifiable l) throws NotIsInsertableEntityException{
-        if(!l.isInsertable())
+    public void insert(EntityModifiable e) throws NotIsInsertableEntityException{
+        if(!e.isInsertable())
             throw new NotIsInsertableEntityException();
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
-        StringBuilder sql = new StringBuilder();
-        sql.append("INSERT INTO ").append(l.getTableName()).append('(');
-        /**
-         * @WhatDo: add the columns that will be inserted.
-         */
-        for (int i = l.haveAutoIncrementID() ? 1 : 0; i < l.getNumOfColumns(); i++) {
-            sql.append(l.getColumnName(i));
-            if (i < l.getNumOfColumns() - 1) {
-                sql.append(",");
-            }
-        }
-        /**
-         * @WhatItIsDoing: adding how many values will be altered.
-         */
-        sql.append(") VALUES(");
-        for (int i = l.haveAutoIncrementID() ? 1 : 0; i < l.getNumOfColumns(); i++) {
-            sql.append("?");
-            if (i < l.getNumOfColumns() - 1) {
-                sql.append(",");
-            }
-        }
-        sql.append(");");
-        System.out.println(sql);
-        System.out.println(l.getValue(0));
-        System.out.println(l.getValue(1));
+        QueryGenerator qg = new SimpleQueryGenerator();
         try {
-            stmt = conn.prepareStatement(sql.toString());
-            for (int i = l.haveAutoIncrementID() ? 2 : 1; i <= l.getNumOfColumns(); i++) {
-                if (l.getValue(i - 1).getClass().equals(Integer.class)) {
-                    stmt.setInt(i, (Integer) l.getValue(i - 1));
-                } else {
-                    stmt.setString(i, (String) l.getValue(i - 1));
-                }
+            stmt = conn.prepareStatement(qg.insertGenerator(e));
+            for (int i = e.haveAutoIncrementID() ? 2 : 1; i <= e.getNumOfColumns(); i++) {
+                if (e.getValue(i - 1).getClass().equals(Integer.class)) 
+                    stmt.setInt(i, (Integer) e.getValue(i - 1));
+                else 
+                    stmt.setString(i, (String) e.getValue(i - 1));
             }
             stmt.executeUpdate();
-        } catch (SQLException | ArrayIndexOutOfBoundsException e) {
-            System.out.println("deu ruim: " + e);
+            stmt.close();
+            conn.close();
+        } catch (SQLException | ArrayIndexOutOfBoundsException er) {
+            System.out.println(er);
         }
     }
 
     @Override
-    public void delete(EntityModifiable l) throws NotIsDeletableEntityException {
-        if(!l.isDeletable())
+    public void delete(EntityModifiable e) throws NotIsDeletableEntityException {
+        if(!e.isDeletable())
             throw new NotIsDeletableEntityException();
-        
+        Connection conn = ConnectionFactory.getConnection();
+        Statement stmt = null;
+        QueryGenerator qg = new SimpleQueryGenerator();
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate(qg.deleteGenerator(e));
+            stmt.close();
+            conn.close();
+        } catch (Exception er) {
+            System.out.println(er);
+        }
     }
 
     @Override
-    public void update(EntityModifiable l) throws NotIsUpgradeableEntityException {
+    public void update(EntityModifiable e) throws NotIsUpgradeableEntityException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void select(EntityModifiable l) throws NotIsSelectableEntityException {
+    public void select(EntityModifiable e) throws NotIsSelectableEntityException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void especificallySelect(Entity l, int id) throws NotIsSelectableEntityException {
+    public void especificallySelect(Entity l) throws NotIsSelectableEntityException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
