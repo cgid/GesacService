@@ -31,11 +31,19 @@ public class SimpleQueries implements Queries<EntityModifiable> {
         QueryGenerator qg = new SimpleQueryGenerator();
         try {
             stmt = conn.prepareStatement(qg.insertGenerator(e));
-            for (int i = e.haveAutoIncrementID() ? 2 : 1; i <= e.getNumOfColumns(); i++) {
-                if (e.getValue(i - 1).getClass().equals(Integer.class)) 
-                    stmt.setInt(i, (Integer) e.getValue(i - 1));
-                else 
-                    stmt.setString(i, (String) e.getValue(i - 1));
+            for (int i = 1; i <= e.getNumOfColumns(); i++) {
+                if(e.haveAutoIncrementID()) {
+                    if (e.getValue(i).getClass().equals(Integer.class)) 
+                        stmt.setInt(i, (Integer) e.getValue(i));
+                    else 
+                        stmt.setString(i, (String) e.getValue(i));
+                }
+                else {
+                     if (e.getValue(i - 1).getClass().equals(Integer.class)) 
+                        stmt.setInt(i, (Integer) e.getValue(i - 1));
+                    else 
+                        stmt.setString(i, (String) e.getValue(i - 1));
+                }
             }
             stmt.executeUpdate();
             stmt.close();
@@ -71,16 +79,23 @@ public class SimpleQueries implements Queries<EntityModifiable> {
         QueryGenerator qg = new SimpleQueryGenerator();
         try {
             stmt = conn.prepareStatement(qg.updateGenerator(e));
-            int n = e.getNumOfColumns();
-            boolean t = e.haveAutoIncrementID();
-            for (int i = 1; i < (t ? n - 1 : n); i++) {
-                if (e.getValue(i - 1).getClass().equals(Integer.class)) 
-                    stmt.setInt(i, (Integer) e.getValue(i - 1));
-                else 
-                    stmt.setString(i, (String) e.getValue(i - 1));
+            for (int i = 1; i <= e.getNumOfColumns(); i++) {
+                if(e.haveAutoIncrementID()) {
+                    if (e.getValue(i).getClass().equals(Integer.class)) 
+                        stmt.setInt(i, (Integer) e.getValue(i));
+                    else 
+                        stmt.setString(i, (String) e.getValue(i));
+                }
+                else {
+                     if (e.getValue(i - 1).getClass().equals(Integer.class)) 
+                        stmt.setInt(i, (Integer) e.getValue(i - 1));
+                    else 
+                        stmt.setString(i, (String) e.getValue(i - 1));
+                }
             }
             stmt.executeUpdate();
         } catch (Exception er) {
+            System.out.println(er);
         }
     }
 
