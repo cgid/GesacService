@@ -64,7 +64,24 @@ public class SimpleQueries implements Queries<EntityModifiable> {
 
     @Override
     public void update(EntityModifiable e) throws NotIsUpgradeableEntityException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(!e.isUpgradeable())
+            throw new NotIsUpgradeableEntityException();
+        Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        QueryGenerator qg = new SimpleQueryGenerator();
+        try {
+            stmt = conn.prepareStatement(qg.updateGenerator(e));
+            int n = e.getNumOfColumns();
+            boolean t = e.haveAutoIncrementID();
+            for (int i = 1; i < (t ? n - 1 : n); i++) {
+                if (e.getValue(i - 1).getClass().equals(Integer.class)) 
+                    stmt.setInt(i, (Integer) e.getValue(i - 1));
+                else 
+                    stmt.setString(i, (String) e.getValue(i - 1));
+            }
+            stmt.executeUpdate();
+        } catch (Exception er) {
+        }
     }
 
     @Override
@@ -76,5 +93,4 @@ public class SimpleQueries implements Queries<EntityModifiable> {
     public void especificallySelect(Entity l) throws NotIsSelectableEntityException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }

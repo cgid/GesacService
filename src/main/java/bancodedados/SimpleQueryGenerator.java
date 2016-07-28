@@ -56,8 +56,20 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
 
     @Override
     public String updateGenerator(Entity e) {
+        //UPDATE [TABLE] SET COL1 = ?, COL2 = ? ...;
         StringBuilder sql = new StringBuilder();
-        String b;
+        sql.append("UPDATE ").
+                append(e.getTableName()).
+                append(" SET ");
+        for (int i = e.haveAutoIncrementID() ? 1 : 0; i < e.getNumOfColumns(); i++) {
+            sql.append(e.getColumnName(i)).append(" = ?");
+            if (i < e.getNumOfColumns() - 1) {
+                sql.append(", ");
+            }
+        }
+        sql.append(" WHERE = ").
+        append(e.getValue(0)).
+        append(";");
         return sql.toString();
     }
 
