@@ -22,6 +22,7 @@ public final class Chamado implements EntityModifiable {
      * @contructor = null.
      */
     public Chamado() {
+        
         for (int i = 0; i < this.values.length; i++) {
             this.values[i] = null;
         }
