@@ -3,57 +3,60 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tabelas;
+package entity;
 
 /**
  *
  * @author murilo
  */
-public class DDDTab implements Line {
-
+public class Contato implements Entity {
     private final String DB = "SisCentralRel";
-    private final String TABLE = "DDD";
-    private final boolean HAVEID = true;
-    private final int NUMCOMLUMNS = 2;
-    private final String[] COLUMNNAMES = {"id_DDD", "DDD"};
+    private final String TABLE = "chamado";
+    private final boolean AUTOINCREMENTID = true;
+    private final int NUMCOMLUMNS = 3;
+    private final String[] COLUMNNAMES = {"id_contato", "nome", "gesac_cod_gesac"};
 
     private Object[] values = new Object[this.NUMCOMLUMNS];
-
+    
     /**
      * @contrutor nulo.
      */
-    public DDDTab() {
+    public Contato() {
         for (int i = 0; i < values.length; i++) {
             values[i] = null;
         }
     }
-
+        
     /**
-     * @contrutor usado para deletar e consultar um registro no banco de dados.
-     * @param ID
+     * @contrutor de consulta.
+     * @param ID 
      */
-    public DDDTab(int ID) {
+    public Contato(int ID) {
         values[0] = ID;
     }
-
+    
     /**
-     * @contrutor usado inserir um resgitro no banco de dados.
-     * @param DDD
+     * @construtor usado inserir um registo no banco de dados.
+     * @param nome
+     * @param codGesac 
      */
-    public DDDTab(String DDD) {
-        values[1] = DDD;
+    public Contato(String nome, int codGesac) {
+        values[1] = nome;
+        values[2] = codGesac;
     }
-
+    
     /**
      * @contrutor usado para atualizar um registro no banco de dados.
      * @param ID
-     * @param DDD
+     * @param nome
+     * @param codGesac 
      */
-    public DDDTab(int ID, String DDD) {
+    public Contato(int ID, String nome, int codGesac) {
         values[0] = ID;
-        values[1] = DDD;
-    }
-
+        values[1] = nome;
+        values[2] = codGesac;
+    }    
+    
     @Override
     public String getDB() {
         return this.DB;
@@ -65,8 +68,8 @@ public class DDDTab implements Line {
     }
 
     @Override
-    public boolean haveID() {
-        return this.HAVEID;
+    public boolean haveAutoIncrementID() {
+        return this.AUTOINCREMENTID;
     }
 
     @Override

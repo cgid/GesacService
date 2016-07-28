@@ -3,55 +3,57 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tabelas;
+package entity;
 
 /**
  *
  * @author murilo
  */
-public class PerfilTab implements Line {
+public class DDD implements Entity {
+
     private final String DB = "SisCentralRel";
-    private final String TABLE = "Perfil";
-    private final boolean HAVEID = true;
+    private final String TABLE = "DDD";
+    private final boolean AUTOINCREMENTID = true;
     private final int NUMCOMLUMNS = 2;
-    private final String[] COLUMNNAMES = {"cod_perfil", "descricao_perfil"};
+    private final String[] COLUMNNAMES = {"id_DDD", "DDD"};
 
     private Object[] values = new Object[this.NUMCOMLUMNS];
-    
+
     /**
-     * @construtor nulo.
+     * @contrutor nulo.
      */
-    public PerfilTab() {
-        for (int i = 0; i < values.length; i++) 
+    public DDD() {
+        for (int i = 0; i < values.length; i++) {
             values[i] = null;
+        }
     }
-        
+
     /**
-     * @construtor usado para deletar e selecionar um registro no banco de dados.
-     * @param ID 
+     * @contrutor usado para deletar e consultar um registro no banco de dados.
+     * @param ID
      */
-    public PerfilTab(int ID) {
+    public DDD(int ID) {
         values[0] = ID;
     }
-    
+
     /**
-     * @construtor usado para inserir um registro no banco de dados.
-     * @param descricao 
+     * @contrutor usado inserir um resgitro no banco de dados.
+     * @param DDD
      */
-    public PerfilTab(String descricao) {
-        values[1] = descricao;
+    public DDD(String DDD) {
+        values[1] = DDD;
     }
-    
+
     /**
      * @contrutor usado para atualizar um registro no banco de dados.
      * @param ID
-     * @param descricao 
+     * @param DDD
      */
-    public PerfilTab(int ID, String descricao) {
+    public DDD(int ID, String DDD) {
         values[0] = ID;
-        values[1] = descricao;
+        values[1] = DDD;
     }
-    
+
     @Override
     public String getDB() {
         return this.DB;
@@ -63,8 +65,8 @@ public class PerfilTab implements Line {
     }
 
     @Override
-    public boolean haveID() {
-        return this.HAVEID;
+    public boolean haveAutoIncrementID() {
+        return this.AUTOINCREMENTID;
     }
 
     @Override

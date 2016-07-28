@@ -3,7 +3,7 @@ import bancodedados.Queries;
 import bancodedados.SimpleQueries;
 import java.util.ArrayList;
 import java.util.List;
-import tabelas.GesacTab;
+import entity.Gesac;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,11 +18,11 @@ public class testeloucura {
 
     public static void main(String[] args) {
       
-        List<GesacTab> gt = new ArrayList<>();
+        List<Gesac> gt = new ArrayList<>();
         Queries q = new SimpleQueries();
   
         for (int i = 0; i < 10; i++) {
-            gt.add(new GesacTab(i, "teste".concat(String.valueOf(i))));
+            gt.add(new Gesac(i, "teste".concat(String.valueOf(i))));
             q.insert(gt.get(i));
         }
     }

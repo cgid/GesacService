@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tabelas;
+package entity;
 
 import cell.Cell;
 
@@ -11,31 +11,33 @@ import cell.Cell;
  *
  * @author murilo
  */
-public class GesacTab implements Line {
+public class Gesac implements Entity {
 
     private final String DB = "SisCentralRel";
     private final String TABLE = "gesac";
-    private final boolean HAVEID = false;
+    private final boolean AUTOINCREMENTID = false;
     private final int NUMCOMLUMNS = 2;
     private final String[] COLUMNNAMES = {"cod_gesac", "nome_estabelecimento"};
 
     private Object[] values = new Object[this.NUMCOMLUMNS];
 
-    public GesacTab() {
+    public Gesac() {
         for (int i = 0; i < values.length; i++) 
             values[i] = null;
     }
 
-    public GesacTab(int ID) {
+    public Gesac(int ID) {
         values[0] = ID;
+        values[1] = null;
     }
 
-    public GesacTab(int ID, String nomeComplemento) {
+    public Gesac(int ID, String nomeComplemento) {
         values[0] = ID;
         values[1] = nomeComplemento;
     }
 
-    public GesacTab(String nomeComplemento) {
+    public Gesac(String nomeComplemento) {
+        values[0] = null;
         values[1] = nomeComplemento;
     }
 
@@ -54,8 +56,8 @@ public class GesacTab implements Line {
     }
 
     @Override
-    public boolean haveID() {
-        return this.HAVEID;
+    public boolean haveAutoIncrementID() {
+        return this.AUTOINCREMENTID;
     }
 
     @Override
@@ -65,17 +67,15 @@ public class GesacTab implements Line {
 
     @Override
     public String getColumnName(int index) throws ArrayIndexOutOfBoundsException {
-        if (index > 1 || index < 0) {
+        if (index > 1 || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
-        }
         return this.COLUMNNAMES[index];
     }
 
     @Override
     public Object getValue(int index) throws ArrayIndexOutOfBoundsException {
-        if (index > 1 || index < 0) {
+        if (index > 1 || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
-        }
         return values[index];
     }
 }

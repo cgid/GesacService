@@ -3,24 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tabelas;
+package entity;
 
 /**
  *
  * @author murilo
  */
-public interface Line {
+public interface Entity {
     public String getDB();
 
     public String getTableName();
 
-    public boolean haveID();
+    public boolean haveAutoIncrementID();
 
     public int getNumOfColumns();
 
     public String getColumnName(int index) throws ArrayIndexOutOfBoundsException;
     
     public Object getValue(int index) throws ArrayIndexOutOfBoundsException;
-
     
 }

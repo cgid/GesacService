@@ -3,70 +3,55 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tabelas;
+package entity;
 
 /**
  *
  * @author murilo
  */
-public class ChamadoTab implements Line {
-
+public class Perfil implements Entity {
     private final String DB = "SisCentralRel";
-    private final String TABLE = "chamado";
-    private final boolean HAVEID = true;
-    private final int NUMCOMLUMNS = 5;
-    private final String[] COLUMNNAMES = {"cod_chamado", "dt_chamado", "observacao", "Usuario_cod_usuario", "Solicitacoes_id_solicitacao"};
+    private final String TABLE = "Perfil";
+    private final boolean AUTOINCREMENTID = true;
+    private final int NUMCOMLUMNS = 2;
+    private final String[] COLUMNNAMES = {"cod_perfil", "descricao_perfil"};
 
     private Object[] values = new Object[this.NUMCOMLUMNS];
-
+    
     /**
-     * @contrutor nulo.
+     * @construtor nulo.
      */
-    public ChamadoTab() {
-        for (int i = 0; i < values.length; i++) {
+    public Perfil() {
+        for (int i = 0; i < values.length; i++) 
             values[i] = null;
-        }
     }
-
+        
     /**
-     * @Construtor Usado para deletar e selecionar um registro no banco de
-     * dados.
-     * @param ID
+     * @construtor usado para deletar e selecionar um registro no banco de dados.
+     * @param ID 
      */
-    public ChamadoTab(int ID) {
+    public Perfil(int ID) {
         values[0] = ID;
     }
-
+    
     /**
      * @construtor usado para inserir um registro no banco de dados.
-     * @param date
-     * @param obs
-     * @param codUsuario
-     * @param solicitacoes
+     * @param descricao 
      */
-    public ChamadoTab(String date, String obs, int codUsuario, int solicitacoes) {
-        values[1] = date;
-        values[2] = obs;
-        values[3] = codUsuario;
-        values[4] = solicitacoes;
+    public Perfil(String descricao) {
+        values[1] = descricao;
     }
-
+    
     /**
-     * @construtor usado para atualizar um registro no banco de dados.
+     * @contrutor usado para atualizar um registro no banco de dados.
      * @param ID
-     * @param date
-     * @param obs
-     * @param codUsuario
-     * @param solicitacoes
+     * @param descricao 
      */
-    public ChamadoTab(int ID, String date, String obs, int codUsuario, int solicitacoes) {
+    public Perfil(int ID, String descricao) {
         values[0] = ID;
-        values[1] = date;
-        values[2] = obs;
-        values[3] = codUsuario;
-        values[4] = solicitacoes;
+        values[1] = descricao;
     }
-
+    
     @Override
     public String getDB() {
         return this.DB;
@@ -78,8 +63,8 @@ public class ChamadoTab implements Line {
     }
 
     @Override
-    public boolean haveID() {
-        return this.HAVEID;
+    public boolean haveAutoIncrementID() {
+        return this.AUTOINCREMENTID;
     }
 
     @Override
@@ -102,5 +87,4 @@ public class ChamadoTab implements Line {
         }
         return values[index];
     }
-
 }

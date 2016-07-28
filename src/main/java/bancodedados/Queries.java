@@ -5,32 +5,40 @@
  */
 package bancodedados;
 
-import tabelas.Line;
+import entity.Entity;
 
 /**
  *
  * @author murilo
- * @param <L>
+ * @param <E>
  */
-public interface Queries<L extends Line>{
+public interface Queries<E extends Entity> {
+
     /**
-     * Executa uma query para inserir um numa determinada tabela.
-     * @param l 
+     * @param l
      */
-    public void insert(L l);
+    public void insert(E l) throws NotIsInsertableEntityException;
+
     /**
-     * 
-     * @param l 
+     *
+     * @param l
      */
-    public void delete(L l);
-    
+    public void delete(E l) throws NotIsDeletableEntityException;
+
     /**
-     * <p>
-     * Executa uma query para atualizar um numa determinada tabela.
-     * </p>
-     * @param l 
+     * @param l
      */
-    public void update(L l);
-    public void select(L l);
-    public void select(L l, int id);
+    public void update(E l) throws NotIsUpgradeableEntityException;
+
+    /**
+     * @param l
+     */
+    public void select(E l) throws NotIsSelectableEntityException;
+
+    /**
+     * @param l
+     * @param id
+     */
+    public void especificallySelect(Entity l, int id) throws NotIsSelectableEntityException;
+        
 }
