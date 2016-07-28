@@ -57,6 +57,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
     @Override
     public String updateGenerator(Entity e) {
         StringBuilder sql = new StringBuilder();
+        String b;
         return sql.toString();
     }
 
