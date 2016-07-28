@@ -1,13 +1,32 @@
-/home/murilo/NetBeansProjects/GesacService/src/main/java/entidade/Solicitacoes.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/persistencia/UsuarioDAO.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/persistencia/ServicoDao.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/entidade/Perfil.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/entidade/Chamado.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/entidade/Usuario.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/servlet/ServicoSrv.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/persistencia/ConnectionFactory.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/entidade/Servico.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/persistencia/ChamadoDAO.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/Properties/Propriedades.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/persistencia/ConexaoFactory.java
-/home/murilo/NetBeansProjects/GesacService/src/main/java/persistencia/SolicitacaoDao.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\cell\Cell.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\NotIsDeletableEntityException.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\persistencia\ConnectionFactory.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\bancodedados\SimpleQueries.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\bancodedados\SimpleQueryGenerator.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\SolicitacoesTab.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\NotIsInsertableEntityException.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entidade\Perfil.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entidade\Solicitacoes.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\EntityModifiable.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\Perfil.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\Contato.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entidade\Usuario.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\Entity.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\persistencia\UsuarioDAO.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\cell\DataType.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\persistencia\ChamadoDAO.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\persistencia\ServicoDao.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\bancodedados\Queries.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\Gesac.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\persistencia\SolicitacaoDao.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\properties\Propriedades.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\persistencia\ConnectionDemo.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\ServicoTab.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\DDD.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entidade\Chamado.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\NotIsSelectableEntityException.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\bancodedados\QueryGenerator.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entidade\Servico.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\servlet\ServicoSrv.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\NotIsUpgradeableEntityException.java
+C:\Users\Edilson Jr\Documents\GitHub\GesacService\src\main\java\entity\Chamado.java
