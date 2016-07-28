@@ -63,9 +63,9 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
                 append(" SET ");
         for (int i = e.haveAutoIncrementID() ? 1 : 0; i < e.getNumOfColumns(); i++) {
             sql.append(e.getColumnName(i)).append(" = ?");
-            if (i < e.getNumOfColumns() - 1) {
+            if (i < e.getNumOfColumns() - 1) 
                 sql.append(", ");
-            }
+            
         }
         sql.append(" WHERE = ").
         append(e.getValue(0)).
