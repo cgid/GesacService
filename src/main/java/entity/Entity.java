@@ -22,5 +22,5 @@ public interface Entity {
     
     public Object getValue(int index) throws ArrayIndexOutOfBoundsException;
     
-    public Integer getID();
+    //public Integer getID();
 }

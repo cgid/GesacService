@@ -55,21 +55,15 @@ public class Gesac implements Entity {
 
     @Override
     public String getColumnName(int index) throws ArrayIndexOutOfBoundsException {
-        if (index > this.NUMCOMLUMNS || index < 0) 
+        if (index >= this.NUMCOMLUMNS || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
         return this.COLUMNNAMES[index];
     }
 
     @Override
     public Object getValue(int index) throws ArrayIndexOutOfBoundsException {
-        if (index > this.NUMCOMLUMNS || index < 0) 
+        if (index >= this.NUMCOMLUMNS || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
         return values[index].value;
-    }
-
-    @Override
-    public Integer getID() {
-        
-        return (Integer) values[0].value;
     }
 }
