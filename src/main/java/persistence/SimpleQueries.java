@@ -23,8 +23,6 @@ import java.sql.Statement;
 public class SimpleQueries implements Queries<Entity> {
     @Override
     public void insert(Entity e) throws NotIsInsertableEntityException{
-        if(true)//temporariamente
-            throw new NotIsInsertableEntityException();
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
@@ -41,7 +39,7 @@ public class SimpleQueries implements Queries<Entity> {
                      if (e.getValue(i - 1).getClass().equals(Integer.class)) 
                         stmt.setInt(i, (Integer) e.getValue(i - 1));
                     else 
-                        stmt.setString(i, String.valueOf(e.getValue(i)));
+                        stmt.setString(i, String.valueOf(e.getValue(i - 1)));
                 }
             }
             stmt.executeUpdate();
@@ -54,6 +52,7 @@ public class SimpleQueries implements Queries<Entity> {
 
     @Override
     public void delete(Entity e) throws NotIsDeletableEntityException {
+        /**
         if(e.getValue(0).equals(null) && e.haveAutoIncrementID())//temporariamente
             throw new NotIsDeletableEntityException();
         Connection conn = ConnectionFactory.getConnection();
@@ -67,10 +66,12 @@ public class SimpleQueries implements Queries<Entity> {
         } catch (Exception er) {
             System.out.println(er);
         }
+        * */
     }
 
     @Override
     public void update(Entity e) throws NotIsUpgradeableEntityException {
+        /**
         if(e.getValue(0).equals(null) && e.haveAutoIncrementID())//temporariamente
             throw new NotIsUpgradeableEntityException();
         Connection conn = ConnectionFactory.getConnection();
@@ -96,6 +97,7 @@ public class SimpleQueries implements Queries<Entity> {
         } catch (SQLException | ArrayIndexOutOfBoundsException er) {
             System.out.println(er);
         }
+        * */
     }
 
     @Override

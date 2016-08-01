@@ -17,7 +17,7 @@ public class Gesac implements Entity {
     private final String    DB          = "SisCentralRel";
     private final String    TABLE       = "gesac";
     private final boolean   HAVEID      = true;
-    private final boolean   IID         = true;
+    private final boolean   IID         = false;
     private final int       NUMCOMLUMNS = 2;
     private final String[]  COLUMNNAMES = {"cod_gesac", "nome_estabelecimento"};
 
@@ -65,5 +65,16 @@ public class Gesac implements Entity {
         if (index >= this.NUMCOMLUMNS || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
         return values[index].value;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb  = new StringBuilder();
+        for (int i = 0; i < getNumOfColumns(); i++) 
+            sb.append(getColumnName(i)).append('\t');
+        sb.append('\n');
+        for (int i = 0; i < getNumOfColumns(); i++) 
+            sb.append(values[i].value).append('\t');
+        return sb.toString();
     }
 }
