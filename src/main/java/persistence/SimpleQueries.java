@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bancodedados;
+package persistence;
 
 import entity.NotIsUpgradeableEntityException;
 import entity.NotIsInsertableEntityException;
@@ -23,7 +23,7 @@ import java.sql.Statement;
 public class SimpleQueries implements Queries<Entity> {
     @Override
     public void insert(Entity e) throws NotIsInsertableEntityException{
-        if(!e.isInsertable())
+        if(true)//temporariamente
             throw new NotIsInsertableEntityException();
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -54,7 +54,7 @@ public class SimpleQueries implements Queries<Entity> {
 
     @Override
     public void delete(Entity e) throws NotIsDeletableEntityException {
-        if(!e.isDeletable())
+        if(true)//temporariamente
             throw new NotIsDeletableEntityException();
         Connection conn = ConnectionFactory.getConnection();
         Statement stmt = null;
@@ -71,7 +71,7 @@ public class SimpleQueries implements Queries<Entity> {
 
     @Override
     public void update(Entity e) throws NotIsUpgradeableEntityException {
-        if(!e.isUpgradeable())
+        if(true)//temporariamente
             throw new NotIsUpgradeableEntityException();
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
