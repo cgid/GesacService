@@ -70,6 +70,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
         sql.append(" WHERE = ").
         append(e.getValue(0)).
         append(";");
+        System.out.println();
         return sql.toString();
     }
 
