@@ -76,4 +76,9 @@ public class Gesac implements Entity {
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
         return values[index];
     }
+
+    @Override
+    public Integer getID() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
