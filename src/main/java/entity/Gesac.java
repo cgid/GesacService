@@ -20,7 +20,7 @@ public class Gesac implements EntityModifiable {
     private final String[] COLUMNNAMES = {"cod_gesac", "nome_estabelecimento"};
 
     private Object[] values = new Object[this.NUMCOMLUMNS];
-
+        
     public Gesac() {
         for (int i = 0; i < values.length; i++) 
             values[i] = null;
