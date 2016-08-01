@@ -11,7 +11,7 @@ import entity.NotIsSelectableEntityException;
 import entity.NotIsDeletableEntityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import persistencia.ConnectionFactory;
+import persistence.ConnectionFactory;
 import java.sql.SQLException;
 import entity.Entity;
 import java.sql.Statement;
@@ -54,7 +54,7 @@ public class SimpleQueries implements Queries<Entity> {
 
     @Override
     public void delete(Entity e) throws NotIsDeletableEntityException {
-        if(true)//temporariamente
+        if(e.getValue(0).equals(null) && e.haveAutoIncrementID())//temporariamente
             throw new NotIsDeletableEntityException();
         Connection conn = ConnectionFactory.getConnection();
         Statement stmt = null;
@@ -71,7 +71,7 @@ public class SimpleQueries implements Queries<Entity> {
 
     @Override
     public void update(Entity e) throws NotIsUpgradeableEntityException {
-        if(true)//temporariamente
+        if(e.getValue(0).equals(null) && e.haveAutoIncrementID())//temporariamente
             throw new NotIsUpgradeableEntityException();
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -93,7 +93,7 @@ public class SimpleQueries implements Queries<Entity> {
                 }
             }
             stmt.executeUpdate();
-        } catch (Exception er) {
+        } catch (SQLException | ArrayIndexOutOfBoundsException er) {
             System.out.println(er);
         }
     }
