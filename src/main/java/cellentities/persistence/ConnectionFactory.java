@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence;
+package cellentities.persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,6 +14,7 @@ import java.sql.SQLException;
  * @author murilo
  */
 public class ConnectionFactory {
+
     static final String USER = "root";
     static final String PASS = "!@#123Asd";
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";

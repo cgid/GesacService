@@ -37,8 +37,8 @@ public class Cell {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("ID            : ").append(this.id ? "SIM" : "NAO").append('\n');
-        sb.append("NOT NULL      : ").append(this.notNull ? "SIM" : "NAO").append('\n');
         sb.append("AUTO INCREMENT: ").append(this.iterable ? "SIM" : "NAO").append('\n');
+        sb.append("NOT NULL      : ").append(this.notNull ? "SIM" : "NAO").append('\n');
         sb.append("TIPO          : ").append(this.type).append('\n');
         sb.append("VALOR         : ").append(this.value).append('\n');
         return sb.toString(); //To change body of generated methods, choose Tools | Templates.

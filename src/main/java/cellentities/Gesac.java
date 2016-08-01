@@ -61,7 +61,7 @@ public class Gesac implements Entity {
     }
 
     @Override
-    public Cell getValue(int index) throws ArrayIndexOutOfBoundsException {
+    public Cell getCell(int index) throws ArrayIndexOutOfBoundsException {
         if (index >= this.NUMCOMLUMNS || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
         return values[index];

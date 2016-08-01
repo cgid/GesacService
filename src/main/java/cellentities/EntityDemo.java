@@ -22,8 +22,6 @@ public class EntityDemo {
         Entity e = new Gesac(666, "beaba");
         QueryGenerator qg = new SimpleQueryGenerator();
         System.out.println(qg.insertGenerator(e));
-        System.out.println(e.toString());
-        Queries q = new SimpleQueries();
-        q.insert(e);
+        System.out.println(e.getCell(0).toString());
     }
 }

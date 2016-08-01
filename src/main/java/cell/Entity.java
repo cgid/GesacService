@@ -20,7 +20,7 @@ public interface Entity {
 
     public String getColumnName(int index) throws ArrayIndexOutOfBoundsException;
     
-    public Cell getValue(int index) throws ArrayIndexOutOfBoundsException;
+    public Cell getCell(int index) throws ArrayIndexOutOfBoundsException;
     
     //public Integer getID();
 }

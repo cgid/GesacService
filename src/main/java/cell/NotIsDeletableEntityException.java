@@ -5,14 +5,12 @@
  */
 package cell;
 
-import entity.*;
-
 /**
  *
  * @author murilo
  */
 public class NotIsDeletableEntityException extends RuntimeException {
-    public NotIsDeletableEntityException(Entity e) {
+    public NotIsDeletableEntityException() {
         super("Nao e possivel deletetar esta entidade. Por favor, verifique seus valores.");
     }
 }

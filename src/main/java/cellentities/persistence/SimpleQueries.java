@@ -5,16 +5,16 @@
  */
 package cellentities.persistence;
 
-import persistence.*;
-import entity.NotIsUpgradeableEntityException;
-import entity.NotIsInsertableEntityException;
-import entity.NotIsSelectableEntityException;
-import entity.NotIsDeletableEntityException;
+import cellentities.NotIsUpgradeableEntityException;
+import cellentities.NotIsInsertableEntityException;
+import cellentities.NotIsSelectableEntityException;
+import cellentities.NotIsDeletableEntityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import cell.Entity;
 import cell.Type;
+import java.sql.Statement;
 
 
 /**
@@ -24,6 +24,11 @@ import cell.Type;
 public class SimpleQueries implements Queries<Entity> {
     @Override
     public void insert(Entity e) throws NotIsInsertableEntityException{
+        for (int i = 0; i < e.getNumOfColumns(); i++) {
+            if(e.getCell(i).isNotNull() && e.getCell(i).getValue().equals(null))
+                throw new NotIsInsertableEntityException();
+        }
+        
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
@@ -31,16 +36,16 @@ public class SimpleQueries implements Queries<Entity> {
             stmt = conn.prepareStatement(qg.insertGenerator(e));
             for (int i = 1; i <= e.getNumOfColumns(); i++) {
                 if(e.haveAutoIncrementID()) {
-                    if (e.getValue(i).getType().equals(Type.NUM)) 
-                        stmt.setInt(i, (Integer) e.getValue(i).getValue());
+                    if (e.getCell(i).getType().equals(Type.NUM)) 
+                        stmt.setInt(i, (Integer) e.getCell(i).getValue());
                     else 
-                        stmt.setString(i, String.valueOf(e.getValue(i).getValue()));
+                        stmt.setString(i, String.valueOf(e.getCell(i).getValue()));
                 }
                 else {
-                     if (e.getValue(i - 1).getType().equals(Type.NUM)) 
-                        stmt.setInt(i, (Integer) e.getValue(i - 1).getValue());
+                     if (e.getCell(i - 1).getType().equals(Type.NUM)) 
+                        stmt.setInt(i, (Integer) e.getCell(i - 1).getValue());
                     else 
-                        stmt.setString(i, String.valueOf(e.getValue(i - 1).getValue()));
+                        stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
                 }
             }
             stmt.executeUpdate();
@@ -53,8 +58,7 @@ public class SimpleQueries implements Queries<Entity> {
 
     @Override
     public void delete(Entity e) throws NotIsDeletableEntityException {
-        /**
-        if(e.getValue(0).equals(null) && e.haveAutoIncrementID())//temporariamente
+        if(e.getCell(0).getValue().equals(null) && e.haveAutoIncrementID())//temporariamente
             throw new NotIsDeletableEntityException();
         Connection conn = ConnectionFactory.getConnection();
         Statement stmt = null;
@@ -67,7 +71,6 @@ public class SimpleQueries implements Queries<Entity> {
         } catch (Exception er) {
             System.out.println(er);
         }
-        * */
     }
 
     @Override

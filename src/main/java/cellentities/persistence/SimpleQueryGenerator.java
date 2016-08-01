@@ -14,6 +14,7 @@ import cell.Entity;
 public class SimpleQueryGenerator implements QueryGenerator<Entity>{
     @Override
     public String insertGenerator(Entity e) {
+        
         //INSERT INTO() VALUES();
         StringBuilder sql = new StringBuilder();
         sql.append("INSERT INTO ").append(e.getTableName()).append('(');
@@ -49,7 +50,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
                     append(" WHERE ").
                     append(e.getColumnName(0)).
                     append(" = ").
-                    append(e.getValue(0).getValue()).
+                    append(e.getCell(0).getValue()).
                     append(";");
         return sql.toString();
     }
@@ -68,7 +69,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
             
         }
         sql.append(" WHERE = ").
-        append(e.getValue(0)).
+        append(e.getCell(0)).
         append(";");
         System.out.println();
         return sql.toString();

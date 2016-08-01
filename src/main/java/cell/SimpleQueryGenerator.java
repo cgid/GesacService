@@ -49,7 +49,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
                 append(" WHERE ").
                 append(e.getColumnName(0)).
                 append(" = ").
-                append((String) e.getValue(0).value).
+                append((String) e.getCell(0).getValue()).
                 append(";");
         return sql.toString();
     }
@@ -68,7 +68,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
             
         }
         sql.append(" WHERE = ").
-        append(e.getValue(0)).
+        append(e.getCell(0)).
         append(";");
         System.out.println();
         return sql.toString();
