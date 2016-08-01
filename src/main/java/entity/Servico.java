@@ -5,24 +5,17 @@
  */
 package entity;
 
-import entity.EntityModifiable;
-
 /**
  *
  * @author Edilson Jr
  */
-public class ServicoTab implements EntityModifiable {
+public class Servico implements Entity {
 
     private final String DB = "SisCentralRel";
     private final String TABLE = "Servico";
     private final boolean HAVEID = true;
     private final int NUMCOMLUMNS = 6;
-    private final String[] COLUMNNAMES = {"cod_servico",
-        "dt_criacao_servico",
-        "descricao",
-        "dt_encerramento",
-        "intervalo_ligacoes",
-        "Usuario_cod_usuario"};
+    private final String[] COLUMNNAMES = {"cod_servico","dt_criacao_servico","descricao","dt_encerramento","intervalo_ligacoes","Usuario_cod_usuario"};
 
     private Object[] values = new Object[this.NUMCOMLUMNS];
 
@@ -31,9 +24,9 @@ public class ServicoTab implements EntityModifiable {
      *
      * @param
      */
-    public ServicoTab() {
-        values[0] = null;
-        values[1] = null;
+    public Servico() {
+        for (int i = 0; i < values.length; i++) 
+            values[i] = null;
     }
 
     /**
@@ -41,11 +34,13 @@ public class ServicoTab implements EntityModifiable {
      *
      * @Construtor usado para deletar ou selecionar um registro no Banco de
      * dados.
-     * @param
      * @param ID
      */
-    public ServicoTab(int ID) {
-        values[0] = ID;
+    public Servico(int ID) {
+        values[1] = ID;
+        for (int i = 0; i < values.length; i++) 
+            values[i] = null;
+        
     }
 
     /**
@@ -57,12 +52,7 @@ public class ServicoTab implements EntityModifiable {
      * @param intervaloLigacoes
      * @param codUsuario
      */
-    public ServicoTab(int ID,
-            String dtCriacaoServico,
-            String descricao,
-            String dtEncerramento,
-            String intervaloLigacoes,
-            String codUsuario) {
+    public Servico(int ID, String dtCriacaoServico, String descricao, String dtEncerramento, String intervaloLigacoes, String codUsuario) {
         values[0] = ID;
         values[1] = dtCriacaoServico;
         values[2] = descricao;
@@ -79,13 +69,7 @@ public class ServicoTab implements EntityModifiable {
      * @param intervaloLigacoes
      * @param codUsuario
      */
-    public ServicoTab(
-            String dtCriacaoServico,
-            String descricao,
-            String dtEncerramento,
-            String intervaloLigacoes,
-            String codUsuario) {
-
+    public Servico(String dtCriacaoServico,String descricao,String dtEncerramento,String intervaloLigacoes,String codUsuario) {
         values[1] = dtCriacaoServico;
         values[2] = descricao;
         values[3] = dtEncerramento;
@@ -114,8 +98,11 @@ public class ServicoTab implements EntityModifiable {
     public String getTableName() {
         return this.TABLE;
     }
-
-
+    
+    @Override
+    public boolean haveAutoIncrementID() {
+        return this.HAVEID;
+    }
 
     @Override
     public int getNumOfColumns() {
@@ -124,37 +111,8 @@ public class ServicoTab implements EntityModifiable {
 
     @Override
     public String getColumnName(int index) throws ArrayIndexOutOfBoundsException {
-        if (index > 1 || index < 0) {
-
+        if (index > 1 || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
-        }
-
         return this.COLUMNNAMES[index];
-
-    }
-
-    @Override
-    public boolean isInsertable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean isDeletable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean isSelectable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean isUpgradeable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean haveAutoIncrementID() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

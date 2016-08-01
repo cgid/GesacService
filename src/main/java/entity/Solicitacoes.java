@@ -9,7 +9,7 @@ package entity;
  *
  * @author Edilson Jr
  */
-public class SolicitacoesTab implements Entity {
+public class Solicitacoes implements Entity {
 
     private final String DB = "SisCentralRel";
     private final String TABLE = "Solicitacoes";
@@ -30,7 +30,7 @@ public class SolicitacoesTab implements Entity {
      *
      * @param
      */
-    public SolicitacoesTab() {
+    public Solicitacoes() {
         values[0] = null;
         values[1] = null;
     }
@@ -43,7 +43,7 @@ public class SolicitacoesTab implements Entity {
      * @param
      * @param ID
      */
-    public SolicitacoesTab(int ID) {
+    public Solicitacoes(int ID) {
         values[0] = ID;
     }
 
@@ -58,7 +58,7 @@ public class SolicitacoesTab implements Entity {
      * @param Servico_cod_servico
      * @param gesac_cod_gesac
      */
-    public SolicitacoesTab(int ID,String Qtde_tentativas, String descricao, String Dt_ult_tentativa, boolean status, boolean contato_ok, int Servico_cod_servico, int gesac_cod_gesac) {
+    public Solicitacoes(int ID,String Qtde_tentativas, String descricao, String Dt_ult_tentativa, boolean status, boolean contato_ok, int Servico_cod_servico, int gesac_cod_gesac) {
         values[0] = ID;
         values[1] = Qtde_tentativas;
         values[2] = descricao;
@@ -79,7 +79,7 @@ public class SolicitacoesTab implements Entity {
      * @param Servico_cod_servico
      * @param gesac_cod_gesac
      */
-    public SolicitacoesTab(String Qtde_tentativas,String descricao,String Dt_ult_tentativa,boolean status,boolean contato_ok,int Servico_cod_servico,int gesac_cod_gesac) {
+    public Solicitacoes(String Qtde_tentativas,String descricao,String Dt_ult_tentativa,boolean status,boolean contato_ok,int Servico_cod_servico,int gesac_cod_gesac) {
         values[1] = Qtde_tentativas;
         values[2] = descricao;
         values[3] = Dt_ult_tentativa;
