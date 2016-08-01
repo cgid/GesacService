@@ -10,5 +10,5 @@ package cell;
  * @author murilo
  */
 public enum Type {
-    STR, NUM;
+    STR, NUM, DATE;
 }

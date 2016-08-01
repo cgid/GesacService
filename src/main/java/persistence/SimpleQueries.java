@@ -35,13 +35,13 @@ public class SimpleQueries implements Queries<Entity> {
                     if (e.getValue(i).getClass().equals(Integer.class)) 
                         stmt.setInt(i, (Integer) e.getValue(i));
                     else 
-                        stmt.setString(i, (String) e.getValue(i));
+                        stmt.setString(i, String.valueOf(e.getValue(i)));
                 }
                 else {
                      if (e.getValue(i - 1).getClass().equals(Integer.class)) 
                         stmt.setInt(i, (Integer) e.getValue(i - 1));
                     else 
-                        stmt.setString(i, (String) e.getValue(i - 1));
+                        stmt.setString(i, String.valueOf(e.getValue(i)));
                 }
             }
             stmt.executeUpdate();

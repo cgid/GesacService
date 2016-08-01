@@ -24,7 +24,7 @@ public class Cell {
         else
             this.value = (String) value;
     }
-
+    //para cricao de celular que nao sao ID
     public Cell(Type type, Object value) {
         this.id = false;
         this.iterable = false;
