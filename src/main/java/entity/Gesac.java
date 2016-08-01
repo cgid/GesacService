@@ -5,8 +5,6 @@
  */
 package entity;
 
-import cell.Cell;
-
 /**
  *
  * @author murilo
