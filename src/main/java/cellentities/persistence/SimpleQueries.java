@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence;
+package cellentities.persistence;
 
+import persistence.*;
 import entity.NotIsUpgradeableEntityException;
 import entity.NotIsInsertableEntityException;
 import entity.NotIsSelectableEntityException;
@@ -13,7 +14,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import cell.Entity;
-import java.sql.Statement;
+import cell.Type;
+
 
 /**
  *
@@ -29,16 +31,16 @@ public class SimpleQueries implements Queries<Entity> {
             stmt = conn.prepareStatement(qg.insertGenerator(e));
             for (int i = 1; i <= e.getNumOfColumns(); i++) {
                 if(e.haveAutoIncrementID()) {
-                    if (e.getValue(i).getClass().equals(Integer.class)) 
-                        stmt.setInt(i, (Integer) e.getValue(i).value);
+                    if (e.getValue(i).getType().equals(Type.NUM)) 
+                        stmt.setInt(i, (Integer) e.getValue(i).getValue());
                     else 
-                        stmt.setString(i, String.valueOf(e.getValue(i)));
+                        stmt.setString(i, String.valueOf(e.getValue(i).getValue()));
                 }
                 else {
-                     if (e.getValue(i - 1).getClass().equals(Integer.class)) 
-                        stmt.setInt(i, (Integer) e.getValue(i - 1).value);
+                     if (e.getValue(i - 1).getType().equals(Type.NUM)) 
+                        stmt.setInt(i, (Integer) e.getValue(i - 1).getValue());
                     else 
-                        stmt.setString(i, String.valueOf(e.getValue(i - 1)));
+                        stmt.setString(i, String.valueOf(e.getValue(i - 1).getValue()));
                 }
             }
             stmt.executeUpdate();

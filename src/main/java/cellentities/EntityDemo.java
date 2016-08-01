@@ -5,9 +5,13 @@
  */
 package cellentities;
 
-import entity.Entity;
-import persistence.Queries;
-import persistence.SimpleQueries;
+import cell.Entity;
+import cellentities.persistence.Queries;
+import cellentities.persistence.QueryGenerator;
+import cellentities.persistence.SimpleQueries;
+import cellentities.persistence.SimpleQueryGenerator;
+
+
 
 /**
  *
@@ -15,7 +19,9 @@ import persistence.SimpleQueries;
  */
 public class EntityDemo {
     public static void main(String[] args) {
-        Entity e = new Gesac(333, "klkasdasdas");
+        Entity e = new Gesac(666, "beaba");
+        QueryGenerator qg = new SimpleQueryGenerator();
+        System.out.println(qg.insertGenerator(e));
         System.out.println(e.toString());
         Queries q = new SimpleQueries();
         q.insert(e);

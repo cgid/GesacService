@@ -7,7 +7,7 @@ package cellentities;
 
 import cell.Cell;
 import cell.Type;
-import entity.Entity;
+import cell.Entity;
 
 /**
  *
@@ -24,13 +24,13 @@ public class Gesac implements Entity {
     private Cell[] values = new Cell[this.NUMCOMLUMNS];
 
     public Gesac(String nomeEstabelecimento) {
-        values[0] = new Cell(HAVEID, IID, Type.NUM, null);
-        values[1] = new Cell(Type.STR, nomeEstabelecimento);
+        values[0] = new Cell(HAVEID, IID, Type.NUM, null, true);
+        values[1] = new Cell(Type.STR, nomeEstabelecimento, false);
     }
     
     public Gesac(int ID, String nomeEstabelecimento) {
-        values[0] = new Cell(HAVEID, IID, Type.NUM, ID);
-        values[1] = new Cell(Type.STR, nomeEstabelecimento);
+        values[0] = new Cell(HAVEID, IID, Type.NUM, ID, true);
+        values[1] = new Cell(Type.STR, nomeEstabelecimento, false);
     }
     
     @Override
@@ -61,10 +61,10 @@ public class Gesac implements Entity {
     }
 
     @Override
-    public Object getValue(int index) throws ArrayIndexOutOfBoundsException {
+    public Cell getValue(int index) throws ArrayIndexOutOfBoundsException {
         if (index >= this.NUMCOMLUMNS || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
-        return values[index].value;
+        return values[index];
     }
 
     @Override
@@ -74,7 +74,7 @@ public class Gesac implements Entity {
             sb.append(getColumnName(i)).append('\t');
         sb.append('\n');
         for (int i = 0; i < getNumOfColumns(); i++) 
-            sb.append(values[i].value).append('\t');
+            sb.append(this.values[i].getValue()).append('\t');
         return sb.toString();
     }
 }
