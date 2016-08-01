@@ -9,7 +9,7 @@ package entity;
  *
  * @author Edilson Jr
  */
-public class SolicitacoesTab implements EntityModifiable {
+public class SolicitacoesTab implements Entity {
 
     private final String DB = "SisCentralRel";
     private final String TABLE = "Solicitacoes";
@@ -58,14 +58,7 @@ public class SolicitacoesTab implements EntityModifiable {
      * @param Servico_cod_servico
      * @param gesac_cod_gesac
      */
-    public SolicitacoesTab(int ID,
-            String Qtde_tentativas,
-            String descricao,
-            String Dt_ult_tentativa,
-            boolean status,
-            boolean contato_ok,
-            int Servico_cod_servico,
-            int gesac_cod_gesac) {
+    public SolicitacoesTab(int ID,String Qtde_tentativas, String descricao, String Dt_ult_tentativa, boolean status, boolean contato_ok, int Servico_cod_servico, int gesac_cod_gesac) {
         values[0] = ID;
         values[1] = Qtde_tentativas;
         values[2] = descricao;
@@ -86,15 +79,7 @@ public class SolicitacoesTab implements EntityModifiable {
      * @param Servico_cod_servico
      * @param gesac_cod_gesac
      */
-    public SolicitacoesTab(
-            String Qtde_tentativas,
-            String descricao,
-            String Dt_ult_tentativa,
-            boolean status,
-            boolean contato_ok,
-            int Servico_cod_servico,
-            int gesac_cod_gesac) {
-
+    public SolicitacoesTab(String Qtde_tentativas,String descricao,String Dt_ult_tentativa,boolean status,boolean contato_ok,int Servico_cod_servico,int gesac_cod_gesac) {
         values[1] = Qtde_tentativas;
         values[2] = descricao;
         values[3] = Dt_ult_tentativa;
@@ -107,9 +92,8 @@ public class SolicitacoesTab implements EntityModifiable {
 
     @Override
     public Object getValue(int index) throws ArrayIndexOutOfBoundsException {
-        if (index > 1 || index < 0) {
+        if (index > 1 || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
-        }
         return values[index];
     }
 
@@ -126,6 +110,11 @@ public class SolicitacoesTab implements EntityModifiable {
     public String getTableName() {
         return this.TABLE;
     }
+    
+    @Override
+    public boolean haveAutoIncrementID() {
+        return this.HAVEID;
+    }
 
     @Override
     public int getNumOfColumns() {
@@ -134,37 +123,11 @@ public class SolicitacoesTab implements EntityModifiable {
 
     @Override
     public String getColumnName(int index) throws ArrayIndexOutOfBoundsException {
-        if (index > 1 || index < 0) {
-
+        if (index > 1 || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
-        }
-
         return this.COLUMNNAMES[index];
 
     }
 
-    @Override
-    public boolean isInsertable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    public boolean isDeletable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean isSelectable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean isUpgradeable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean haveAutoIncrementID() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
