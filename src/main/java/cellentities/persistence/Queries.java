@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence;
+package cellentities.persistence;
 
-import entity.NotIsUpgradeableEntityException;
-import entity.NotIsInsertableEntityException;
-import entity.NotIsSelectableEntityException;
-import entity.NotIsDeletableEntityException;
-import entity.Entity;
+import cell.NotIsUpgradeableEntityException;
+import cell.NotIsInsertableEntityException;
+import cell.NotIsSelectableEntityException;
+import cell.NotIsDeletableEntityException;
+import cell.Entity;
 
 /**
  *

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package cell;
 
 /**
  *
@@ -20,6 +20,7 @@ public interface Entity {
 
     public String getColumnName(int index) throws ArrayIndexOutOfBoundsException;
     
-    public Object getValue(int index) throws ArrayIndexOutOfBoundsException;
+    public Cell getCell(int index) throws ArrayIndexOutOfBoundsException;
     
+    //public Integer getID();
 }

@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence;
+package cell;
 
-import entity.Entity;
 
 /**
  *
  * @author murilo
  */
 public class SimpleQueryGenerator implements QueryGenerator<Entity>{
+    
     @Override
     public String insertGenerator(Entity e) {
         //INSERT INTO() VALUES();
@@ -49,7 +49,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
                 append(" WHERE ").
                 append(e.getColumnName(0)).
                 append(" = ").
-                append((String) e.getValue(0)).
+                append((String) e.getCell(0).getValue()).
                 append(";");
         return sql.toString();
     }
@@ -68,7 +68,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
             
         }
         sql.append(" WHERE = ").
-        append(e.getValue(0)).
+        append(e.getCell(0)).
         append(";");
         System.out.println();
         return sql.toString();
