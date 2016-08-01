@@ -4,7 +4,7 @@ package entity;
  *
  * @author murilo
  */
-public final class Chamado implements EntityModifiable {
+public final class Chamado implements Entity {
     private final String DB = "SisCentralRel";
     private final String TABLE = "chamado";
     private final boolean AUTOINCREMENTID = true;
@@ -13,11 +13,6 @@ public final class Chamado implements EntityModifiable {
 
     private Object[] values = new Object[this.NUMCOMLUMNS];
     
-    private final boolean INSERTABLE;
-    private final boolean DELETABLE;
-    private final boolean SELECTABLE;
-    private final boolean UPGRADEABLE;
-
     /**
      * @contructor = null.
      */
@@ -26,10 +21,7 @@ public final class Chamado implements EntityModifiable {
         for (int i = 0; i < this.values.length; i++) {
             this.values[i] = null;
         }
-        this.INSERTABLE = false;
-        this.DELETABLE = false;
-        this.SELECTABLE = false;
-        this.UPGRADEABLE = false;
+
     }
 
     /**
@@ -40,12 +32,6 @@ public final class Chamado implements EntityModifiable {
     public Chamado(int ID) {
         this.values[0] = ID;
         this.values[1] = null;
-        
-        this.INSERTABLE = false;
-        this.DELETABLE = true;
-        this.SELECTABLE = true;
-        this.UPGRADEABLE = false;
-
     }
 
     /**!haveAutoIncrementID(
@@ -61,11 +47,6 @@ public final class Chamado implements EntityModifiable {
         this.values[2] = obs;
         this.values[3] = codUsuario;
         this.values[4] = solicitacoes;
-        this.INSERTABLE = haveAutoIncrementID();
-        this.DELETABLE = false;
-        this.SELECTABLE = false;
-        this.UPGRADEABLE = false;
-
     }
 
     /**
@@ -84,10 +65,6 @@ public final class Chamado implements EntityModifiable {
         values[2] = obs;
         values[3] = codUsuario;
         values[4] = solicitacoes;
-        this.INSERTABLE = !haveAutoIncrementID();
-        this.DELETABLE = false;
-        this.SELECTABLE = false;
-        this.UPGRADEABLE = true;
     }
 
     @Override
@@ -122,25 +99,5 @@ public final class Chamado implements EntityModifiable {
         if (index > 1 || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
         return values[index];
-    }
-
-    @Override
-    public boolean isInsertable() {
-        return this.INSERTABLE;
-    }
-
-    @Override
-    public boolean isDeletable() {
-        return this.DELETABLE;
-    }
-
-    @Override
-    public boolean isSelectable() {
-        return this.SELECTABLE;
-    }
-
-    @Override
-    public boolean isUpgradeable() {
-        return this.UPGRADEABLE;
     }
 }

@@ -5,13 +5,11 @@
  */
 package entity;
 
-import cell.Cell;
-
 /**
  *
  * @author murilo
  */
-public class Gesac implements EntityModifiable {
+public class Gesac implements Entity {
 
     private final String DB = "SisCentralRel";
     private final String TABLE = "gesac";
@@ -20,7 +18,7 @@ public class Gesac implements EntityModifiable {
     private final String[] COLUMNNAMES = {"cod_gesac", "nome_estabelecimento"};
 
     private Object[] values = new Object[this.NUMCOMLUMNS];
-
+        
     public Gesac() {
         for (int i = 0; i < values.length; i++) 
             values[i] = null;
@@ -77,25 +75,5 @@ public class Gesac implements EntityModifiable {
         if (index > 1 || index < 0) 
             throw new ArrayIndexOutOfBoundsException("Valor inserido esta fora do intervalo.");
         return values[index];
-    }
-
-    @Override
-    public boolean isInsertable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean isDeletable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean isSelectable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean isUpgradeable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -14,16 +14,15 @@ import java.sql.PreparedStatement;
 import persistencia.ConnectionFactory;
 import java.sql.SQLException;
 import entity.Entity;
-import entity.EntityModifiable;
 import java.sql.Statement;
 
 /**
  *
  * @author murilo
  */
-public class SimpleQueries implements Queries<EntityModifiable> {
+public class SimpleQueries implements Queries<Entity> {
     @Override
-    public void insert(EntityModifiable e) throws NotIsInsertableEntityException{
+    public void insert(Entity e) throws NotIsInsertableEntityException{
         if(!e.isInsertable())
             throw new NotIsInsertableEntityException();
         Connection conn = ConnectionFactory.getConnection();
@@ -54,7 +53,7 @@ public class SimpleQueries implements Queries<EntityModifiable> {
     }
 
     @Override
-    public void delete(EntityModifiable e) throws NotIsDeletableEntityException {
+    public void delete(Entity e) throws NotIsDeletableEntityException {
         if(!e.isDeletable())
             throw new NotIsDeletableEntityException();
         Connection conn = ConnectionFactory.getConnection();
@@ -71,7 +70,7 @@ public class SimpleQueries implements Queries<EntityModifiable> {
     }
 
     @Override
-    public void update(EntityModifiable e) throws NotIsUpgradeableEntityException {
+    public void update(Entity e) throws NotIsUpgradeableEntityException {
         if(!e.isUpgradeable())
             throw new NotIsUpgradeableEntityException();
         Connection conn = ConnectionFactory.getConnection();
@@ -100,7 +99,7 @@ public class SimpleQueries implements Queries<EntityModifiable> {
     }
 
     @Override
-    public void select(EntityModifiable e) throws NotIsSelectableEntityException {
+    public void select(Entity e) throws NotIsSelectableEntityException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
