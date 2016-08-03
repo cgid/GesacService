@@ -5,7 +5,7 @@
  */
 package entities;
 
-import cell.Entity;
+import persistence.Entity;
 import persistence.QueryGenerator;
 import persistence.SimpleQueryGenerator;
 

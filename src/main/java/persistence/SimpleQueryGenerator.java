@@ -5,8 +5,6 @@
  */
 package persistence;
 
-import cell.Entity;
-
 /**
  *
  * @author murilo
@@ -21,7 +19,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
         /**
          * @WhatDo: add the columns that will be inserted.
          */
-        for (int i = e.haveAutoIncrementID() ? 1 : 0; i < e.getNumOfColumns(); i++) {
+        for (int i = e.getCell(0).isIterable() ? 1 : 0; i < e.getNumOfColumns(); i++) {
             sql.append(e.getColumnName(i));
             if (i < e.getNumOfColumns() - 1) {
                 sql.append(",");
@@ -31,7 +29,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
          * @WhatItIsDoing: adding how many values will be altered.
          */
         sql.append(") VALUES(");
-        for (int i = e.haveAutoIncrementID() ? 1 : 0; i < e.getNumOfColumns(); i++) {
+        for (int i = e.getCell(0).isIterable() ? 1 : 0; i < e.getNumOfColumns(); i++) {
             sql.append("?");
             if (i < e.getNumOfColumns() - 1) {
                 sql.append(",");
@@ -62,7 +60,7 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
         sql.append("UPDATE ").
                 append(e.getTableName()).
                 append(" SET ");
-        for (int i = e.haveAutoIncrementID() ? 1 : 0; i < e.getNumOfColumns(); i++) {
+        for (int i = e.getCell(0).isIterable() ? 1 : 0; i < e.getNumOfColumns(); i++) {
             sql.append(e.getColumnName(i)).append(" = ?");
             if (i < e.getNumOfColumns() - 1) 
                 sql.append(", ");

@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cell;
+package persistence;
+
+import cell.Cell;
 
 /**
  *
@@ -13,8 +15,6 @@ public interface Entity {
     public String getDB();
 
     public String getTableName();
-
-    public boolean haveAutoIncrementID();
 
     public int getNumOfColumns();
 
