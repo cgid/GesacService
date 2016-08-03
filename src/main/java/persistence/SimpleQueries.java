@@ -5,10 +5,10 @@
  */
 package persistence;
 
-import cellentities.NotIsUpgradeableEntityException;
-import cellentities.NotIsInsertableEntityException;
-import cellentities.NotIsSelectableEntityException;
-import cellentities.NotIsDeletableEntityException;
+import entities.NotIsUpgradeableEntityException;
+import entities.NotIsInsertableEntityException;
+import entities.NotIsSelectableEntityException;
+import entities.NotIsDeletableEntityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

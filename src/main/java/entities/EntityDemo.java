@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cellentities;
+package entities;
 
 import cell.Entity;
 import persistence.QueryGenerator;
