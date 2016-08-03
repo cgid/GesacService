@@ -17,7 +17,7 @@ import persistence.SimpleQueryGenerator;
  */
 public class EntityDemo {
     public static void main(String[] args) {
-        Entity e = new Gesac(666, "beaba");
+        Entity e = new PID(666, "beaba");
         QueryGenerator qg = new SimpleQueryGenerator();
         System.out.println(qg.insertGenerator(e));
         System.out.println(e.getCell(0).toString());
