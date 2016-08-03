@@ -24,11 +24,13 @@ public class ExcellHandler {
         Workbook workbook;
         Sheet sheet;
         Cell a6;
+        
         try {
             workbook = Workbook.getWorkbook(new File("Itapuranga.xls"));
             sheet = workbook.getSheet(0);            
             
-            System.out.println("Iniciando a leitura da planilha XLS:");
+            System.out.println("Iniciando a leitura da planilha XLS...");
+            
             for (int i = 2; i <= sheet.getRows(); i++) {
                 for (int j = 1; j <= sheet.getColumns(); j++) {
                     a6 = sheet.getCell(i, j);

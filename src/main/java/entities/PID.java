@@ -13,7 +13,7 @@ import persistence.Entity;
  *
  * @author murilo
  */
-public class Gesac implements Entity {
+public class PID implements Entity {
     private final String    DB          = "SisCentralRel";
     private final String    TABLE       = "gesac";
     private final boolean   HAVEID      = true;
@@ -23,16 +23,22 @@ public class Gesac implements Entity {
 
     private Cell[] values = new Cell[this.NUMCOMLUMNS];
 
-    public Gesac(String nomeEstabelecimento) {
+    public PID(String nomeEstabelecimento) {
         values[0] = new Cell(HAVEID, IID, Type.NUM, null, true);
         values[1] = new Cell(Type.STR, nomeEstabelecimento, false);
     }
     
-    public Gesac(int ID, String nomeEstabelecimento) {
+    public PID(int ID, String nomeEstabelecimento) {
         values[0] = new Cell(HAVEID, IID, Type.NUM, ID, true);
         values[1] = new Cell(Type.STR, nomeEstabelecimento, false);
     }
     
+    public void setCodGesac(long codGesac) {this.values[0].setValue(codGesac);}
+    public void setNomeEstabelecimento(String nomeEstabelecimento) {this.values[1].setValue(nomeEstabelecimento);}
+    
+    /**
+     * Methods of Entity interface.
+     */
     @Override
     public String getDB() {return this.DB;}
 

@@ -14,7 +14,7 @@ public class Cell {
     private final boolean notNull;
     private final boolean iterable;
     private final Type type;
-    private final Object value;
+    private Object value;
 
     public Cell(boolean id, boolean iterable, Type type, Object value, boolean notNull) {
         this.id = id;
@@ -43,7 +43,10 @@ public class Cell {
         sb.append("VALOR         : ").append(this.value).append('\n');
         return sb.toString(); //To change body of generated methods, choose Tools | Templates.
     }
-
+    //Setters
+    public void setValue(Object value) {this.value = value;}
+    
+    //Getters
     public boolean isId() {return this.id;}
 
     public boolean isNotNull() {return this.notNull;}
