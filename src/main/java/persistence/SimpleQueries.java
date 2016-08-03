@@ -22,12 +22,17 @@ import java.sql.Statement;
  * @author murilo
  */
 public class SimpleQueries implements Queries<Entity> {
+    /**
+     * 
+     * @param e
+     * @throws NotIsInsertableEntityException 
+     */
     @Override
     public void insert(Entity e) throws NotIsInsertableEntityException{
-        for (int i = 0; i < e.getNumOfColumns(); i++) {
+        for (int i = 0; i < e.getNumOfColumns(); i++) 
             if(e.getCell(i).isNotNull() && e.getCell(i).getValue().equals(null))
                 throw new NotIsInsertableEntityException();
-        }
+        
         
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -55,7 +60,12 @@ public class SimpleQueries implements Queries<Entity> {
             System.out.println(er);
         }
     }
-
+    
+    /**
+     * 
+     * @param e
+     * @throws NotIsDeletableEntityException 
+     */
     @Override
     public void delete(Entity e) throws NotIsDeletableEntityException {
         if(e.getCell(0).getValue().equals(null) && e.haveAutoIncrementID())//temporariamente
@@ -72,36 +82,42 @@ public class SimpleQueries implements Queries<Entity> {
             System.out.println(er);
         }
     }
-
+    
+    /**
+     * 
+     * @param e
+     * @throws NotIsUpgradeableEntityException 
+     */
     @Override
     public void update(Entity e) throws NotIsUpgradeableEntityException {
-        /**
-        if(e.getValue(0).equals(null) && e.haveAutoIncrementID())//temporariamente
-            throw new NotIsUpgradeableEntityException();
+        for (int i = 0; i < e.getNumOfColumns(); i++)
+            if(e.getCell(i).isNotNull() && e.getCell(i).getValue().equals(null))
+                throw new NotIsUpgradeableEntityException();
+        
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
+        
         try {
             stmt = conn.prepareStatement(qg.updateGenerator(e));
             for (int i = 1; i <= e.getNumOfColumns(); i++) {
                 if(e.haveAutoIncrementID()) {
-                    if (e.getValue(i).getClass().equals(Integer.class)) 
-                        stmt.setInt(i, (Integer) e.getValue(i));
+                    if (e.getCell(i).getType().equals(Type.NUM)) 
+                        stmt.setInt(i, (Integer) e.getCell(i).getValue());
                     else 
-                        stmt.setString(i, (String) e.getValue(i));
+                        stmt.setString(i, String.valueOf(e.getCell(i).getValue()));
                 }
                 else {
-                     if (e.getValue(i - 1).getClass().equals(Integer.class)) 
-                        stmt.setInt(i, (Integer) e.getValue(i - 1));
+                     if (e.getCell(i - 1).getType().equals(Type.NUM)) 
+                        stmt.setInt(i, (Integer) e.getCell(i - 1).getValue());
                     else 
-                        stmt.setString(i, (String) e.getValue(i - 1));
+                        stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
                 }
             }
             stmt.executeUpdate();
         } catch (SQLException | ArrayIndexOutOfBoundsException er) {
             System.out.println(er);
         }
-        * */
     }
 
     @Override

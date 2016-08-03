@@ -6,9 +6,7 @@
 package cellentities;
 
 import cell.Entity;
-import persistence.Queries;
 import persistence.QueryGenerator;
-import persistence.SimpleQueries;
 import persistence.SimpleQueryGenerator;
 
 
