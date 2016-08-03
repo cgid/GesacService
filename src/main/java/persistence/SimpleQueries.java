@@ -5,10 +5,10 @@
  */
 package persistence;
 
-import cellentities.NotIsUpgradeableEntityException;
-import cellentities.NotIsInsertableEntityException;
-import cellentities.NotIsSelectableEntityException;
-import cellentities.NotIsDeletableEntityException;
+import entities.NotIsUpgradeableEntityException;
+import entities.NotIsInsertableEntityException;
+import entities.NotIsSelectableEntityException;
+import entities.NotIsDeletableEntityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -37,6 +37,8 @@ public class SimpleQueries implements Queries<Entity> {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
+        
+        
         try {
             stmt = conn.prepareStatement(qg.insertGenerator(e));
             for (int i = 1; i <= e.getNumOfColumns(); i++) {
@@ -68,17 +70,19 @@ public class SimpleQueries implements Queries<Entity> {
      */
     @Override
     public void delete(Entity e) throws NotIsDeletableEntityException {
-        if(e.getCell(0).getValue().equals(null) && e.haveAutoIncrementID())//temporariamente
+        if(e.getCell(0).getValue().equals(null) && e.haveAutoIncrementID())
             throw new NotIsDeletableEntityException();
+        
         Connection conn = ConnectionFactory.getConnection();
         Statement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
+        
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(qg.deleteGenerator(e));
             stmt.close();
             conn.close();
-        } catch (Exception er) {
+        } catch (SQLException er) {
             System.out.println(er);
         }
     }
@@ -102,15 +106,15 @@ public class SimpleQueries implements Queries<Entity> {
             stmt = conn.prepareStatement(qg.updateGenerator(e));
             for (int i = 1; i <= e.getNumOfColumns(); i++) {
                 if(e.haveAutoIncrementID()) {
-                    if (e.getCell(i).getType().equals(Type.NUM)) 
+                    if(e.getCell(i).getType().equals(Type.NUM)) 
                         stmt.setInt(i, (Integer) e.getCell(i).getValue());
-                    else 
+                    else
                         stmt.setString(i, String.valueOf(e.getCell(i).getValue()));
                 }
                 else {
-                     if (e.getCell(i - 1).getType().equals(Type.NUM)) 
+                     if(e.getCell(i - 1).getType().equals(Type.NUM)) 
                         stmt.setInt(i, (Integer) e.getCell(i - 1).getValue());
-                    else 
+                    else
                         stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
                 }
             }
