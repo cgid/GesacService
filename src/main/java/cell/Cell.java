@@ -24,7 +24,7 @@ public class Cell {
         this.value = value;
     }
     
-    //para cricao de celula que nao sao ID
+    //para cricao de celula que nao e ID
     public Cell(Type type, Object value, boolean notNull) {
         this.id = false;
         this.iterable = false;

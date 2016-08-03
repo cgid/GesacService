@@ -5,11 +5,11 @@
  */
 package persistence;
 
+import cell.Cell;
 import cell.NotIsUpgradeableEntityException;
 import cell.NotIsInsertableEntityException;
 import cell.NotIsSelectableEntityException;
 import cell.NotIsDeletableEntityException;
-import cell.Entity;
 
 /**
  *
@@ -42,6 +42,6 @@ public interface Queries<E extends Entity> {
     /**
      * @param l
      */
-    public void especificallySelect(E l) throws NotIsSelectableEntityException;
+    public Cell especificallySelect(int ID) throws NotIsSelectableEntityException;
         
 }
