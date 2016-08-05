@@ -93,4 +93,8 @@ public class PID implements Entity {
         }
         return sb.toString();
     }
+
+    public void setCodPID(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
