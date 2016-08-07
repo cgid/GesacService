@@ -16,11 +16,11 @@ import persistence.Entity;
 public class PID implements Entity {
 
     private final String DB = "SisCentralRel";
-    private final String TABLE = "gesac";
+    private final String TABLE = "PID";
     private final boolean HAVEID = true;
     private final boolean IID = true;
     private final int NUMCOMLUMNS = 4;
-    private final String[] COLUMNNAMES = {"cod_gesac", "nome_estabelecimento", "cod_tc", "cod_gesac"};
+    private final String[] COLUMNNAMES = {"cod_pid", "nome_estabelecimento", "cod_tc", "cod_gesac","cod_cd"};
 
     private Cell[] values = new Cell[this.NUMCOMLUMNS];
 
@@ -92,5 +92,9 @@ public class PID implements Entity {
             sb.append(this.values[i].getValue()).append('\t');
         }
         return sb.toString();
+    }
+
+    public void setCodPID(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
