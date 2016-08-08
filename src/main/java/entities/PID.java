@@ -40,7 +40,7 @@ public class PID implements Entity {
     }
 
     public void setCodGesac(long codGesac) {
-        this.values[0].setValue(codGesac);
+        this.values[3].setValue(codGesac);
     }
 
     public void setNomeEstabelecimento(String nomeEstabelecimento) {
@@ -94,7 +94,7 @@ public class PID implements Entity {
         return sb.toString();
     }
 
-    public void setCodPID(int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setCodPID(int PID) {
+       this.values[3].setValue(PID);
     }
 }
