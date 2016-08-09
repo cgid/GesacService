@@ -6,7 +6,6 @@
 package excell;
 
 
-import entities.;
 import entities.Contato;
 import entities.Endereco;
 import entities.Municipio;
