@@ -73,19 +73,19 @@ public class ExcellHandler {
                             endereco.setBairro(a6.getContents());
                             break;
                         case 7:
-                            municipio.setCod_IBGE(a6.getContents());
+                            municipio.setCodIBGE(Integer.parseInt(a6.getContents()));
                             break;
                         case 8:
                             contato.setNome(a6.getContents());
                             q.insert(contato);
                             break;
                         case 9:
-                            telefone.setCod_contato(q.especificallySelect(contato).getCell(0).getValue());
+                            telefone.setContato(q.especificallySelect(contato).getCell(0).getValue());
                             telefone.setDDD(a6.getContents());
 
                             break;
                         case 10:
-                            telefone.setTelefone(a6.getContents());
+                            telefone.setTelefone(Integer.parseInt(a6.getContents()));
                             q.insert(telefone);
                             break;
                         case 11:
