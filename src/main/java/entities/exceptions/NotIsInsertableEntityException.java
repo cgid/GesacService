@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities;
+package entities.exceptions;
 
 /**
  *
  * @author murilo
  */
-public class NotIsDeletableEntityException extends RuntimeException {
-    public NotIsDeletableEntityException() {
+public class NotIsInsertableEntityException extends RuntimeException{
+    public NotIsInsertableEntityException() {
         super("Nao e possivel deletetar esta entidade. Por favor, verifique seus valores.");
     }
 }

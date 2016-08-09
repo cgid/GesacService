@@ -13,41 +13,43 @@ import persistence.Entity;
  *
  * @author murilo
  */
-public class PID implements Entity {
+public class Usuario implements Entity {
+
     private final String DB = "SisCentralRel";
-    private final String TABLE = "PID";
+    private final String TABLE = "chamado";
     private final boolean HAVEID = true;
     private final boolean IID = true;
-    private final int NUMCOMLUMNS = 4;
-    private final String[] COLUMNNAMES = {"cod_pid", "nome_estabelecimento", "cod_tc", "cod_gesac","cod_cd"};
+    private final int NUMCOMLUMNS = 5;
+    private final String[] COLUMNNAMES = {"id_usuario", "nome", "login", "senha", "Perfil_cod_perfil"};
 
     private Cell[] values = new Cell[this.NUMCOMLUMNS];
 
-    public PID() {
-    }
-
-    public PID(String nomeEstabelecimento) {
+    public Usuario() {
         values[0] = new Cell(HAVEID, IID, Type.NUM, null, true);
-        values[1] = new Cell(Type.STR, nomeEstabelecimento, false);
-    }
-
-    public PID(int ID, String nomeEstabelecimento, int cod_tc, int cod_gesac) {
-        values[0] = new Cell(HAVEID, IID, Type.NUM, ID, true);
-        values[1] = new Cell(Type.NUM, nomeEstabelecimento, false);
-        values[2] = new Cell(Type.NUM, cod_tc, false);
-        values[3] = new Cell(Type.NUM, cod_gesac, false);
-    }
-
-    public void setCodGesac(long codGesac) {
-        this.values[3].setValue(codGesac);
-    }
-
-    public void setNomeEstabelecimento(String nomeEstabelecimento) {
-        this.values[1].setValue(nomeEstabelecimento);
+        values[1] = new Cell(Type.STR, null, true);
+        values[2] = new Cell(Type.STR, null, true);
+        values[3] = new Cell(Type.STR, null, true);
+        values[4] = new Cell(Type.NUM, null, true);
     }
     
-    public void setCodPID(int PID) {
-       this.values[3].setValue(PID);
+    public void setIdIUsuario(int idIUsuario) {
+        this.values[0].setValue(idIUsuario);
+    }
+    
+    public void setNome(String nome) {
+        this.values[1].setValue(nome);
+    }
+    
+    public void setLogin(String login) {
+        this.values[2].setValue(login);
+    }
+    
+    public void setSenha(String senha) {
+        this.values[3].setValue(senha);
+    }
+    
+    public void setCodPerfil(int codPerfil) {
+        this.values[4].setValue(codPerfil);
     }
 
     /**

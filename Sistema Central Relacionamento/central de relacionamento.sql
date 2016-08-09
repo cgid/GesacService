@@ -51,7 +51,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SisCentralRel`.`Servico` (
   `id_servico` INT NOT NULL AUTO_INCREMENT,
-  `dt_criacao_servico` DATETIME NOT NULL DEFAULT 'current_date',
+  `dt_criacao_servico` DATETIME NOT NULL,
   `descricao` VARCHAR(300) NOT NULL,
   `Dt_encerramento` DATETIME NULL,
   `Intervalo_ligacoes` INT NULL,

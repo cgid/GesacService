@@ -6,10 +6,10 @@
 package persistence;
 
 import cell.Cell;
-import entities.NotIsUpgradeableEntityException;
-import entities.NotIsInsertableEntityException;
-import entities.NotIsSelectableEntityException;
-import entities.NotIsDeletableEntityException;
+import entities.exceptions.NotIsUpgradeableEntityException;
+import entities.exceptions.NotIsInsertableEntityException;
+import entities.exceptions.NotIsSelectableEntityException;
+import entities.exceptions.NotIsDeletableEntityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

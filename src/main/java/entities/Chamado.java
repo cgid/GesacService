@@ -7,47 +7,49 @@ package entities;
 
 import cell.Cell;
 import cell.Type;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import persistence.Entity;
 
 /**
  *
  * @author murilo
  */
-public class PID implements Entity {
+public class Chamado implements Entity {
     private final String DB = "SisCentralRel";
-    private final String TABLE = "PID";
+    private final String TABLE = "chamado";
     private final boolean HAVEID = true;
     private final boolean IID = true;
-    private final int NUMCOMLUMNS = 4;
-    private final String[] COLUMNNAMES = {"cod_pid", "nome_estabelecimento", "cod_tc", "cod_gesac","cod_cd"};
+    private final int NUMCOMLUMNS = 5;
+    private final String[] COLUMNNAMES = {"id_chamado", "dt_chamado", "observacao", "Usuario_cod_usuario", "Solicitacoes_id_solicitacao"};
 
     private Cell[] values = new Cell[this.NUMCOMLUMNS];
 
-    public PID() {
-    }
-
-    public PID(String nomeEstabelecimento) {
+    public Chamado() {
         values[0] = new Cell(HAVEID, IID, Type.NUM, null, true);
-        values[1] = new Cell(Type.STR, nomeEstabelecimento, false);
+        values[1] = new Cell(Type.DATE, null, true);
+        values[2] = new Cell(Type.STR, null, false);
+        values[3] = new Cell(Type.NUM, null, true);
+        values[4] = new Cell(Type.NUM, null, true);
     }
 
-    public PID(int ID, String nomeEstabelecimento, int cod_tc, int cod_gesac) {
-        values[0] = new Cell(HAVEID, IID, Type.NUM, ID, true);
-        values[1] = new Cell(Type.NUM, nomeEstabelecimento, false);
-        values[2] = new Cell(Type.NUM, cod_tc, false);
-        values[3] = new Cell(Type.NUM, cod_gesac, false);
+    public void setIdChamado(int val) {
+        this.values[0].setValue(val);
     }
 
-    public void setCodGesac(long codGesac) {
-        this.values[3].setValue(codGesac);
+    public void setDtChamado(String date) {
+        this.values[1].setValue(date);
     }
 
-    public void setNomeEstabelecimento(String nomeEstabelecimento) {
-        this.values[1].setValue(nomeEstabelecimento);
+    public void setObservacao(String obs) {
+        this.values[2].setValue(obs);
     }
-    
-    public void setCodPID(int PID) {
-       this.values[3].setValue(PID);
+
+    public void setCodusuario(int codUsuario) {
+        this.values[3].setValue(codUsuario);
+    }
+
+    public void setIdSolicitacoes(int idSolicitacoes) {
+        this.values[4].setValue(idSolicitacoes);
     }
 
     /**
