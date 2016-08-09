@@ -20,7 +20,11 @@ public class Telefone implements Entity {
     private final boolean HAVEID = true;
     private final boolean IID = true;
     private final int NUMCOMLUMNS = 4;
-    private final String[] COLUMNNAMES = {"id_telefone", "ddd", "telefone", "Contato_id_contato"};
+    private final String[] COLUMNNAMES = {"id_telefone",
+        "ddd", "telefone",
+        "Contato_id_contato"};
+
+    private Cell[] values = new Cell[this.NUMCOMLUMNS];
 
     public Telefone() {
     }
@@ -32,7 +36,17 @@ public class Telefone implements Entity {
         values[3] = new Cell(Type.NUM, Contato_id_contato, false);
     }
 
-    private Cell[] values = new Cell[this.NUMCOMLUMNS];
+    public void setDDD(int contents) {
+        this.values[1].setValue(contents);
+    }
+
+    public void setTelefone(int contents) {
+        this.values[2].setValue(contents);
+    }
+
+    public void setContato(int contents) {
+        this.values[3].setValue(contents);
+    }
 
     @Override
     public String getDB() {
@@ -77,17 +91,4 @@ public class Telefone implements Entity {
         }
         return sb.toString();
     }
-
-    public void setDDD(String contents) {
-        this.values[1].setValue(contents);
-    }
-
-    public void setTelefone(String contents) {
-        this.values[2].setValue(contents);
-    }
-
-    public void setContato(String contents) {
-        this.values[3].setValue(contents);
-    }
-
 }
