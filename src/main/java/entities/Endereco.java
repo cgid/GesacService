@@ -16,7 +16,7 @@ import persistence.Entity;
 public class Endereco implements Entity {
 
     private final String DB = "SisCentralRel";
-    private final String TABLE = "PID";
+    private final String TABLE = "Endereco";
     private final boolean HAVEID = true;
     private final boolean IID = true;
     private final int NUMCOMLUMNS = 10;
