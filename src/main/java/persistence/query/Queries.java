@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence;
+package persistence.query;
 
 import cell.Cell;
 import cell.NotIsUpgradeableEntityException;
 import cell.NotIsInsertableEntityException;
 import cell.NotIsSelectableEntityException;
 import cell.NotIsDeletableEntityException;
+import persistence.Entity;
 
 /**
  *
@@ -42,6 +43,6 @@ public interface Queries<E extends Entity> {
     /**
      * @param l
      */
-    public Cell especificallySelect(int ID) throws NotIsSelectableEntityException;
+    public Entity especificallySelect(int ID) throws NotIsSelectableEntityException;
         
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence;
+package persistence.query;
 
 import cell.Cell;
 import entities.exceptions.NotIsUpgradeableEntityException;
@@ -15,6 +15,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import cell.Type;
 import java.sql.Statement;
+import persistence.ConnectionFactory;
+import persistence.Entity;
+import persistence.querygen.QueryGenerator;
+import persistence.querygen.SimpleQueryGenerator;
 
 
 /**
@@ -29,6 +33,7 @@ public class SimpleQueries implements Queries<Entity> {
      */
     @Override
     public void insert(Entity e) throws NotIsInsertableEntityException{
+        
         for (int i = 0; i < e.getNumOfColumns(); i++) 
             if(e.getCell(i).isNotNull() && e.getCell(i).getValue().equals(null))
                 throw new NotIsInsertableEntityException();
@@ -129,7 +134,7 @@ public class SimpleQueries implements Queries<Entity> {
     }
 
     @Override
-    public Cell especificallySelect(int ID) throws NotIsSelectableEntityException {
+    public Entity especificallySelect(int ID) throws NotIsSelectableEntityException {
         return null;
     }
 }

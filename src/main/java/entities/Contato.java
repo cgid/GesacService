@@ -50,8 +50,7 @@ public class Contato implements Entity {
         this.values[2].setValue(PID);
     }
 
-    
-
+   
     @Override
     public String getDB() {
         return this.DB;
