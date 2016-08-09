@@ -14,7 +14,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import cell.Type;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import persistence.ConnectionFactory;
 import persistence.Entity;
 import persistence.querygen.QueryGenerator;
@@ -138,7 +141,22 @@ public class SimpleQueries implements Queries<Entity> {
     }
 
     @Override
-    public Entity especificallySelect(int ID) throws NotIsSelectableEntityException {
-        return null;
+    public int especificallySelect(Entity e) throws NotIsSelectableEntityException {
+        Connection conn = ConnectionFactory.getConnection();
+        int next = 0;
+        try {
+
+            Statement stmt = conn.createStatement();
+            ResultSet resultSet = stmt.executeQuery("SELECT * e.getTableName() order by desc limit 1");
+            while (resultSet.next()) {
+                next = resultSet.getInt(1);
+
+            }
+
+            return next;
+        } catch (SQLException ex) {
+            Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }
