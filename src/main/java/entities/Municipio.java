@@ -9,6 +9,10 @@ package entities;
  *
  * @author Edilson Jr
  */
-class Municipio {
+public class Municipio {
+
+    public void setCod_IBGE(String contents) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

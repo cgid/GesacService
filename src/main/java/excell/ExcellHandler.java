@@ -5,7 +5,13 @@
  */
 package excell;
 
+
+import entities.;
+import entities.Contato;
+import entities.Endereco;
+import entities.Municipio;
 import entities.PID;
+import entities.Telefone;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -16,6 +22,8 @@ import jxl.Workbook;
 import jxl.read.biff.BiffException;
 import persistence.Queries;
 import persistence.SimpleQueries;
+
+
 
 /**
  *

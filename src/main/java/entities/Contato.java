@@ -13,7 +13,7 @@ import persistence.Entity;
  *
  * @author Edilson Jr
  */
-class Contato implements Entity {
+public class Contato implements Entity {
 
     private final String DB = "SisCentralRel";
     private final String TABLE = "Contato";
@@ -35,27 +35,53 @@ class Contato implements Entity {
 
     @Override
     public String getDB() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.DB;
     }
 
     @Override
     public String getTableName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.TABLE;
     }
 
     @Override
     public int getNumOfColumns() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.NUMCOMLUMNS;
     }
 
     @Override
     public String getColumnName(int index) throws ArrayIndexOutOfBoundsException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (index >= this.NUMCOMLUMNS || index < 0) {
+            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+        }
+        return this.COLUMNNAMES[index];
     }
 
     @Override
     public Cell getCell(int index) throws ArrayIndexOutOfBoundsException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (index >= this.NUMCOMLUMNS || index < 0) {
+            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+        }
+        return values[index];
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < getNumOfColumns(); i++) {
+            sb.append(getColumnName(i)).append('\t');
+        }
+        sb.append('\n');
+        for (int i = 0; i < getNumOfColumns(); i++) {
+            sb.append(this.values[i].getValue()).append('\t');
+        }
+        return sb.toString();
+    }
+
+    public void setCodPID(int PID) {
+        this.values[2].setValue(PID);
+    }
+
+    public void setNome(String contents) {
+         this.values[1].setValue(contents);  }
 
 }

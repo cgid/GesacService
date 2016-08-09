@@ -5,10 +5,89 @@
  */
 package entities;
 
+import cell.Cell;
+import cell.Type;
+import persistence.Entity;
+
 /**
  *
  * @author Edilson Jr
  */
-class Telefone {
-    
+public class Telefone implements Entity {
+
+    private final String DB = "SisCentralRel";
+    private final String TABLE = "PID";
+    private final boolean HAVEID = true;
+    private final boolean IID = true;
+    private final int NUMCOMLUMNS = 4;
+    private final String[] COLUMNNAMES = {"id_telefone", "ddd", "telefone", "Contato_id_contato"};
+
+    public Telefone() {
+    }
+
+    public Telefone(int id_telefone, int ddd, int telefone, int Contato_id_contato) {
+        values[0] = new Cell(HAVEID, IID, Type.NUM, id_telefone, true);
+        values[1] = new Cell(Type.NUM, ddd, false);
+        values[2] = new Cell(Type.NUM, telefone, false);
+        values[3] = new Cell(Type.NUM, Contato_id_contato, false);
+    }
+
+    private Cell[] values = new Cell[this.NUMCOMLUMNS];
+
+    @Override
+    public String getDB() {
+        return this.DB;
+    }
+
+    @Override
+    public String getTableName() {
+        return this.TABLE;
+    }
+
+    @Override
+    public int getNumOfColumns() {
+        return this.NUMCOMLUMNS;
+    }
+
+    @Override
+    public String getColumnName(int index) throws ArrayIndexOutOfBoundsException {
+        if (index >= this.NUMCOMLUMNS || index < 0) {
+            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+        }
+        return this.COLUMNNAMES[index];
+    }
+
+    @Override
+    public Cell getCell(int index) throws ArrayIndexOutOfBoundsException {
+        if (index >= this.NUMCOMLUMNS || index < 0) {
+            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+        }
+        return values[index];
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < getNumOfColumns(); i++) {
+            sb.append(getColumnName(i)).append('\t');
+        }
+        sb.append('\n');
+        for (int i = 0; i < getNumOfColumns(); i++) {
+            sb.append(this.values[i].getValue()).append('\t');
+        }
+        return sb.toString();
+    }
+
+    public void setDDD(String contents) {
+        this.values[1].setValue(contents);
+    }
+
+    public void setTelefone(String contents) {
+        this.values[2].setValue(contents);
+    }
+
+    public void setContato(String contents) {
+        this.values[3].setValue(contents);
+    }
+
 }
