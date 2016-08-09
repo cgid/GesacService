@@ -37,7 +37,7 @@ public class Solicitacoes implements Entity {
         values[3] = new Cell(Type.NUM, null, false);
         values[4] = new Cell(Type.NUM, null, false);
         values[5] = new Cell(Type.NUM, null, true);
-        values[4] = new Cell(Type.NUM, null, true);
+        values[6] = new Cell(Type.NUM, null, true);
     }
     
     public void setIdSolicitacao(int idSolicitacao) {
@@ -114,5 +114,4 @@ public class Solicitacoes implements Entity {
         }
         return sb.toString();
     }
-
 }

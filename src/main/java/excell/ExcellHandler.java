@@ -19,8 +19,8 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
-import persistence.Queries;
-import persistence.SimpleQueries;
+import persistence.query.Queries;
+import persistence.query.SimpleQueries;
 
 
 
