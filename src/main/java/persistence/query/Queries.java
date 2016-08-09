@@ -43,6 +43,6 @@ public interface Queries<E extends Entity> {
     /**
      * @param l
      */
-    public Entity especificallySelect(int ID) throws NotIsSelectableEntityException;
-        
+    public int especificallySelect(Entity e) throws NotIsSelectableEntityException;
+
 }

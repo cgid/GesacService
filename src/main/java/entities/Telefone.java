@@ -78,15 +78,15 @@ public class Telefone implements Entity {
         return sb.toString();
     }
 
-    public void setDDD(String contents) {
+    public void setDDD(int contents) {
         this.values[1].setValue(contents);
     }
 
-    public void setTelefone(String contents) {
+    public void setTelefone(int contents) {
         this.values[2].setValue(contents);
     }
 
-    public void setContato(String contents) {
+    public void setContato(int contents) {
         this.values[3].setValue(contents);
     }
 

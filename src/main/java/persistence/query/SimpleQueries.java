@@ -14,50 +14,52 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import cell.Type;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import persistence.ConnectionFactory;
 import persistence.Entity;
 import persistence.querygen.QueryGenerator;
 import persistence.querygen.SimpleQueryGenerator;
-
 
 /**
  *
  * @author murilo
  */
 public class SimpleQueries implements Queries<Entity> {
+
     /**
-     * 
+     *
      * @param e
-     * @throws NotIsInsertableEntityException 
+     * @throws NotIsInsertableEntityException
      */
     @Override
-    public void insert(Entity e) throws NotIsInsertableEntityException{
-        
-        for (int i = 0; i < e.getNumOfColumns(); i++) 
-            if(e.getCell(i).isNotNull() && e.getCell(i).getValue().equals(null))
+    public void insert(Entity e) throws NotIsInsertableEntityException {
+
+        for (int i = 0; i < e.getNumOfColumns(); i++) {
+            if (e.getCell(i).isNotNull() && e.getCell(i).getValue().equals(null)) {
                 throw new NotIsInsertableEntityException();
-        
-        
+            }
+        }
+
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
-        
-        
+
         try {
             stmt = conn.prepareStatement(qg.insertGenerator(e));
             for (int i = 1; i <= e.getNumOfColumns(); i++) {
-                if(e.getCell(0).isIterable()) {
-                    if (e.getCell(i).getType().equals(Type.NUM)) 
+                if (e.getCell(0).isIterable()) {
+                    if (e.getCell(i).getType().equals(Type.NUM)) {
                         stmt.setInt(i, (Integer) e.getCell(i).getValue());
-                    else 
+                    } else {
                         stmt.setString(i, String.valueOf(e.getCell(i).getValue()));
-                }
-                else {
-                     if (e.getCell(i - 1).getType().equals(Type.NUM)) 
-                        stmt.setInt(i, (Integer) e.getCell(i - 1).getValue());
-                    else 
-                        stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
+                    }
+                } else if (e.getCell(i - 1).getType().equals(Type.NUM)) {
+                    stmt.setInt(i, (Integer) e.getCell(i - 1).getValue());
+                } else {
+                    stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
                 }
             }
             stmt.executeUpdate();
@@ -67,21 +69,22 @@ public class SimpleQueries implements Queries<Entity> {
             System.out.println(er);
         }
     }
-    
+
     /**
-     * 
+     *
      * @param e
-     * @throws NotIsDeletableEntityException 
+     * @throws NotIsDeletableEntityException
      */
     @Override
     public void delete(Entity e) throws NotIsDeletableEntityException {
-        if(e.getCell(0).getValue().equals(null))
+        if (e.getCell(0).getValue().equals(null)) {
             throw new NotIsDeletableEntityException();
-        
+        }
+
         Connection conn = ConnectionFactory.getConnection();
         Statement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
-        
+
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(qg.deleteGenerator(e));
@@ -91,35 +94,35 @@ public class SimpleQueries implements Queries<Entity> {
             System.out.println(er);
         }
     }
-    
+
     /**
-     * 
+     *
      * @param e
-     * @throws NotIsUpgradeableEntityException 
+     * @throws NotIsUpgradeableEntityException
      */
     @Override
     public void update(Entity e) throws NotIsUpgradeableEntityException {
-        if(!e.getCell(0).isIterable() && e.getCell(0).getValue().equals(null))
+        if (!e.getCell(0).isIterable() && e.getCell(0).getValue().equals(null)) {
             throw new NotIsUpgradeableEntityException();
-        
+        }
+
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
-        
+
         try {
             stmt = conn.prepareStatement(qg.updateGenerator(e));
             for (int i = 1; i <= e.getNumOfColumns(); i++) {
-                if(e.getCell(0).isIterable()) {
-                    if(e.getCell(i).getType().equals(Type.NUM)) 
+                if (e.getCell(0).isIterable()) {
+                    if (e.getCell(i).getType().equals(Type.NUM)) {
                         stmt.setInt(i, (Integer) e.getCell(i).getValue());
-                    else
+                    } else {
                         stmt.setString(i, String.valueOf(e.getCell(i).getValue()));
-                }
-                else {
-                     if(e.getCell(i - 1).getType().equals(Type.NUM)) 
-                        stmt.setInt(i, (Integer) e.getCell(i - 1).getValue());
-                    else
-                        stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
+                    }
+                } else if (e.getCell(i - 1).getType().equals(Type.NUM)) {
+                    stmt.setInt(i, (Integer) e.getCell(i - 1).getValue());
+                } else {
+                    stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
                 }
             }
             stmt.executeUpdate();
@@ -134,7 +137,22 @@ public class SimpleQueries implements Queries<Entity> {
     }
 
     @Override
-    public Entity especificallySelect(int ID) throws NotIsSelectableEntityException {
-        return null;
+    public int especificallySelect(Entity e) throws NotIsSelectableEntityException {
+        Connection conn = ConnectionFactory.getConnection();
+        int next = 0;
+        try {
+
+            Statement stmt = conn.createStatement();
+            ResultSet resultSet = stmt.executeQuery("SELECT * e.getTableName() order by desc limit 1");
+            while (resultSet.next()) {
+                next = resultSet.getInt(1);
+
+            }
+
+            return next;
+        } catch (SQLException ex) {
+            Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }
