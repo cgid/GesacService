@@ -22,16 +22,35 @@ public class Contato implements Entity {
     private final boolean NOTNULL = true;
     private final int NUMCOMLUMNS = 3;
     private final String[] COLUMNNAMES = {"id_contato", "nome", "PID_cod_pid"};
+
     private Cell[] values = new Cell[this.NUMCOMLUMNS];
 
     public Contato() {
+        values[0] = new Cell(HAVEID, IID, Type.NUM, null, NOTNULL);
+        values[1] = new Cell(Type.STR, null, NOTNULL);
+        values[2] = new Cell(Type.NUM, null, NOTNULL);
+
     }
 
     public Contato(int id_contato, String nome, int PID_cod_pid) {
-        values[0] = new Cell(HAVEID, IID, Type.NUM, null, NOTNULL);
+        values[0] = new Cell(HAVEID, IID, Type.NUM, id_contato, NOTNULL);
         values[1] = new Cell(Type.STR, nome, NOTNULL);
         values[2] = new Cell(Type.NUM, PID_cod_pid, NOTNULL);
     }
+    
+    public void setIdContato(int idContato) {
+        this.values[0].setValue(idContato);
+    }
+    
+    public void setNome(String contents) {
+        this.values[1].setValue(contents);
+    }
+
+    public void setCodPID(int PID) {
+        this.values[2].setValue(PID);
+    }
+
+    
 
     @Override
     public String getDB() {
@@ -76,12 +95,4 @@ public class Contato implements Entity {
         }
         return sb.toString();
     }
-
-    public void setCodPID(int PID) {
-        this.values[2].setValue(PID);
-    }
-
-    public void setNome(String contents) {
-         this.values[1].setValue(contents);  }
-
 }
