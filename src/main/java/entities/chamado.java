@@ -5,26 +5,34 @@ import cell.Cell;
 import cell.Type;
 import persistence.Entity;
 
-public class Municipio implements Entity {
+public class chamado implements Entity {
 	private final String DB = "SisCentralRel";
-	private final String TABLENAME = "Municipio";
-	private final String[] COLUMNNAMES = {"cod_IBGE", "nome_municipio", "UF"};
+	private final String TABLENAME = "chamado";
+	private final String[] COLUMNNAMES = {"id_chamado", "dt_chamado", "observacao", "Usuario_cod_usuario", "Solicitacoes_id_solicitacao"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
-	public Municipio() {
-		values[0] = new Cell(true, false,Type.NUM, null, true);
-		values[1] = new Cell(Type.STR, null, false);
+	public chamado() {
+		values[0] = new Cell(true, true,Type.NUM, null, true);
+		values[1] = new Cell(Type.DATE, null, true);
 		values[2] = new Cell(Type.STR, null, false);
+		values[3] = new Cell(Type.NUM, null, true);
+		values[4] = new Cell(Type.NUM, null, true);
 	}
 
-	public void setCodIBGE(int codIBGE) {
-		this.values[0].setValue(codIBGE);
+	public void setIdChamado(int idChamado) {
+		this.values[0].setValue(idChamado);
 	}
-	public void setNomeMunicipio(String nomeMunicipio) {
-		this.values[1].setValue(nomeMunicipio);
+	public void setDtChamado(String dtChamado) {
+		this.values[1].setValue(dtChamado);
 	}
-	public void setUF(String UF) {
-		this.values[2].setValue(UF);
+	public void setObservacao(String observacao) {
+		this.values[2].setValue(observacao);
+	}
+	public void setCodUsuario(int codUsuario) {
+		this.values[3].setValue(codUsuario);
+	}
+	public void setIdSolicitacao(int idSolicitacao) {
+		this.values[4].setValue(idSolicitacao);
 	}
 
 	@Override
