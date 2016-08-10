@@ -5,7 +5,6 @@
  */
 package persistence.query;
 
-import cell.Cell;
 import entities.exceptions.NotIsUpgradeableEntityException;
 import entities.exceptions.NotIsInsertableEntityException;
 import entities.exceptions.NotIsSelectableEntityException;
@@ -36,8 +35,7 @@ public class SimpleQueries implements Queries<Entity> {
      */
     @Override
     public void insert(Entity e) throws NotIsInsertableEntityException {
-
-        for (int i = 0; i < e.getNumOfColumns(); i++) {
+        for (int i = e.getCell(0).isIterable() ? 1 : 0; i < e.getNumOfColumns(); i++) {
             if (e.getCell(i).isNotNull() && e.getCell(i).getValue().equals(null)) {
                 throw new NotIsInsertableEntityException();
             }
@@ -49,17 +47,25 @@ public class SimpleQueries implements Queries<Entity> {
 
         try {
             stmt = conn.prepareStatement(qg.insertGenerator(e));
-            for (int i = 1; i <= e.getNumOfColumns(); i++) {
+            int col = e.getNumOfColumns();
+            if (e.getCell(0).isIterable()) {
+                col = col - 1;
+            }
+                
+            for (int i = 1; i <= col; i++) {
                 if (e.getCell(0).isIterable()) {
                     if (e.getCell(i).getType().equals(Type.NUM)) {
-                        stmt.setInt(i, (Integer) e.getCell(i).getValue());
+                        stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (Integer) e.getCell(i - 1).getValue());
                     } else {
                         stmt.setString(i, String.valueOf(e.getCell(i).getValue()));
                     }
-                } else if (e.getCell(i - 1).getType().equals(Type.NUM)) {
-                    stmt.setInt(i, (Integer) e.getCell(i - 1).getValue());
-                } else {
-                    stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
+                }
+                else {
+                    if (e.getCell(i - 1).getType().equals(Type.NUM)) {
+                        stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (Integer) e.getCell(i - 1).getValue());
+                    } else { 
+                        stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
+                    }
                 }
             }
             stmt.executeUpdate();
