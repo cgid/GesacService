@@ -54,18 +54,16 @@ public class SimpleQueries implements Queries<Entity> {
                 
             for (int i = 1; i <= col; i++) {
                 if (e.getCell(0).isIterable()) {
-                    if (e.getCell(i).getType().equals(Type.NUM)) {
+                    if (e.getCell(i).getType().equals(Type.NUM)) 
                         stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (Integer) e.getCell(i - 1).getValue());
-                    } else {
+                    else 
                         stmt.setString(i, String.valueOf(e.getCell(i).getValue()));
-                    }
                 }
                 else {
-                    if (e.getCell(i - 1).getType().equals(Type.NUM)) {
+                    if (e.getCell(i - 1).getType().equals(Type.NUM)) 
                         stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (Integer) e.getCell(i - 1).getValue());
-                    } else { 
+                    else 
                         stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
-                    }
                 }
             }
             stmt.executeUpdate();
