@@ -27,6 +27,7 @@ public class ConnectionFactory {
     static final String DB_URL = "jdbc:mysql://localhost/SisCentralRel?autoReconnect=true&useSSL=false";
 
     public static Connection getConnection() {
+        /**
         Properties props = null;
         FileInputStream in;
         String driver;
@@ -41,7 +42,7 @@ public class ConnectionFactory {
         
         try {Class.forName(driver);} 
         catch (ClassNotFoundException ex) {System.out.println(ex);}
-        
+        */
         Connection conn = null;
         try {
             Class.forName(JDBC_DRIVER);

@@ -16,10 +16,7 @@ public class Contato implements Entity {
 		values[1] = new Cell(Type.STR, null, false);
 		values[2] = new Cell(Type.NUM, null, true);
 	}
-
-	public void setIdContato(int idContato) {
-		this.values[0].setValue(idContato);
-	}
+        
 	public void setNome(String nome) {
 		this.values[1].setValue(nome);
 	}
@@ -45,16 +42,16 @@ public class Contato implements Entity {
 	@Override
 	public String getColumnName(int index) throws ArrayIndexOutOfBoundsException {
 		if (index >= this.COLUMNNAMES.length || index < 0) {
-			throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+			throw new ArrayIndexOutOfBoundsException("\nClasse Contato(1).\nIndice inserido esta fora do intervalo.");
 		}
 	return this.COLUMNNAMES[index];
 	}
 
 	@Override
 	public Cell getCell(int index) throws ArrayIndexOutOfBoundsException {
-		if (index >= this.COLUMNNAMES.length || index < 0) {
-			throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
-		}
+//		if (index >= this.COLUMNNAMES.length || index < 0) {
+//			throw new ArrayIndexOutOfBoundsException("\nClasse Contato(2).\nIndice inserido esta fora do intervalo.");
+//		}
 	return values[index];
 	}
 
