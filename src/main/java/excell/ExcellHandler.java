@@ -5,7 +5,6 @@
  */
 package excell;
 
-
 import entities.Contato;
 import entities.Endereco;
 import entities.Municipio;
@@ -21,8 +20,6 @@ import jxl.Workbook;
 import jxl.read.biff.BiffException;
 import persistence.query.Queries;
 import persistence.query.SimpleQueries;
-
-
 
 /**
  *
@@ -80,8 +77,9 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 9:
-                            telefone.setContato(q.especificallySelect(contato).getCell(0).getValue());
-                            telefone.setDDD(a6.getContents());
+
+                            telefone.setContato(q.especificallySelect(contato));
+                            telefone.setDDD(Integer.parseInt(a6.getContents()));
 
                             break;
                         case 10:
@@ -90,24 +88,24 @@ public class ExcellHandler {
                             break;
                         case 11:
                             if (!a6.equals(null)) {
-                                telefone.setDDD(a6.getContents());
+                                telefone.setDDD(Integer.parseInt(a6.getContents()));
                             }
 
                             break;
                         case 12:
                             if (!a6.equals(null)) {
-                                telefone.setTelefone(a6.getContents());
+                                telefone.setTelefone(Integer.parseInt(a6.getContents()));
                                 q.insert(telefone);
                             }
                             break;
                         case 13:
                             if (!a6.equals(null)) {
-                                telefone.setDDD(a6.getContents());
+                                telefone.setDDD(Integer.parseInt(a6.getContents()));
                             }
                             break;
                         case 14:
                             if (!a6.equals(null)) {
-                                telefone.setTelefone(a6.getContents());
+                                telefone.setTelefone(Integer.parseInt(a6.getContents()));
                                 q.insert(telefone);
                             }
                             break;
@@ -116,34 +114,34 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 19:
-                            telefone.setCod_contato(q.especificallySelect(contato).getCell(0).getValue());
-                            telefone.setDDD(a6.getContents());
+                            telefone.setContato(q.especificallySelect(contato));
+                            telefone.setDDD(Integer.parseInt(a6.getContents()));
 
                             break;
                         case 20:
-                            telefone.setTelefone(a6.getContents());
+                            telefone.setTelefone(Integer.parseInt(a6.getContents()));
                             q.insert(telefone);
                             break;
                         case 21:
                             if (!a6.equals(null)) {
-                                telefone.setDDD(a6.getContents());
+                                telefone.setDDD(Integer.parseInt(a6.getContents()));
                             }
 
                             break;
                         case 22:
                             if (!a6.equals(null)) {
-                                telefone.setTelefone(a6.getContents());
+                                telefone.setTelefone(Integer.parseInt(a6.getContents()));
                                 q.insert(telefone);
                             }
                             break;
                         case 23:
                             if (!a6.equals(null)) {
-                                telefone.setDDD(a6.getContents());
+                                telefone.setDDD(Integer.parseInt(a6.getContents()));
                             }
                             break;
                         case 24:
                             if (!a6.equals(null)) {
-                                telefone.setTelefone(a6.getContents());
+                                telefone.setTelefone(Integer.parseInt(a6.getContents()));
                                 q.insert(telefone);
                             }
                             break;
@@ -152,34 +150,34 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 28:
-                            telefone.setCod_contato(q.especificallySelect(contato).getCell(0).getValue());
-                            telefone.setDDD(a6.getContents());
+                            telefone.setContato(q.especificallySelect(contato));
+                            telefone.setDDD(Integer.parseInt(a6.getContents()));
 
                             break;
                         case 29:
-                            telefone.setTelefone(a6.getContents());
+                            telefone.setTelefone(Integer.parseInt(a6.getContents()));
                             q.insert(telefone);
                             break;
                         case 30:
                             if (!a6.equals(null)) {
-                                telefone.setDDD(a6.getContents());
+                                telefone.setDDD(Integer.parseInt(a6.getContents()));
                             }
 
                             break;
                         case 31:
                             if (!a6.equals(null)) {
-                                telefone.setTelefone(a6.getContents());
+                                telefone.setTelefone(Integer.parseInt(a6.getContents()));
                                 q.insert(telefone);
                             }
                             break;
                         case 32:
                             if (!a6.equals(null)) {
-                                telefone.setDDD(a6.getContents());
+                                telefone.setDDD(Integer.parseInt(a6.getContents()));
                             }
                             break;
                         case 33:
                             if (!a6.equals(null)) {
-                                telefone.setTelefone(a6.getContents());
+                                telefone.setTelefone(Integer.parseInt(a6.getContents()));
                                 q.insert(telefone);
                             }
                             break;
@@ -188,34 +186,34 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 37:
-                            telefone.setCod_contato(q.especificallySelect(contato).getCell(0).getValue());
-                            telefone.setDDD(a6.getContents());
+                            telefone.setContato(q.especificallySelect(contato));
+                            telefone.setDDD(Integer.parseInt(a6.getContents()));
 
                             break;
                         case 38:
-                            telefone.setTelefone(a6.getContents());
+                            telefone.setTelefone(Integer.parseInt(a6.getContents()));
                             q.insert(telefone);
                             break;
                         case 39:
                             if (!a6.equals(null)) {
-                                telefone.setDDD(a6.getContents());
+                                telefone.setDDD(Integer.parseInt(a6.getContents()));
                             }
 
                             break;
                         case 40:
                             if (!a6.equals(null)) {
-                                telefone.setTelefone(a6.getContents());
+                                telefone.setTelefone(Integer.parseInt(a6.getContents()));
                                 q.insert(telefone);
                             }
                             break;
                         case 41:
                             if (!a6.equals(null)) {
-                                telefone.setDDD(a6.getContents());
+                                telefone.setDDD(Integer.parseInt(a6.getContents()));
                             }
                             break;
                         case 42:
                             if (!a6.equals(null)) {
-                                telefone.setTelefone(a6.getContents());
+                                telefone.setTelefone(Integer.parseInt(a6.getContents()));
                                 q.insert(telefone);
                             }
                             break;
@@ -224,34 +222,34 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 46:
-                            telefone.setCod_contato(q.especificallySelect(contato).getCell(0).getValue());
-                            telefone.setDDD(a6.getContents());
+                            telefone.setContato(q.especificallySelect(contato));
+                            telefone.setDDD(Integer.parseInt(a6.getContents()));
 
                             break;
                         case 47:
-                            telefone.setTelefone(a6.getContents());
+                            telefone.setTelefone(Integer.parseInt(a6.getContents()));
                             q.insert(telefone);
                             break;
                         case 48:
                             if (!a6.equals(null)) {
-                                telefone.setDDD(a6.getContents());
+                                telefone.setDDD(Integer.parseInt(a6.getContents()));
                             }
 
                             break;
                         case 49:
                             if (!a6.equals(null)) {
-                                telefone.setTelefone(a6.getContents());
+                                telefone.setTelefone(Integer.parseInt(a6.getContents()));
                                 q.insert(telefone);
                             }
                             break;
                         case 50:
                             if (!a6.equals(null)) {
-                                telefone.setDDD(a6.getContents());
+                                telefone.setDDD(Integer.parseInt(a6.getContents()));
                             }
                             break;
                         case 51:
                             if (!a6.equals(null)) {
-                                telefone.setTelefone(a6.getContents());
+                                telefone.setTelefone(Integer.parseInt(a6.getContents()));
                                 q.insert(telefone);
                             }
                             break;
