@@ -11,6 +11,6 @@ package entities.exceptions;
  */
 public class NotIsInsertableEntityException extends RuntimeException{
     public NotIsInsertableEntityException() {
-        super("Nao e possivel deletetar esta entidade. Por favor, verifique seus valores.");
+        super("Nao e possivel inserir esta entidade. Por favor, verifique seus valores.");
     }
 }
