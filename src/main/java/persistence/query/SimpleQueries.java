@@ -47,21 +47,18 @@ public class SimpleQueries implements Queries<Entity> {
 
         try {
             stmt = conn.prepareStatement(qg.insertGenerator(e));
-            int col = e.getNumOfColumns();
-            if (e.getCell(0).isIterable()) {
-                col = col - 1;
-            }
-                
+            int col = e.getCell(0).isIterable() ? e.getNumOfColumns() - 1 : e.getNumOfColumns();
+
             for (int i = 1; i <= col; i++) {
-                if (e.getCell(0).isIterable()) {
+                if(e.getCell(0).isIterable()) {
                     if (e.getCell(i).getType().equals(Type.NUM)) 
-                        stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (Integer) e.getCell(i - 1).getValue());
+                        stmt.setInt(i, e.getCell(i).getValue() == null ? 0 : (int) e.getCell(i).getValue());
                     else 
                         stmt.setString(i, String.valueOf(e.getCell(i).getValue()));
                 }
                 else {
                     if (e.getCell(i - 1).getType().equals(Type.NUM)) 
-                        stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (Integer) e.getCell(i - 1).getValue());
+                        stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (int) e.getCell(i - 1).getValue());
                     else 
                         stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
                 }
@@ -134,11 +131,7 @@ public class SimpleQueries implements Queries<Entity> {
             System.out.println(er);
         }
     }
-
-    public void select(int id, Entity...e) throws NotIsSelectableEntityException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    @Deprecated
     @Override
     public void select(Entity e) throws NotIsSelectableEntityException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -151,12 +144,9 @@ public class SimpleQueries implements Queries<Entity> {
         try {
 
             Statement stmt = conn.createStatement();
-            ResultSet resultSet = stmt.executeQuery("SELECT * e.getTableName() order by desc limit 1");
-            while (resultSet.next()) {
+            ResultSet resultSet = stmt.executeQuery("SELECT * from" + e.getTableName() + "order by desc limit 1");
+            while (resultSet.next()) 
                 next = resultSet.getInt(1);
-
-            }
-
             return next;
         } catch (SQLException ex) {
             Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
