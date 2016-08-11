@@ -30,9 +30,9 @@ public class QueryDemo {
         System.out.println(pid.toString());
         
         System.out.println(qg.insertGenerator(pid));
-        System.out.println(qg.insertGenerator(c));
+        //System.out.println(qg.insertGenerator(c));
         
-        q.insert(pid);
+        //q.insert(pid);
         //q.insert(c);
     }
 }

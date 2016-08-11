@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cell;
+package entities.exceptions;
 
 /**
  *
  * @author murilo
  */
-public enum Type {
-    /** String Type. */
-    STR,
-    
-    /** Integer type.*/
-    NUM, 
-    
-    /** Date type. */
-    DATE;
+public class InvalidDateFormat extends RuntimeException{
+    public InvalidDateFormat() {
+        super("A data inserida nao esta no formato adequado.\n-> (dd-MM-aaaa HH:mm:ss)");
+    }
 }

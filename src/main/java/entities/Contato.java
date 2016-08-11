@@ -2,6 +2,7 @@ package entities;
 
 import cell.Cell;
 import cell.Type;
+import javax.validation.constraints.NotNull;
 import persistence.Entity;
 
 public class Contato implements Entity {
@@ -17,10 +18,18 @@ public class Contato implements Entity {
         values[2] = new Cell(Type.NUM, null, true);
     }
 
+    /**
+     *
+     * @param nome name of contact.
+     */
     public void setNome(String nome) {
         this.values[1].setValue(nome);
     }
 
+    /**
+     *
+     * @param codPid
+     */
     public void setCodPid(int codPid) {
         this.values[2].setValue(codPid);
     }
@@ -31,6 +40,7 @@ public class Contato implements Entity {
     }
 
     @Override
+    @Mostrar
     public String getTableName() {
         return this.TABLENAME;
     }
@@ -42,30 +52,32 @@ public class Contato implements Entity {
 
     @Override
     public String getColumnName(int index) throws ArrayIndexOutOfBoundsException {
-        if (index >= this.COLUMNNAMES.length || index < 0) {
+        if (index >= this.COLUMNNAMES.length || index < 0) 
             throw new ArrayIndexOutOfBoundsException("\nClasse Contato(1).\nIndice inserido esta fora do intervalo.");
-        }
+        
         return this.COLUMNNAMES[index];
     }
 
     @Override
     public Cell getCell(int index) throws ArrayIndexOutOfBoundsException {
-//		if (index >= this.COLUMNNAMES.length || index < 0) {
-//			throw new ArrayIndexOutOfBoundsException("\nClasse Contato(2).\nIndice inserido esta fora do intervalo.");
-//		}
+        if (index >= this.COLUMNNAMES.length || index < 0) 
+            throw new ArrayIndexOutOfBoundsException("\nClasse Contato(2).\nIndice inserido esta fora do intervalo.");
+        
         return values[index];
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < getNumOfColumns(); i++) {
+        
+        for (int i = 0; i < getNumOfColumns(); i++) 
             sb.append(getColumnName(i)).append('\t');
-        }
+        
         sb.append('\n');
-        for (int i = 0; i < getNumOfColumns(); i++) {
+        
+        for (int i = 0; i < getNumOfColumns(); i++) 
             sb.append(this.values[i].getValue()).append('\t');
-        }
+        
         return sb.toString();
     }
 }
