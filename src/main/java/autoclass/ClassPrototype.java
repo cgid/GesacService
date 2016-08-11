@@ -44,7 +44,7 @@ public class ClassPrototype {
                         .append("PRI".equals(dados[i][4]) ? "true," : "false,")
                         .append("auto_increment".equals(dados[i][5]) ? " true," : " false,");
                 if (dados[i][1].contains("int")) {
-                    sb.append(numType).append(',').append(" null,").append("NO".equals(dados[i][3]) ? " true);" : " false);\n");
+                    sb.append(numType).append(',').append(" 0,").append("NO".equals(dados[i][3]) ? " true);" : " false);\n");
                 }
                 if (dados[i][1].contains("date")) {
                     sb.append(dateType).append(',').append("NO".equals(dados[i][3]) ? " true);" : " false);\n");
@@ -56,7 +56,7 @@ public class ClassPrototype {
                 sb.append("\n");
                 sb.append("\t\t").append("values[").append(i).append("] = new Cell(");
                 if (dados[i][1].contains("int")) 
-                    sb.append(numType).append(',').append(" null,").append("NO".equals(dados[i][3]) ? " true);" : " false);");
+                    sb.append(numType).append(',').append(" 0,").append("NO".equals(dados[i][3]) ? " true);" : " false);");
                 if (dados[i][1].contains("date")) 
                     sb.append(dateType).append(',').append(" null,").append("NO".equals(dados[i][3]) ? " true);" : " false);");
                 
