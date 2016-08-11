@@ -30,6 +30,13 @@ public class ExcellHandler {
     public void readSheet() {
         Workbook workbook;
         Sheet sheet;
+        Cell a6;
+        PID pid;
+        Endereco endereco;
+        Contato contato;
+        Municipio municipio;
+        Telefone telefone;
+        Queries q;
 
         try {
             workbook = Workbook.getWorkbook(new File("Itapuranga.xls"));
@@ -39,13 +46,13 @@ public class ExcellHandler {
 
             for (int i = 2; i <= sheet.getRows(); i++) {
                 for (int j = 1; j <= sheet.getColumns(); j++) {
-                    Cell a6 = sheet.getCell(i, j);
-                    PID pid = new PID();
-                    Endereco endereco = new Endereco();
-                    Contato contato = new Contato();
-                    Municipio municipio = new Municipio();
-                    Telefone telefone = new Telefone();
-                    Queries q = new SimpleQueries();
+                    a6 = sheet.getCell(i, j);
+                    pid = new PID();
+                    endereco = new Endereco();
+                    contato = new Contato();
+                    municipio = new Municipio();
+                    telefone = new Telefone();
+                    q = new SimpleQueries();
 
                     switch (j) {
                         case 1:
@@ -77,10 +84,8 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 9:
-
                             telefone.setIdContato(q.especificallySelect(contato));
                             telefone.setDdd(Integer.parseInt(a6.getContents()));
-
                             break;
                         case 10:
                             telefone.setTelefone(Integer.parseInt(a6.getContents()));
@@ -90,7 +95,6 @@ public class ExcellHandler {
                             if (!a6.equals(null)) {
                                 telefone.setDdd(Integer.parseInt(a6.getContents()));
                             }
-
                             break;
                         case 12:
                             if (!a6.equals(null)) {
