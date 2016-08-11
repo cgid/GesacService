@@ -1,83 +1,73 @@
 package entities;
 
+
 import cell.Cell;
 import cell.Type;
-import javax.validation.constraints.NotNull;
 import persistence.Entity;
 
 public class Contato implements Entity {
+	private final String DB = "SisCentralRel";
+	private final String TABLENAME = "Contato";
+	private final String[] COLUMNNAMES = {"id_contato", "nome", "PID_cod_pid"};
+	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
-    private final String DB = "SisCentralRel";
-    private final String TABLENAME = "Contato";
-    private final String[] COLUMNNAMES = {"id_contato", "nome", "PID_cod_pid"};
-    private Cell[] values = new Cell[this.COLUMNNAMES.length];
+	public Contato() {
+		values[0] = new Cell(true, true,Type.NUM, 0, true);
+		values[1] = new Cell(Type.STR, null, false);
+		values[2] = new Cell(Type.NUM, 0, true);
+	}
 
-    public Contato() {
-        values[0] = new Cell(true, true, Type.NUM, null, true);
-        values[1] = new Cell(Type.STR, null, false);
-        values[2] = new Cell(Type.NUM, null, true);
-    }
+	public void setIdContato(int idContato) {
+		this.values[0].setValue(idContato);
+	}
+	public void setNome(String nome) {
+		this.values[1].setValue(nome);
+	}
+	public void setCodPid(int codPid) {
+		this.values[2].setValue(codPid);
+	}
 
-    /**
-     *
-     * @param nome name of contact.
-     */
-    public void setNome(String nome) {
-        this.values[1].setValue(nome);
-    }
+	@Override
+	public String getDB() {
+		return this.DB;
+	}
 
-    /**
-     *
-     * @param codPid
-     */
-    public void setCodPid(int codPid) {
-        this.values[2].setValue(codPid);
-    }
+	@Override
+	public String getTableName() {
+		return this.TABLENAME;
+	}
 
-    @Override
-    public String getDB() {
-        return this.DB;
-    }
+	@Override
+	public int getNumOfColumns() {
+		return this.COLUMNNAMES.length;
+	}
 
-    @Override
-    @Mostrar
-    public String getTableName() {
-        return this.TABLENAME;
-    }
+	@Override
+	public String getColumnName(int index) throws ArrayIndexOutOfBoundsException {
+		if (index >= this.COLUMNNAMES.length || index < 0) {
+			throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+		}
+	return this.COLUMNNAMES[index];
+	}
 
-    @Override
-    public int getNumOfColumns() {
-        return this.COLUMNNAMES.length;
-    }
+	@Override
+	public Cell getCell(int index) throws ArrayIndexOutOfBoundsException {
+		if (index >= this.COLUMNNAMES.length || index < 0) {
+			throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+		}
+	return values[index];
+	}
 
-    @Override
-    public String getColumnName(int index) throws ArrayIndexOutOfBoundsException {
-        if (index >= this.COLUMNNAMES.length || index < 0) 
-            throw new ArrayIndexOutOfBoundsException("\nClasse Contato(1).\nIndice inserido esta fora do intervalo.");
-        
-        return this.COLUMNNAMES[index];
-    }
-
-    @Override
-    public Cell getCell(int index) throws ArrayIndexOutOfBoundsException {
-        if (index >= this.COLUMNNAMES.length || index < 0) 
-            throw new ArrayIndexOutOfBoundsException("\nClasse Contato(2).\nIndice inserido esta fora do intervalo.");
-        
-        return values[index];
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        
-        for (int i = 0; i < getNumOfColumns(); i++) 
-            sb.append(getColumnName(i)).append('\t');
-        
-        sb.append('\n');
-        
-        for (int i = 0; i < getNumOfColumns(); i++) 
-            sb.append(this.values[i].getValue()).append('\t');
-        
-        return sb.toString();
-    }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < getNumOfColumns(); i++) {
+			sb.append(getColumnName(i)).append('\t');
+		}
+	sb.append('\n');
+	for (int i = 0; i < getNumOfColumns(); i++) {
+		sb.append(this.values[i].getValue()).append('\t');
+	}
+	return sb.toString();
+	}
 }
