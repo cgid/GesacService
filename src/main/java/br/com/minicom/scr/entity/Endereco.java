@@ -1,9 +1,9 @@
-package entity;
+package br.com.minicom.scr.entity;
 
 
-import cell.Cell;
-import cell.Type;
-import persistence.Entity;
+import br.com.minicom.scr.cell.Cell;
+import br.com.minicom.scr.cell.Type;
+import br.com.minicom.scr.persistence.Entity;
 
 public class Endereco implements Entity {
 	private final String DB = "SisCentralRel";

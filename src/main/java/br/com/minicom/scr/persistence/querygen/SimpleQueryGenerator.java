@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence.querygen;
+package br.com.minicom.scr.persistence.querygen;
 
-import persistence.Entity;
+import br.com.minicom.scr.persistence.Entity;
 
 /**
  *

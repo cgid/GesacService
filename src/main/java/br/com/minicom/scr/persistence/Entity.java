@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence;
+package br.com.minicom.scr.persistence;
 
-import cell.Cell;
+import br.com.minicom.scr.cell.Cell;
 
 /**
  *

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entity;
+package br.com.minicom.scr.entity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
