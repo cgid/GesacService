@@ -25,7 +25,6 @@ import persistence.querygen.SimpleQueryGenerator;
  * @author murilo
  */
 public class SimpleQueries implements Queries<Entity> {
-
     /**
      *
      * @param e
