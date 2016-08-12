@@ -36,7 +36,7 @@ public class SimpleQueries implements Queries<Entity> {
     @Override
     public void insert(Entity e) throws NotIsInsertableEntityException {
         for (int i = e.getCell(0).isIterable() ? 1 : 0; i < e.getNumOfColumns(); i++) {
-            if (e.getCell(i).isNotNull() && e.getCell(i).getValue().equals(null)) {
+            if (e.getCell(i).isNotNull() && e.getCell(i).getValue() == null) {
                 throw new NotIsInsertableEntityException();
             }
         }
@@ -50,17 +50,16 @@ public class SimpleQueries implements Queries<Entity> {
             int col = e.getCell(0).isIterable() ? e.getNumOfColumns() - 1 : e.getNumOfColumns();
 
             for (int i = 1; i <= col; i++) {
-                if(e.getCell(0).isIterable()) {
-                    if (e.getCell(i).getType().equals(Type.NUM)) 
+                if (e.getCell(0).isIterable()) {
+                    if (e.getCell(i).getType().equals(Type.NUM)) {
                         stmt.setInt(i, e.getCell(i).getValue() == null ? 0 : (int) e.getCell(i).getValue());
-                    else 
+                    } else {
                         stmt.setString(i, String.valueOf(e.getCell(i).getValue()));
-                }
-                else {
-                    if (e.getCell(i - 1).getType().equals(Type.NUM)) 
-                        stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (int) e.getCell(i - 1).getValue());
-                    else 
-                        stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
+                    }
+                } else if (e.getCell(i - 1).getType().equals(Type.NUM)) {
+                    stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (int) e.getCell(i - 1).getValue());
+                } else {
+                    stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
                 }
             }
             stmt.executeUpdate();
@@ -131,6 +130,7 @@ public class SimpleQueries implements Queries<Entity> {
             System.out.println(er);
         }
     }
+
     @Deprecated
     @Override
     public void select(Entity e) throws NotIsSelectableEntityException {
@@ -144,9 +144,10 @@ public class SimpleQueries implements Queries<Entity> {
         try {
 
             Statement stmt = conn.createStatement();
-            ResultSet resultSet = stmt.executeQuery("SELECT * from" + e.getTableName() + "order by desc limit 1");
-            while (resultSet.next()) 
+            ResultSet resultSet = stmt.executeQuery("SELECT * FROM " + e.getTableName() + " order by  " + e.getColumnName(0) + " desc  limit 1");
+            while (resultSet.next()) {
                 next = resultSet.getInt(1);
+            }
             return next;
         } catch (SQLException ex) {
             Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
