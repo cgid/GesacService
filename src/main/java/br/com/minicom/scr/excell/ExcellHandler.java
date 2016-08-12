@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package excell;
+package br.com.minicom.scr.excell;
 
-import entity.Contato;
-import entity.Endereco;
-import entity.Municipio;
-import entity.PID;
-import entity.Telefone;
+
+import br.com.minicom.scr.entity.Contato;
+import br.com.minicom.scr.entity.Endereco;
+import br.com.minicom.scr.entity.Municipio;
+import br.com.minicom.scr.entity.PID;
+import br.com.minicom.scr.entity.Telefone;
+import br.com.minicom.scr.persistence.query.Queries;
+import br.com.minicom.scr.persistence.query.SimpleQueries;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -18,8 +21,6 @@ import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
-import persistence.query.Queries;
-import persistence.query.SimpleQueries;
 
 /**
  *

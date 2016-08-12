@@ -1,4 +1,4 @@
-package servlet;
+package br.com.minicom.scr.servlet;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

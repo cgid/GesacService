@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence.query;
+package br.com.minicom.scr.persistence.query;
 
-import entity.Contato;
-import entity.PID;
-import persistence.querygen.QueryGenerator;
-import persistence.querygen.SimpleQueryGenerator;
+
+import br.com.minicom.scr.entity.Contato;
+import br.com.minicom.scr.entity.PID;
+import br.com.minicom.scr.persistence.querygen.QueryGenerator;
+import br.com.minicom.scr.persistence.querygen.SimpleQueryGenerator;
+
 
 /**
  *

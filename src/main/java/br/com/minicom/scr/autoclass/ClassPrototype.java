@@ -1,4 +1,4 @@
-package autoclass;
+package br.com.minicom.scr.autoclass;
 
 
 /**

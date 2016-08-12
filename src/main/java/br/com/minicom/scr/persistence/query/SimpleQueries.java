@@ -3,22 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package persistence.query;
+package br.com.minicom.scr.persistence.query;
 
-import entity.exceptions.NotIsUpgradeableEntityException;
-import entity.exceptions.NotIsInsertableEntityException;
-import entity.exceptions.NotIsSelectableEntityException;
-import entity.exceptions.NotIsDeletableEntityException;
+import br.com.minicom.scr.cell.Type;
+import br.com.minicom.scr.entity.exceptions.NotIsDeletableEntityException;
+import br.com.minicom.scr.entity.exceptions.NotIsInsertableEntityException;
+import br.com.minicom.scr.entity.exceptions.NotIsSelectableEntityException;
+import br.com.minicom.scr.entity.exceptions.NotIsUpgradeableEntityException;
+import br.com.minicom.scr.persistence.ConnectionFactory;
+import br.com.minicom.scr.persistence.Entity;
+import br.com.minicom.scr.persistence.querygen.QueryGenerator;
+import br.com.minicom.scr.persistence.querygen.SimpleQueryGenerator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import cell.Type;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import persistence.ConnectionFactory;
-import persistence.Entity;
-import persistence.querygen.QueryGenerator;
-import persistence.querygen.SimpleQueryGenerator;
+
 
 /**
  *

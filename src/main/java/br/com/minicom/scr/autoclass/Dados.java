@@ -1,10 +1,10 @@
-package autoclass;
+package br.com.minicom.scr.autoclass;
 
 
+import br.com.minicom.scr.persistence.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import persistence.ConnectionFactory;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
