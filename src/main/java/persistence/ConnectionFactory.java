@@ -15,10 +15,10 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
 
-    static final String USER = "root";
-    static final String PASS = "!@#123Asd";
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/SisCentralRel?autoReconnect=true&useSSL=false";
+    private static final String USER = "root";
+    private static final String PASS = "!@#123Asd";
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://localhost/SisCentralRel?autoReconnect=true&useSSL=false";
 
     public static Connection getConnection() {
         /**
@@ -28,7 +28,7 @@ public class ConnectionFactory {
         
         try {
             props = new Properties();
-            in = new FileInputStream("../sid/cgid/gesacservice/db.properties");
+            in = new FileInputStream("sid/cgid/gesacservice/db.properties");
             props.load(in);
         } catch (IOException e) {System.out.println(e);}
         
