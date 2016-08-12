@@ -129,15 +129,9 @@ public class SimpleQueries implements Queries<Entity> {
             System.out.println(er);
         }
     }
-    
-    @Deprecated
-    @Override
-    public void select(Entity e) throws NotIsSelectableEntityException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
-    public int especificallySelect(Entity e) throws NotIsSelectableEntityException {
+    public int select(Entity e) throws NotIsSelectableEntityException {
         Connection conn = ConnectionFactory.getConnection();
         int next = 0;
         try {

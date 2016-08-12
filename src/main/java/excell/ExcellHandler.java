@@ -84,7 +84,7 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 9:
-                            telefone.setIdContato(q.especificallySelect(contato));
+                            telefone.setIdContato(q.select(contato));
                             telefone.setDdd(Integer.parseInt(a6.getContents()));
                             break;
                         case 10:
@@ -118,7 +118,7 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 19:
-                            telefone.setIdContato(q.especificallySelect(contato));
+                            telefone.setIdContato(q.select(contato));
                             telefone.setDdd(Integer.parseInt(a6.getContents()));
 
                             break;
@@ -154,7 +154,7 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 28:
-                            telefone.setIdContato(q.especificallySelect(contato));
+                            telefone.setIdContato(q.select(contato));
                             telefone.setDdd(Integer.parseInt(a6.getContents()));
 
                             break;
@@ -190,7 +190,7 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 37:
-                            telefone.setIdContato(q.especificallySelect(contato));
+                            telefone.setIdContato(q.select(contato));
                             telefone.setDdd(Integer.parseInt(a6.getContents()));
 
                             break;
@@ -226,7 +226,7 @@ public class ExcellHandler {
                             q.insert(contato);
                             break;
                         case 46:
-                            telefone.setIdContato(q.especificallySelect(contato));
+                            telefone.setIdContato(q.select(contato));
                             telefone.setDdd(Integer.parseInt(a6.getContents()));
 
                             break;

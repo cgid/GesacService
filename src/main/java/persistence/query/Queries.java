@@ -35,14 +35,9 @@ public interface Queries<E extends Entity> {
     public void update(E l) throws NotIsUpgradeableEntityException;
 
     /**
-     * @param l
-     */
-    public void select(E l) throws NotIsSelectableEntityException;
-
-    /**
      * @param e
      * @return 
      */
-    public int especificallySelect(Entity e) throws NotIsSelectableEntityException;
+    public int select(Entity e) throws NotIsSelectableEntityException;
 
 }
