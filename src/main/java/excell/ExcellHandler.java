@@ -5,11 +5,11 @@
  */
 package excell;
 
-import entities.Contato;
-import entities.Endereco;
-import entities.Municipio;
-import entities.PID;
-import entities.Telefone;
+import entity.Contato;
+import entity.Endereco;
+import entity.Municipio;
+import entity.PID;
+import entity.Telefone;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -133,7 +133,7 @@ public class ExcellHandler {
                             break;
                         case 10:
                             if (!a6.equals(null) && a6.getContents().length() >= 1) {
-                                telefone.setIdContato(q.especificallySelect(contato));
+                                telefone.setIdContato(q.select(contato));
                                 telefone.setDdd(Integer.parseInt(a6.getContents()));
                             }
                             break;
@@ -178,7 +178,7 @@ public class ExcellHandler {
                         case 19:
                             if (!a6.equals(null) && a6.getContents().length() >= 1) {
 //                                System.out.println("TAMANHO: " + a6.getContents().length());
-                                telefone.setIdContato(q.especificallySelect(contato));
+                                telefone.setIdContato(q.select(contato));
                                 telefone.setDdd(Integer.parseInt(a6.getContents()));
 
                             }
@@ -227,7 +227,7 @@ public class ExcellHandler {
                             break;
                         case 28:
                             if (!a6.equals(null) && a6.getContents().length() >= 1) {
-                                telefone.setIdContato(q.especificallySelect(contato));
+                                telefone.setIdContato(q.select(contato));
                                 telefone.setDdd(Integer.parseInt(a6.getContents()));
 
                             }
@@ -276,7 +276,7 @@ public class ExcellHandler {
                             break;
                         case 37:
                             if (!a6.equals(null) && a6.getContents().length() >= 1) {
-                                telefone.setIdContato(q.especificallySelect(contato));
+                                telefone.setIdContato(q.select(contato));
                                 telefone.setDdd(Integer.parseInt(a6.getContents()));
 
                             }
@@ -325,7 +325,7 @@ public class ExcellHandler {
                             break;
                         case 46:
                             if (!a6.equals(null) && a6.getContents().length() >= 1) {
-                                telefone.setIdContato(q.especificallySelect(contato));
+                                telefone.setIdContato(q.select(contato));
                                 telefone.setDdd(Integer.parseInt(a6.getContents()));
 
                             }

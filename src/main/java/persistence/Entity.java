@@ -12,6 +12,7 @@ import cell.Cell;
  * @author murilo
  */
 public interface Entity {
+    
     public String getDB();
 
     public String getTableName();
@@ -22,5 +23,4 @@ public interface Entity {
     
     public Cell getCell(int index) throws ArrayIndexOutOfBoundsException;
     
-    //public Integer getID();
 }
