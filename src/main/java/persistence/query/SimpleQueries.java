@@ -5,18 +5,16 @@
  */
 package persistence.query;
 
-import entities.exceptions.NotIsUpgradeableEntityException;
-import entities.exceptions.NotIsInsertableEntityException;
-import entities.exceptions.NotIsSelectableEntityException;
-import entities.exceptions.NotIsDeletableEntityException;
+import entity.exceptions.NotIsUpgradeableEntityException;
+import entity.exceptions.NotIsInsertableEntityException;
+import entity.exceptions.NotIsSelectableEntityException;
+import entity.exceptions.NotIsDeletableEntityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import cell.Type;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import persistence.ConnectionFactory;
 import persistence.Entity;
 import persistence.querygen.QueryGenerator;
@@ -131,6 +129,7 @@ public class SimpleQueries implements Queries<Entity> {
             System.out.println(er);
         }
     }
+    
     @Deprecated
     @Override
     public void select(Entity e) throws NotIsSelectableEntityException {
@@ -149,7 +148,7 @@ public class SimpleQueries implements Queries<Entity> {
                 next = resultSet.getInt(1);
             return next;
         } catch (SQLException ex) {
-            Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
         return 0;
     }
