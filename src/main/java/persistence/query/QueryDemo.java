@@ -5,8 +5,8 @@
  */
 package persistence.query;
 
-import entities.Contato;
-import entities.PID;
+import entity.Contato;
+import entity.PID;
 import persistence.querygen.QueryGenerator;
 import persistence.querygen.SimpleQueryGenerator;
 

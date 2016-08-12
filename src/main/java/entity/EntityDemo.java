@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities;
+package entity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -12,8 +12,6 @@ import java.lang.reflect.Method;
  *
  * @author murilo
  */
-
-
 public class EntityDemo {
     public static void main(String[] args) {
         Object t = null;
@@ -25,13 +23,14 @@ public class EntityDemo {
         
         System.out.println("Nome da classse: " + t.getClass().toString() + "\n");
         System.out.println("Metodos: ");
-        for (Method m : t.getClass().getMethods())  {
+        
+        for (Method m : t.getClass().getMethods())  
             System.out.println(m.getName() + ", ");
-        }
+        
         System.out.println("\n");
-        for (Field  f : t.getClass().getDeclaredFields()) {
+        
+        for (Field  f : t.getClass().getDeclaredFields()) 
             System.out.println(f.getName());
-        }
+        
     }
-
 }

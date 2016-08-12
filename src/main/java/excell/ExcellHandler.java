@@ -5,11 +5,11 @@
  */
 package excell;
 
-import entities.Contato;
-import entities.Endereco;
-import entities.Municipio;
-import entities.PID;
-import entities.Telefone;
+import entity.Contato;
+import entity.Endereco;
+import entity.Municipio;
+import entity.PID;
+import entity.Telefone;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
