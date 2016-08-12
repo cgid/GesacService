@@ -5,11 +5,10 @@
  */
 package persistence.query;
 
-import cell.Cell;
-import entities.exceptions.NotIsUpgradeableEntityException;
-import entities.exceptions.NotIsInsertableEntityException;
-import entities.exceptions.NotIsSelectableEntityException;
-import entities.exceptions.NotIsDeletableEntityException;
+import entity.exceptions.NotIsUpgradeableEntityException;
+import entity.exceptions.NotIsInsertableEntityException;
+import entity.exceptions.NotIsSelectableEntityException;
+import entity.exceptions.NotIsDeletableEntityException;
 import persistence.Entity;
 
 /**
@@ -36,14 +35,9 @@ public interface Queries<E extends Entity> {
     public void update(E l) throws NotIsUpgradeableEntityException;
 
     /**
-     * @param l
-     */
-    public void select(E l) throws NotIsSelectableEntityException;
-
-    /**
      * @param e
      * @return 
      */
-    public int especificallySelect(Entity e) throws NotIsSelectableEntityException;
+    public int select(Entity e) throws NotIsSelectableEntityException;
 
 }
