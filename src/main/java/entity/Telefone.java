@@ -1,30 +1,34 @@
-package entities;
+package entity;
 
 
 import cell.Cell;
 import cell.Type;
 import persistence.Entity;
 
-public class Perguntas implements Entity {
+public class Telefone implements Entity {
 	private final String DB = "SisCentralRel";
-	private final String TABLENAME = "Perguntas";
-	private final String[] COLUMNNAMES = {"id_Perguntas", "pergunta", "Servico_cod_servico"};
+	private final String TABLENAME = "Telefone";
+	private final String[] COLUMNNAMES = {"id_telefone", "ddd", "telefone", "Contato_id_contato"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
-	public Perguntas() {
+	public Telefone() {
 		values[0] = new Cell(true, true,Type.NUM, 0, true);
-		values[1] = new Cell(Type.STR, null, false);
+		values[1] = new Cell(Type.NUM, 0, true);
 		values[2] = new Cell(Type.NUM, 0, true);
+		values[3] = new Cell(Type.NUM, 0, true);
 	}
 
-	public void setIdPerguntas(int idPerguntas) {
-		this.values[0].setValue(idPerguntas);
+	public void setIdTelefone(int idTelefone) {
+		this.values[0].setValue(idTelefone);
 	}
-	public void setPergunta(String pergunta) {
-		this.values[1].setValue(pergunta);
+	public void setDdd(int ddd) {
+		this.values[1].setValue(ddd);
 	}
-	public void setCodServico(int codServico) {
-		this.values[2].setValue(codServico);
+	public void setTelefone(int telefone) {
+		this.values[2].setValue(telefone);
+	}
+	public void setIdContato(int idContato) {
+		this.values[3].setValue(idContato);
 	}
 
 	@Override

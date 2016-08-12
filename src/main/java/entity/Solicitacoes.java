@@ -1,26 +1,46 @@
-package entities;
+package entity;
 
 
 import cell.Cell;
 import cell.Type;
 import persistence.Entity;
 
-public class Perfil implements Entity {
+public class Solicitacoes implements Entity {
 	private final String DB = "SisCentralRel";
-	private final String TABLENAME = "Perfil";
-	private final String[] COLUMNNAMES = {"id_perfil", "descricao_perfil"};
+	private final String TABLENAME = "Solicitacoes";
+	private final String[] COLUMNNAMES = {"id_solicitacao", "Qtde_tentativas", "Dt_ult_tentativa", "em_chamado", "contato_ok", "Servico_cod_servico", "PID_cod_pid"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
-	public Perfil() {
+	public Solicitacoes() {
 		values[0] = new Cell(true, true,Type.NUM, 0, true);
-		values[1] = new Cell(Type.STR, null, true);
+		values[1] = new Cell(Type.NUM, 0, false);
+		values[2] = new Cell(Type.DATE, null, true);
+		values[3] = new Cell(Type.NUM, 0, false);
+		values[4] = new Cell(Type.NUM, 0, false);
+		values[5] = new Cell(Type.NUM, 0, true);
+		values[6] = new Cell(Type.NUM, 0, true);
 	}
 
-	public void setIdPerfil(int idPerfil) {
-		this.values[0].setValue(idPerfil);
+	public void setIdSolicitacao(int idSolicitacao) {
+		this.values[0].setValue(idSolicitacao);
 	}
-	public void setDescricaoPerfil(String descricaoPerfil) {
-		this.values[1].setValue(descricaoPerfil);
+	public void setQtdeTentativas(int QtdeTentativas) {
+		this.values[1].setValue(QtdeTentativas);
+	}
+	public void setUltTentativa(String ultTentativa) {
+		this.values[2].setValue(ultTentativa);
+	}
+	public void setEmChamado(int emChamado) {
+		this.values[3].setValue(emChamado);
+	}
+	public void setContatoOk(int contatoOk) {
+		this.values[4].setValue(contatoOk);
+	}
+	public void setCodServico(int codServico) {
+		this.values[5].setValue(codServico);
+	}
+	public void setCodPid(int codPid) {
+		this.values[6].setValue(codPid);
 	}
 
 	@Override

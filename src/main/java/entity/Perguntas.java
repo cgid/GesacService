@@ -1,38 +1,30 @@
-package entities;
+package entity;
 
 
 import cell.Cell;
 import cell.Type;
 import persistence.Entity;
 
-public class PID implements Entity {
+public class Perguntas implements Entity {
 	private final String DB = "SisCentralRel";
-	private final String TABLENAME = "PID";
-	private final String[] COLUMNNAMES = {"cod_pid", "cod_gesac", "cod_tc", "cod_cd", "nome_estabelecimento"};
+	private final String TABLENAME = "Perguntas";
+	private final String[] COLUMNNAMES = {"id_Perguntas", "pergunta", "Servico_cod_servico"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
-	public PID() {
-		values[0] = new Cell(true, false,Type.NUM, 0, true);
-		values[1] = new Cell(Type.NUM, 0, false);
-		values[2] = new Cell(Type.NUM, 0, false);
-		values[3] = new Cell(Type.NUM, 0, false);
-		values[4] = new Cell(Type.STR, null, false);
+	public Perguntas() {
+		values[0] = new Cell(true, true,Type.NUM, 0, true);
+		values[1] = new Cell(Type.STR, null, false);
+		values[2] = new Cell(Type.NUM, 0, true);
 	}
 
-	public void setCodPid(int codPid) {
-		this.values[0].setValue(codPid);
+	public void setIdPerguntas(int idPerguntas) {
+		this.values[0].setValue(idPerguntas);
 	}
-	public void setCodGesac(int codGesac) {
-		this.values[1].setValue(codGesac);
+	public void setPergunta(String pergunta) {
+		this.values[1].setValue(pergunta);
 	}
-	public void setCodTc(int codTc) {
-		this.values[2].setValue(codTc);
-	}
-	public void setCodCd(int codCd) {
-		this.values[3].setValue(codCd);
-	}
-	public void setNomeEstabelecimento(String nomeEstabelecimento) {
-		this.values[4].setValue(nomeEstabelecimento);
+	public void setCodServico(int codServico) {
+		this.values[2].setValue(codServico);
 	}
 
 	@Override
