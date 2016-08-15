@@ -1,5 +1,11 @@
-<!DOCTYPE html>
 
+<%
+    if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+%>
+Você não está logado no sistema<br/>
+<a href="login.html">Por Favor, Entre com o seu Login clicando aqui!</a>
+<%} else {
+%>
 <html>
 
 		<head>
@@ -85,3 +91,6 @@
 		<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
 	</body>
 </html>
+<%
+    }
+%>
