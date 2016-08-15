@@ -6,7 +6,7 @@ package br.com.minicom.scr.autoclass;
  * @author murilo
  */
 public class ClassPrototype {
-    public static String makeVarPadrao(String[][] dados, String nome) {
+    public static String buildClass(String[][] dados, String nome) {
         fixString(nome);
 
         String dateType = "Type.DATE";
@@ -66,6 +66,7 @@ public class ClassPrototype {
             }
         }
         sb.append("\n\t}\n");
+        
         //Setters
         for (int i = 0; i < dados.length; i++) {
             String tmp = fixSetString(dados[i][0]);
@@ -75,9 +76,7 @@ public class ClassPrototype {
                     .append(tmp).append(")").append(" {\n")
                     .append("\t\tthis.values[").append(i).append("].setValue(").append(tmp).append(");\n\t}");
         }
-        
-
-        
+                
         //Interface
         sb.append("\n\n");
         sb.append("\t@Override\n"
