@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet;
  *
  * @author Edilson Jr
  */
-@WebServlet(urlPatterns = {"/ServicoSrv"})
+@WebServlet(urlPatterns = {"/Servico"})
 public class ServicoSrv extends HttpServlet {
 
 }

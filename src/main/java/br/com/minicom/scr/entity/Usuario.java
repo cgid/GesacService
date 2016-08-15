@@ -2,7 +2,13 @@ package br.com.minicom.scr.entity;
 
 import br.com.minicom.scr.cell.Cell;
 import br.com.minicom.scr.cell.Type;
+import br.com.minicom.scr.persistence.ConnectionFactory;
 import br.com.minicom.scr.persistence.Entity;
+import static java.lang.System.out;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Usuario implements Entity {
 
@@ -81,5 +87,21 @@ public class Usuario implements Entity {
             sb.append(this.values[i].getValue()).append('\t');
         }
         return sb.toString();
+    }
+
+    public boolean autenticar(String userid, String pwd) throws SQLException {
+
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement ps = con.prepareStatement("select * from usuario where login=? and senha=?");
+        ps.setString(1, userid);
+        ps.setString(2, pwd);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return true;
+        } else {
+            out.println("Senha e/ou Usuário incorreto! <a href='index.jsp'>Tente Novamente</a>");
+        }
+        return false;
     }
 }
