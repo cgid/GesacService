@@ -137,7 +137,7 @@ public class SimpleQueries implements Queries<Entity> {
         try {
 
             Statement stmt = conn.createStatement();
-            ResultSet resultSet = stmt.executeQuery("SELECT * from" + e.getTableName() + "order by desc limit 1");
+            ResultSet resultSet = stmt.executeQuery("SELECT * from " + e.getTableName() + " order by "+ e.getColumnName(0)+" limit 1");
             while (resultSet.next()) 
                 next = resultSet.getInt(1);
             return next;
