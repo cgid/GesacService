@@ -15,7 +15,7 @@ public class Main {
         tabelas = Dados.getTables();
         
         //System.out.println(ClassPrototype.buildClass(Dados.getTableData(Dados.getTables()[0]), Dados.getTables()[0]));
-        Scanner input = new Scanner(System.in);
+    
         FileWriter arquivo;
         File file;
         try {

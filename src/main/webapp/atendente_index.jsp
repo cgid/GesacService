@@ -37,8 +37,8 @@
                         <ul>
                             <li><a href="#"> Início</a></li>
                             <li><a href="#"> Perfil</a></li></a>
-                            <li><a href="#"> Chamados</a></li></a>  
-                            <li><a href="#"> Solicitações</a></li></a> 
+                            <li><a href="chamados.jsp"> Chamados</a></li></a>  
+                            <li><a href="#"> Servicos</a></li></a> 
                             <li><a href="#"> Opção 4</a></li></a> 
                             <li><a href="#"> Opção 5</a></li></a> 
                             <li><a href="#"> Opção 6</a></li></a> 

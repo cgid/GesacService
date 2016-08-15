@@ -13,9 +13,9 @@
     Usuario usuario = new Usuario();
     if (usuario.autenticar(userid, pwd)) {
         session.setAttribute("userid", userid);
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("atendente_index.jsp");
     } else {
 
-        out.println("Senha e/ou Usuário incorreto! <a href='index.jsp'>Tente Novamente</a>");
+        out.println("Senha e/ou Usuário incorreto! <a href='login.html'>Tente Novamente</a>");
     }
 %>

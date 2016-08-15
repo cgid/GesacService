@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+
 
 <html>
 
 		<head>
 			<meta charset="utf-8">
-			<title>CHAMADOS - SIS CENTRAL REL</title>
+			<title>Editar endereço - SIS CENTRAL REL</title>
 			<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="css/chamados.css">
+			<link rel="stylesheet" type="text/css" href="css/editarend.css">
 		</head>
 
 
@@ -56,27 +56,31 @@
 
 			</div>	
 
+
 			<div id="painel" class="container">
 
-			<div class="panel panel-default">
-  			<!-- Default panel contents -->
-  			<div class="panel-heading">Chamado - <b>PID: 39847</b></div>
+				<div class="panel panel-default">
+  				<div class="panel-heading">Editar endereço</div>
+  				<div class="panel-body">
 
- 			<!-- Table -->
- 			<ul class="list-group">
-  			<li class="list-group-item">Contato: Fulano</li>
- 			<li class="list-group-item">Endereço: Endereço Teste</li>
-  			<li class="list-group-item">Telefone: Telefone Teste</li>
-			</ul>
+  				<div id="painel" class="container">	
+    			<div class="row">Descrição: </div>
+    			<div class="row">Número: </div>
+    			<div class="row">Bairro: </div>
+    			<div class="row">CEP: </div>
+    			<div class="row">Complemento: </div>
+    			<div class="row">Município: </div>
 
-  			<div class="row text-right">
-			<td><a href="#"><button class="btn btn-primary text-center">Editar endereço</button></a></td>
+
+  				</div>
+				</div>
+
+
+
+
+
+
 			</div>
-
-			</div>
-
-			</div>
-
 
 			</section>
 
