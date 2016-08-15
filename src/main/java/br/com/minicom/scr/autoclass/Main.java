@@ -14,7 +14,7 @@ public class Main {
         String[] tabelas;
         tabelas = Dados.getTables();
         
-        //System.out.println(ClassPrototype.makeVarPadrao(Dados.getTableData(Dados.getTables()[0]), Dados.getTables()[0]));
+        //System.out.println(ClassPrototype.buildClass(Dados.getTableData(Dados.getTables()[0]), Dados.getTables()[0]));
         Scanner input = new Scanner(System.in);
         FileWriter arquivo;
         File file;
@@ -23,7 +23,7 @@ public class Main {
                 file = new File("/home/murilo/NetBeansProjects/GesacService/src/main/java/entities/" + tabelas[i].concat(".java"));
                 System.out.println(file.getAbsolutePath());
                 arquivo = new FileWriter(file);
-                arquivo.write(ClassPrototype.makeVarPadrao(Dados.getTableData(tabelas[i]), tabelas[i]));
+                arquivo.write(ClassPrototype.buildClass(Dados.getTableData(tabelas[i]), tabelas[i]));
                 arquivo.close();
             }
         } catch (Exception e) {

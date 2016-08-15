@@ -11,6 +11,6 @@ package br.com.minicom.scr.entity.exceptions;
  */
 public class InvalidDateFormat extends RuntimeException{
     public InvalidDateFormat() {
-        super("A data inserida nao esta no formato adequado.\n-> (dd-MM-aaaa HH:mm:ss)");
+        super("A data inserida nao esta no formato adequado.\n-> (yyyy-dd-MM HH:mm:ss)");
     }
 }
