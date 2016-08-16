@@ -19,13 +19,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author murilo
  */
 public class SimpleQueries implements Queries<Entity> {
+
     /**
      *
      * @param e
@@ -48,17 +52,16 @@ public class SimpleQueries implements Queries<Entity> {
             int col = e.getCell(0).isIterable() ? e.getNumOfColumns() - 1 : e.getNumOfColumns();
 
             for (int i = 1; i <= col; i++) {
-                if(e.getCell(0).isIterable()) {
-                    if (e.getCell(i).getType().equals(Type.NUM)) 
+                if (e.getCell(0).isIterable()) {
+                    if (e.getCell(i).getType().equals(Type.NUM)) {
                         stmt.setInt(i, e.getCell(i).getValue() == null ? 0 : (int) e.getCell(i).getValue());
-                    else 
+                    } else {
                         stmt.setString(i, String.valueOf(e.getCell(i).getValue()));
-                }
-                else {
-                    if (e.getCell(i - 1).getType().equals(Type.NUM)) 
-                        stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (int) e.getCell(i - 1).getValue());
-                    else 
-                        stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
+                    }
+                } else if (e.getCell(i - 1).getType().equals(Type.NUM)) {
+                    stmt.setInt(i, e.getCell(i - 1).getValue() == null ? 0 : (int) e.getCell(i - 1).getValue());
+                } else {
+                    stmt.setString(i, String.valueOf(e.getCell(i - 1).getValue()));
                 }
             }
             stmt.executeUpdate();
@@ -137,16 +140,17 @@ public class SimpleQueries implements Queries<Entity> {
         try {
 
             Statement stmt = conn.createStatement();
-            ResultSet resultSet = stmt.executeQuery("SELECT * from " + e.getTableName() + " order by "+ e.getColumnName(0)+" limit 1");
-            while (resultSet.next()) 
+            ResultSet resultSet = stmt.executeQuery("SELECT * from " + e.getTableName() + " order by " + e.getColumnName(0) + " limit 1");
+            while (resultSet.next()) {
                 next = resultSet.getInt(1);
+            }
             return next;
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         return 0;
     }
-    
+
     public Entity select(Entity e, int id) {
         //SELECT * FROM ENTITY WHERE ID = *;
         Connection conn = ConnectionFactory.getConnection();
@@ -156,16 +160,44 @@ public class SimpleQueries implements Queries<Entity> {
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
-            while (rs.next())             
-                for (int i = 1; i <= e.getNumOfColumns(); i++) 
-                    e.setCell(i, rs.getString(1));
-            
+            while (rs.next()) {
+                for (int i = 1; i <= e.getNumOfColumns(); i++) {
+                    e.setCell(i, rs.getString(i));
+                }
+            }
+
             return e;
-        } 
-        catch (Exception f) {
+        } catch (Exception f) {
             System.out.println(f);
         }
         return null;
     }
-}
 
+    public List<Entity> selectList(Entity e)  {
+        Connection conn = ConnectionFactory.getConnection();
+        String sql = "SELECT * FROM " + e.getTableName();
+        String pacote = "br.com.minicom.scr.entity." + e.getTableName();
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<Entity> l = new ArrayList<>();
+        Entity aux;
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()) {
+                aux = (Entity) Class.forName(pacote).newInstance();
+                for (int i = 1; i <= aux.getNumOfColumns(); i++) {
+                    aux.setCell(i - 1, rs.getString(i));
+                }
+                l.add(aux);
+            }
+            stmt.close();
+            rs.close();
+            conn.close();
+            return l;
+        }  catch (SQLException | ArrayIndexOutOfBoundsException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+}
