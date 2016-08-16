@@ -176,7 +176,7 @@ public class SimpleQueries implements Queries<Entity> {
     public List<Entity> selectList(Entity e)  {
         Connection conn = ConnectionFactory.getConnection();
         String sql = "SELECT * FROM " + e.getTableName();
-        String pacote = "br.com.minicom.scr.entity." + e.getTableName();
+        String clazz = "br.com.minicom.scr.entity." + e.getTableName();
         Statement stmt = null;
         ResultSet rs = null;
         List<Entity> l = new ArrayList<>();
@@ -185,7 +185,7 @@ public class SimpleQueries implements Queries<Entity> {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next()) {
-                aux = (Entity) Class.forName(pacote).newInstance();
+                aux = (Entity) Class.forName(clazz).newInstance();
                 for (int i = 1; i <= aux.getNumOfColumns(); i++) {
                     aux.setCell(i - 1, rs.getString(i));
                 }
