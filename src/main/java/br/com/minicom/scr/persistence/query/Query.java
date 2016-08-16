@@ -5,20 +5,19 @@
  */
 package br.com.minicom.scr.persistence.query;
 
-import br.com.minicom.scr.entity.exceptions.NotIsDeletableEntityException;
 import br.com.minicom.scr.persistence.Entity;
 
 /**
  *
  * @author murilo
+ * @param <E>
  */
-
-@FunctionalInterface
-public interface Delete {
+public interface Query<E> {
     /**
      * 
      * @param e
-     * @throws NotIsDeletableEntityException 
+     * @param id
+     * @return 
      */
-    public void delete(Entity e) throws NotIsDeletableEntityException;
+    public E execute(Entity e, int...id);
 }

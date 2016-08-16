@@ -8,7 +8,6 @@ package br.com.minicom.scr.persistence.query;
 
 import br.com.minicom.scr.entity.PID;
 import br.com.minicom.scr.persistence.Entity;
-import java.util.List;
 
 
 /**
@@ -16,13 +15,9 @@ import java.util.List;
  * @author murilo
  */
 public class QueryDemo {
-    public static void main(String[] args) {
-        SimpleQueries q = new SimpleQueries();
-        PID pid = new PID();
-        
-        List<Entity> l = q.selectList(new PID());
-        
-        l.forEach(list -> System.out.println(list));
+    public static void main(String[] args) { 
+        Entity p = new PID();
+        eQuery.update.execute(p);
         
     }
 }
