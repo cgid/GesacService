@@ -23,4 +23,5 @@ public interface Entity {
     
     public Cell getCell(int index) throws ArrayIndexOutOfBoundsException;
     
+    public void setCell(int index, Object v) throws ArrayIndexOutOfBoundsException;
 }

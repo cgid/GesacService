@@ -146,4 +146,26 @@ public class SimpleQueries implements Queries<Entity> {
         }
         return 0;
     }
+    
+    public Entity select(Entity e, int id) {
+        //SELECT * FROM ENTITY WHERE ID = *;
+        Connection conn = ConnectionFactory.getConnection();
+        Statement stmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM " + e.getTableName() + " WHERE " + e.getColumnName(0) + "= " + id;
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next())             
+                for (int i = 1; i <= e.getNumOfColumns(); i++) 
+                    e.setCell(i, rs.getString(1));
+            
+            return e;
+        } 
+        catch (Exception f) {
+            System.out.println(f);
+        }
+        return null;
+    }
 }
+

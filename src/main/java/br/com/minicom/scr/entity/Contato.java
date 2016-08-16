@@ -72,4 +72,12 @@ public class Contato implements Entity {
         }
         return sb.toString();
     }
+    
+    @Override
+    public void setCell(int index, Object v) throws ArrayIndexOutOfBoundsException {
+        if (index >= this.COLUMNNAMES.length || index < 0) {
+            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+        }
+        this.values[index].setValue(v);
+    }
 }
