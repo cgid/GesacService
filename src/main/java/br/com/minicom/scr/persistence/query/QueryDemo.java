@@ -6,10 +6,9 @@
 package br.com.minicom.scr.persistence.query;
 
 
-import br.com.minicom.scr.entity.Contato;
 import br.com.minicom.scr.entity.PID;
-import br.com.minicom.scr.persistence.querygen.QueryGenerator;
-import br.com.minicom.scr.persistence.querygen.SimpleQueryGenerator;
+import br.com.minicom.scr.persistence.Entity;
+import java.util.List;
 
 
 /**
@@ -18,23 +17,12 @@ import br.com.minicom.scr.persistence.querygen.SimpleQueryGenerator;
  */
 public class QueryDemo {
     public static void main(String[] args) {
-        Queries q = new SimpleQueries();
-        QueryGenerator qg = new SimpleQueryGenerator();
+        SimpleQueries q = new SimpleQueries();
         PID pid = new PID();
-        Contato c = new Contato();
         
-        c.setCodPid(4001);
-        c.setNome("Murilo");
-        pid.setCodPid(4001);
-        pid.setNomeEstabelecimento("Estabelecimento");
+        List<Entity> l = q.selectList(new PID());
         
-        System.out.println(c.toString());
-        System.out.println(pid.toString());
+        l.forEach(list -> System.out.println(list));
         
-        System.out.println(qg.insertGenerator(pid));
-        //System.out.println(qg.insertGenerator(c));
-        
-        //q.insert(pid);
-        //q.insert(c);
     }
 }
