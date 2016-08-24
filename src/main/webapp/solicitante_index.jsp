@@ -1,10 +1,4 @@
-<%
-    if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
-%>
-Você não está logado no sistema<br/>
-<a href="login1.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
-<%} else {
-%>
+<!DOCTYPE html>
 
 <html>
 
@@ -41,7 +35,7 @@ Você não está logado no sistema<br/>
 
                         <nav id="menu" class="pull-left">
                             <ul>
-                                <li><a href="atendente_index.jsp"> Inicio</a></li>
+                                <li><a href="#"> InÃ­cio</a></li>
                                 <li><a href="chamados.jsp"> Servicos</a></li></a>  
 
 
@@ -86,4 +80,4 @@ Você não está logado no sistema<br/>
 
     </body>
 
-</html><% }%>
+</html>

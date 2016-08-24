@@ -57,7 +57,7 @@ section {
 	position: relative;
 }
 #menu {
-	margin: 10px 0px;
+	margin: 18px 0px;
 }
 #menu a {
 	margin-right: 0px;
@@ -89,10 +89,20 @@ section .row {
 	margin-top: -8px;
 	margin-bottom: 20px;
 }
+section .btn {
+	margin-top: 13px;
+	margin-bottom: 10px;
+	margin-left: 18px;
+}
+#painel input {
+	width: 600px;
+}
+footer {
+	margin-top: 700px;
+}
 footer .row {
 	width: 100%;
 	margin-left: 0px;
-	position: absolute;
 	bottom: 0;
 
 }
