@@ -7,7 +7,7 @@ import br.com.minicom.scr.persistence.Entity;
 public class Solicitacoes implements Entity {
 
     private final String DB = "SisCentralRel";
-    private final String TABLENAME = "Solicitacoes";
+    private final String TABLENAME = "solicitacoes";
     private final String[] COLUMNNAMES = {"id_solicitacao", "Qtde_tentativas", "Dt_ult_tentativa", "em_chamado", "contato_ok", "Servico_cod_servico", "PID_cod_pid"};
     private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
@@ -79,25 +79,29 @@ public class Solicitacoes implements Entity {
         }
         return values[index];
     }
-    
-    @Override
-    public void setCell(int index, Object v) throws ArrayIndexOutOfBoundsException {
-        if (index >= this.COLUMNNAMES.length || index < 0) {
-            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
-        }
-        this.values[index].setValue(v);
-    }
 
     @Override
     public String toString() {
+        String espaco = " ";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < getNumOfColumns(); i++) {
             sb.append(getColumnName(i)).append('\t');
         }
         sb.append('\n');
         for (int i = 0; i < getNumOfColumns(); i++) {
-            sb.append(this.values[i].getValue()).append('\t');
+            for (int j = 1; j < getColumnName(i).length() - 1; j++) {
+                espaco.concat(espaco);
+            }
+            sb.append('\t').append("  	").append(this.values[i].getValue()).append(espaco);
         }
         return sb.toString();
+    }
+
+    @Override
+    public void setCell(int index, Object v) throws ArrayIndexOutOfBoundsException {
+        if (index >= this.COLUMNNAMES.length || index < 0) {
+            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+        }
+        this.values[index].setValue(v);
     }
 }

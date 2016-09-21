@@ -5,11 +5,13 @@
  */
 package br.com.minicom.scr.persistence.query;
 
+import br.com.minicom.scr.consultas.ChamadoConsulta;
 import br.com.minicom.scr.entity.exceptions.NotIsDeletableEntityException;
 import br.com.minicom.scr.entity.exceptions.NotIsInsertableEntityException;
 import br.com.minicom.scr.entity.exceptions.NotIsSelectableEntityException;
 import br.com.minicom.scr.entity.exceptions.NotIsUpgradeableEntityException;
 import br.com.minicom.scr.persistence.Entity;
+import java.util.List;
 
 /**
  *
@@ -36,8 +38,12 @@ public interface Queries<E extends Entity> {
 
     /**
      * @param e
-     * @return 
+     * @return
      */
     public int select(Entity e) throws NotIsSelectableEntityException;
+
+    public void close();
+
+    public List<ChamadoConsulta> getChamado(String pid, String servico);
 
 }

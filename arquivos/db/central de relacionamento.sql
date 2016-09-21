@@ -22,7 +22,10 @@ USE `SisCentralRel` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SisCentralRel`.`Perfil` (
   `id_perfil` INT NOT NULL AUTO_INCREMENT,
-  `descricao_perfil` VARCHAR(45) NOT NULL,
+  `descricao_perfil` VARCHAR(100) NOT NULL,
+  `realizar_chamado` BOOLEAN NOT NULL,
+  `gerenciar_usuarios` BOOLEAN NOT NULL,
+  `gerenciar_servicos` BOOLEAN NOT NULL,
   PRIMARY KEY (`id_perfil`))
 ENGINE = InnoDB;
 
@@ -32,9 +35,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SisCentralRel`.`Usuario` (
   `id_usuario` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  `login` VARCHAR(45) NOT NULL,
-  `senha` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
+  `login` VARCHAR(100) NOT NULL,
+  `senha` VARCHAR(100) NOT NULL,
   `Perfil_cod_perfil` INT NOT NULL,
   PRIMARY KEY (`id_usuario`),
   INDEX `fk_Usuario_Perfil_idx` (`Perfil_cod_perfil` ASC),
@@ -74,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `SisCentralRel`.`PID` (
   `cod_gesac` INT NULL,
   `cod_tc` INT NULL,
   `cod_cd` INT NULL,
-  `nome_estabelecimento` VARCHAR(45) NULL,
+  `nome_estabelecimento` VARCHAR(100) NULL,
   PRIMARY KEY (`cod_pid`))
 ENGINE = InnoDB;
 
@@ -136,8 +139,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SisCentralRel`.`Municipio` (
   `cod_IBGE` INT NOT NULL,
-  `nome_municipio` VARCHAR(45) NULL,
-  `UF` VARCHAR(45) NULL,
+  `nome_municipio` VARCHAR(100) NULL,
+  `UF` VARCHAR(100) NULL,
   PRIMARY KEY (`cod_IBGE`))
 ENGINE = InnoDB;
 
@@ -148,9 +151,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `SisCentralRel`.`Endereco` (
   `id_endereco` INT NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(200) NULL,
-  `numero` VARCHAR(45) NULL,
-  `bairro` VARCHAR(45) NULL,
-  `cep` VARCHAR(45) NULL,
+  `numero` VARCHAR(100) NULL,
+  `bairro` VARCHAR(100) NULL,
+  `cep` VARCHAR(100) NULL,
   `complemento` VARCHAR(100) NULL,
   `Municipio_cod_IBGE` INT NOT NULL,
   `PID_cod_pid` INT NOT NULL,
@@ -177,7 +180,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SisCentralRel`.`Contato` (
   `id_contato` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NULL,
+  `nome` VARCHAR(100) NULL,
   `PID_cod_pid` INT NOT NULL,
   PRIMARY KEY (`id_contato`, `PID_cod_pid`),
   INDEX `fk_Contato_PID1_idx` (`PID_cod_pid` ASC),
@@ -247,9 +250,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `SisCentralRel`.`Endereco_novo` (
   `id_endereco` INT NOT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(200) NULL,
-  `numero` VARCHAR(45) NULL,
-  `bairro` VARCHAR(45) NULL,
-  `cep` VARCHAR(45) NULL,
+  `numero` VARCHAR(100) NULL,
+  `bairro` VARCHAR(100) NULL,
+  `cep` VARCHAR(100) NULL,
   `complemento` VARCHAR(100) NULL,
   `Municipio_cod_IBGE` INT NOT NULL,
   `PID_cod_pid` INT NOT NULL,

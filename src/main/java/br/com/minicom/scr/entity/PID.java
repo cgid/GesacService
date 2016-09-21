@@ -4,10 +4,11 @@ import br.com.minicom.scr.cell.Cell;
 import br.com.minicom.scr.cell.Type;
 import br.com.minicom.scr.persistence.Entity;
 
-public class PID implements Entity {
+
+public class PID implements Entity{
 
     private final String DB = "SisCentralRel";
-    private final String TABLENAME = "PID";
+    private final String TABLENAME = "pid";
     private final String[] COLUMNNAMES = {"cod_pid", "cod_gesac", "cod_tc", "cod_cd", "nome_estabelecimento"};
     private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
@@ -38,7 +39,6 @@ public class PID implements Entity {
     public void setNomeEstabelecimento(String nomeEstabelecimento) {
         this.values[4].setValue(nomeEstabelecimento);
     }
-
     @Override
     public String getDB() {
         return this.DB;
@@ -69,14 +69,6 @@ public class PID implements Entity {
         }
         return values[index];
     }
-    
-    @Override
-    public void setCell(int index, Object v) throws ArrayIndexOutOfBoundsException {
-        if (index >= this.COLUMNNAMES.length || index < 0) {
-            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
-        }
-        this.values[index].setValue(v);
-    }
 
     @Override
     public String toString() {
@@ -90,4 +82,13 @@ public class PID implements Entity {
         }
         return sb.toString();
     }
+
+    @Override
+    public void setCell(int index, Object v) throws ArrayIndexOutOfBoundsException {
+        if (index >= this.COLUMNNAMES.length || index < 0) {
+            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+        }
+        this.values[index].setValue(v);
+    }
+
 }

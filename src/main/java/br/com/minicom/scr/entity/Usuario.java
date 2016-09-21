@@ -4,7 +4,6 @@ import br.com.minicom.scr.cell.Cell;
 import br.com.minicom.scr.cell.Type;
 import br.com.minicom.scr.persistence.ConnectionFactory;
 import br.com.minicom.scr.persistence.Entity;
-import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,14 +74,6 @@ public class Usuario implements Entity {
         }
         return values[index];
     }
-    
-    @Override
-    public void setCell(int index, Object v) throws ArrayIndexOutOfBoundsException {
-        if (index >= this.COLUMNNAMES.length || index < 0) {
-            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
-        }
-        this.values[index].setValue(v);
-    }
 
     @Override
     public String toString() {
@@ -97,6 +88,14 @@ public class Usuario implements Entity {
         return sb.toString();
     }
 
+    @Override
+    public void setCell(int index, Object v) throws ArrayIndexOutOfBoundsException {
+        if (index >= this.COLUMNNAMES.length || index < 0) {
+            throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
+        }
+        this.values[index].setValue(v);
+    }
+
     public boolean autenticar(String userid, String pwd) throws SQLException {
 
         Connection con = ConnectionFactory.getConnection();
@@ -108,8 +107,45 @@ public class Usuario implements Entity {
         if (rs.next()) {
             return true;
         } else {
-            out.println("Senha e/ou Usuário incorreto! <a href='index.jsp'>Tente Novamente</a>");
+            System.out.println("Senha e/ou Usuário incorreto! <a href='index.jsp'>Tente Novamente</a>");
         }
         return false;
+    }
+
+    public String autenticarPerfil(String userid, String pwd) throws SQLException {
+
+        Connection con = ConnectionFactory.getConnection();
+      
+        PreparedStatement ps = con.prepareStatement("select * from usuario where login=? and senha=?");
+        PreparedStatement ps2;
+
+        ps.setString(1, userid);
+        ps.setString(2, pwd);
+        System.out.println(ps.toString());
+        ResultSet rs = ps.executeQuery();
+        ResultSet rs2;
+
+        if (rs.next()) {
+            int perfil = rs.getInt(getColumnName(4));
+            rs.close();
+            
+            ps2 = con.prepareStatement("select * from perfil where id_perfil=?");
+            ps2.setInt(1, perfil);
+            
+            rs2 = ps2.executeQuery();
+            System.out.println(ps2.toString());
+            if (rs2.next()) {
+
+                String descricao = rs2.getString(2);
+
+                System.out.println(descricao);
+                con.close();
+                return descricao;
+
+            }
+        } else {
+            System.out.println("Senha e/ou Usuário incorreto! Tente Novamente</a>");
+        }
+        return null;
     }
 }

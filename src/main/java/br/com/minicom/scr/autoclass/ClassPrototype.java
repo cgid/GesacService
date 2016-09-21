@@ -1,11 +1,13 @@
 package br.com.minicom.scr.autoclass;
 
+import java.util.Locale;
 
 /**
  *
  * @author murilo
  */
 public class ClassPrototype {
+
     public static String buildClass(String[][] dados, String nome) {
         fixString(nome);
 
@@ -13,14 +15,14 @@ public class ClassPrototype {
         String numType = "Type.NUM";
         String strType = "Type.STR";
         StringBuilder sb = new StringBuilder();
-        
-        sb.append("package entities;\n\n\n");
-        
-        sb.append("import cell.Cell;\n" +
-                    "import cell.Type;\n" +
-                    "import persistence.Entity;\n\n");
 
-        sb.append("public class ").append(nome).append(" implements Entity {\n");
+        sb.append("package br.com.minicom.scr.entity;\n\n\n");
+
+        sb.append("import br.com.minicom.scr.cell.Cell;\n"
+                + "import br.com.minicom.scr.cell.Type;\n"
+                + "import  br.com.minicom.scr.persistence.Entity;\n\n");
+
+        sb.append("public class ").append(nome.toUpperCase().charAt(0)).append(nome.substring(1, nome.length())).append(" implements Entity {\n");
         sb.append('\t').append("private final String DB = \"SisCentralRel\";\n");
         sb.append('\t').append("private final String TABLENAME = ").append("\"").append(nome).append("\"").append(";\n");
         sb.append('\t').append("private final String[] COLUMNNAMES = {");
@@ -37,7 +39,7 @@ public class ClassPrototype {
         sb.append('\n');
 
         //Construtor
-        sb.append('\t').append("public ").append(nome).append("()").append(" {\n");
+        sb.append('\t').append("public ").append(nome.toUpperCase().charAt(0)).append(nome.substring(1, nome.length())).append("()").append(" {\n");
         for (int i = 0; i < dados.length; i++) {
             if (i == 0) {
                 sb.append("\t\t").append("values[").append(i).append("] = new Cell(")
@@ -55,18 +57,21 @@ public class ClassPrototype {
             } else {
                 sb.append("\n");
                 sb.append("\t\t").append("values[").append(i).append("] = new Cell(");
-                if (dados[i][1].contains("int")) 
+                if (dados[i][1].contains("int")) {
                     sb.append(numType).append(',').append(" 0,").append("NO".equals(dados[i][3]) ? " true);" : " false);");
-                if (dados[i][1].contains("date")) 
+                }
+                if (dados[i][1].contains("date")) {
                     sb.append(dateType).append(',').append(" null,").append("NO".equals(dados[i][3]) ? " true);" : " false);");
-                
-                if (dados[i][1].contains("varchar")) 
+                }
+
+                if (dados[i][1].contains("varchar")) {
                     sb.append(strType).append(',').append(" null,").append("NO".equals(dados[i][3]) ? " true);" : " false);");
-                
+                }
+
             }
         }
         sb.append("\n\t}\n");
-        
+
         //Setters
         for (int i = 0; i < dados.length; i++) {
             String tmp = fixSetString(dados[i][0]);
@@ -76,7 +81,7 @@ public class ClassPrototype {
                     .append(tmp).append(")").append(" {\n")
                     .append("\t\tthis.values[").append(i).append("].setValue(").append(tmp).append(");\n\t}");
         }
-                
+
         //Interface
         sb.append("\n\n");
         sb.append("\t@Override\n"
@@ -121,7 +126,13 @@ public class ClassPrototype {
                 + "\t\tsb.append(this.values[i].getValue()).append('\\t');\n"
                 + "\t}\n"
                 + "\treturn sb.toString();\n"
-                + "\t}\n");
+                + "\t}\n@Override\n"
+                + "    public void setCell(int index, Object v) throws ArrayIndexOutOfBoundsException {\n"
+                + "        if (index >= this.COLUMNNAMES.length || index < 0) {\n"
+                + "            throw new ArrayIndexOutOfBoundsException(\"Indice inserido esta fora do intervalo.\");\n"
+                + "        }\n"
+                + "        this.values[index].setValue(v);\n"
+                + "    }");
         sb.append("}");
         return sb.toString();
     }
@@ -132,17 +143,17 @@ public class ClassPrototype {
         sb.replace(0, 1, String.valueOf(Character.toUpperCase(n.charAt(0))));
         n = sb.toString();
     }
-    
+
     private static String fixSetString(String n) {
         String[] t;
         String ret = n;
-        if(n.contains("_")) {
+        if (n.contains("_")) {
             t = n.split("_");
-            if(t.length == 2) {
+            if (t.length == 2) {
                 t[1] = String.valueOf(Character.toUpperCase(t[1].charAt(0))) + t[1].substring(1, t[1].length());
                 ret = t[0].concat(t[1]);
             }
-            if(t.length == 3) {
+            if (t.length == 3) {
                 t[2] = String.valueOf(Character.toUpperCase(t[2].charAt(0))) + t[2].substring(1, t[2].length());
                 ret = t[1].concat(t[2]);
             }

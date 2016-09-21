@@ -54,7 +54,7 @@ public class Chamado extends HttpServlet {
 
         Solicitacoes s = new Solicitacoes();
 
-        List<Entity> solicitacoeses = eQuery.selectList.execute(s);
+//        List<Entity> solicitacoeses = eQuery.selectList.execute(s);
         boolean isMultiPart = FileUpload.isMultipartContent(request);
         if (isMultiPart) {
 

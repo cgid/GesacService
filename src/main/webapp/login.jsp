@@ -1,21 +1,62 @@
-<%-- 
-    Document   : login
-    Created on : 30/05/2016, 15:55:36
-    Author     : VictorHugo
---%>
 
-<%@page import="br.com.minicom.scr.entity.Usuario"%>
-<%@ page import ="java.sql.*" %>
-<%
-    String userid = request.getParameter("login");
-    String pwd = request.getParameter("senha");
 
-    Usuario usuario = new Usuario();
-    if (usuario.autenticar(userid, pwd)) {
-        session.setAttribute("userid", userid);
-        response.sendRedirect("atendente_index.jsp");
-    } else {
+<html>
 
-        out.println("Senha e/ou Usuário incorreto! <a href='login1.jsp'>Tente Novamente</a>");
-    }
-%>
+    <head>
+        <meta charset="utf-8">
+        <title>Login - SIS CENTRAL REL</title>
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/login.css">
+    </head>
+
+
+    <body>
+
+        <%@include file="header.html" %>
+
+
+        <section>
+
+            <div id="painellogin" class="container">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Login</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <form method="POST" action="loginHandler.jsp">
+                            <div class="form-group">
+                                <label for="login">Usuario</label>
+                                <input type="text" name="login" id="login" class="form-control" placeholder="Digite seu usuÃ¡rio" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="senha">Senha</label>
+                                <input type="password" name="senha" id="senha" class="form-control" placeholder="Digite sua senha" required>
+                            </div>
+
+
+                            <div class="row text-center">
+                                <button type="submit" class="btn btn-primary">Entrar</button>
+                                <button type="reset" class="btn btn-primary">Limpar</button>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <%@include file="footer.html" %>
+
+
+        <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+    </body>
+
+</html>

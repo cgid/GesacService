@@ -29,12 +29,22 @@ import java.util.logging.Logger;
  */
 public class eQuery {
 
+    Connection conn;
+
+    public eQuery() {
+        conn = ConnectionFactory.getConnection();
+    }
+
+    public void close() throws SQLException {
+        System.out.println("Fechou");
+        conn.close();
+    }
+
     Query<Integer> delete = (e, id) -> {
         if (e.getCell(0).getValue().equals(null)) {
             throw new NotIsDeletableEntityException();
         }
 
-        Connection conn = ConnectionFactory.getConnection();
         Statement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
 
@@ -42,21 +52,20 @@ public class eQuery {
             stmt = conn.createStatement();
             stmt.executeUpdate(qg.deleteGenerator(e));
             stmt.close();
-            conn.close();
+
         } catch (SQLException ex) {
             Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
     };
 
-    static Query<Integer> insert = (e, id) -> {
+    public Query<Integer> insert = (e, id) -> {
         for (int k = e.getCell(0).isIterable() ? 1 : 0; k < e.getNumOfColumns(); k++) {
             if (e.getCell(k).isNotNull() && e.getCell(k).getValue().equals(null)) {
                 throw new NotIsInsertableEntityException();
             }
         }
 
-        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
 
@@ -86,59 +95,43 @@ public class eQuery {
         return 0;
     };
 
-    static Query<Integer> update = (e, id) -> {
+    public Query<Integer> update = (e, id) -> {
         if (!e.getCell(0).isIterable() && e.getCell(0).getValue().equals(null)) {
             throw new NotIsUpgradeableEntityException();
         }
 
-        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         QueryGenerator qg = new SimpleQueryGenerator();
 
         try {
-            stmt = conn.prepareStatement(qg.updateGenerator(e));
-            for (int k = 1; k <= e.getNumOfColumns(); k++) {
-                if (e.getCell(0).isIterable()) {
-                    if (e.getCell(k).getType().equals(Type.NUM)) {
-                        stmt.setInt(k, (Integer) e.getCell(k).getValue());
-                    } else {
-                        stmt.setString(k, String.valueOf(e.getCell(k).getValue()));
-                    }
-                } else if (e.getCell(k - 1).getType().equals(Type.NUM)) {
-                    stmt.setInt(k, (Integer) e.getCell(k - 1).getValue());
-                } else {
-                    stmt.setString(k, String.valueOf(e.getCell(k - 1).getValue()));
-                }
-            }
-            stmt.executeUpdate();
-        } catch (SQLException | ArrayIndexOutOfBoundsException ex) {
+        } catch (ArrayIndexOutOfBoundsException ex) {
             Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
     };
 
-    static Query<Integer> selectID = (e, id) -> {
-        Connection conn = ConnectionFactory.getConnection();
+    public Query<Integer> selectID = (e, id) -> {
+      
         Statement stmt = null;
         ResultSet rs = null;
         int next = 0;
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * from " + e.getTableName() + " order by " + e.getColumnName(0) + " limit 1");
+            rs = stmt.executeQuery("SELECT * from " + e.getTableName() + " order by " + e.getColumnName(0) + " desc limit 1");
             while (rs.next()) {
                 next = rs.getInt(1);
             }
             stmt.close();
             rs.close();
-            conn.close();
+
         } catch (SQLException ex) {
             Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
         return next;
     };
 
-    static Query<List<Entity>> selectList = (e, id) -> {
-        Connection conn = ConnectionFactory.getConnection();
+    public Query<List<Entity>> selectList = (e, id) -> {
+
         String sql = "SELECT * FROM " + e.getTableName();
         String clazz = "br.com.minicom.scr.entity." + e.getTableName();
         Statement stmt = null;
@@ -160,7 +153,7 @@ public class eQuery {
 
             stmt.close();
             rs.close();
-            conn.close();
+
         } catch (SQLException | ArrayIndexOutOfBoundsException |
                 ClassNotFoundException | InstantiationException |
                 IllegalAccessException ex) {
@@ -169,8 +162,8 @@ public class eQuery {
         return l;
     };
 
-    static Query<Entity> selectEntity = (e, id) -> {
-        Connection conn = ConnectionFactory.getConnection();
+    public Query<Entity> selectEntity = (e, id) -> {
+
         Statement stmt = null;
         ResultSet rs = null;
         String sql = "SELECT * FROM " + e.getTableName() + " WHERE " + e.getColumnName(0) + "= " + id[0];
@@ -182,6 +175,8 @@ public class eQuery {
                     e.setCell(i, rs.getString(i));
                 }
             }
+            stmt.close();
+            rs.close();
 
             return e;
         } catch (SQLException | ArrayIndexOutOfBoundsException ex) {

@@ -7,7 +7,7 @@ import br.com.minicom.scr.persistence.Entity;
 public class Contato implements Entity {
 
     private final String DB = "SisCentralRel";
-    private final String TABLENAME = "Contato";
+    private final String TABLENAME = "contato";
     private final String[] COLUMNNAMES = {"id_contato", "nome", "PID_cod_pid"};
     private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
@@ -72,7 +72,7 @@ public class Contato implements Entity {
         }
         return sb.toString();
     }
-    
+
     @Override
     public void setCell(int index, Object v) throws ArrayIndexOutOfBoundsException {
         if (index >= this.COLUMNNAMES.length || index < 0) {

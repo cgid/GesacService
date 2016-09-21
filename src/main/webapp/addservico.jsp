@@ -1,90 +1,83 @@
+<%@page import="br.com.minicom.scr.entity.Usuario"%>
 <%
+
     if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
 %>
+
 Você não está logado no sistema<br/>
-<a href="login1.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
+<a href="index.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
 <%} else {
+    String userid = String.valueOf(session.getAttribute("userid"));
+    String pwd = String.valueOf(session.getAttribute("senha"));
+
+    Usuario usuario = new Usuario();
+
+    String perfil = usuario.autenticarPerfil(userid, pwd);
+    perfil = "index_" + perfil + ".jsp";
 %>
+
+
+
+
 <html>
 
     <head>
         <meta charset="utf-8">
-        <title>ServiÃ§o - SIS CENTRAL REL</title>
+        <title>Chamados - SIS CENTRAL REL</title>
         <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/addservico.css">
+        <link rel="stylesheet" type="text/css" href="css/chamados.css">
     </head>
 
 
     <body>
 
-        <header>
-            <div class="container">
-
-                <div id="banner">
-
-                    <h1>SIS CENTRAL REL<small>MinistÃ©rio das ComunicaÃ§Ãµes</small></h1>
-
-                </div>
-
-            </div>
-
-        </header>
+         <%@include file="header.html" %>
 
 
         <section>
+             <% if (perfil.contains("gerente")) {
+            %><%@include file= 'barra_gerente.jsp' %> 
 
-            <div class="container">
+            <% }%>  <% if (perfil.contains("administrador")) {
 
-                <div class="menu">
+            %><%@include file= 'barra_administrador.jsp' %> 
+            <% }%>  <% if (perfil.contains("atendente")) {
 
-                    <div class="row">
-
-                        <nav id="menu" class="pull-left">
-                            <ul>
-                                <li><a href="solicitante_index.html"> inicio</a></li>
-                                <li><a href="addservico.html"> Serviços</a></li></a>                                       
-
-                            </ul>
-
-                        </nav>
-
-                    </div>
-
-                </div>
+            %><%@include file= 'barra_atendente.jsp' %> 
+            <% }%>
 
 
-            </div>	
 
             <div id="painel" class="container">
 
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">Adicionar serviÃ§o</div>
+                    <div class="panel-heading">Adicionar servico</div>
 
                     <!-- Table -->
                     <ul class="list-group">
                         <li class="list-group-item">
 
 
-                            <form method="post" action="servicoSrv"  enctype="multipart/form-data">
+                            <form method="POST" action="servicoSrv" enctype="multipart/form-data">
 
                                 <div class="form-group">
-                                    <label for="descriçao">DescriÃ§Ã£o</label>
-                                    <input type="text" name="descricao" id="descricao" class="form-control" placeholder="Digite a descriÃ§Ã£o do serviÃ§o" >
+                                    <label for="nome">Descrição</label>
+                                    <input type="text" name="descricao" id="descricao" class="form-control" placeholder="Digite a descrição do serviço">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="pergunta">Intervalo de ligaÃ§Ãµes</label>
-                                    <input type="text" name="intervalo" id="intervalo" class="form-control" placeholder="Digite o intervalo das ligaÃ§Ãµes">
+                                    <label for="nome">Intervalo de ligaçoes</label>
+                                    <input type="text" name="intervaloligacoes" id="intervaloligacoes" class="form-control" placeholder="Digite o intervalo das ligações">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="pergunta">Pergunta</label>
+                                    <label for="nome">Pergunta</label>
                                     <input type="text" name="pergunta" id="pergunta" class="form-control" placeholder="Digite a pergunta">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="pergunta">Pergunta</label>
+                                    <label for="nome">Pergunta</label>
                                     <input type="text" name="pergunta" id="pergunta" class="form-control" placeholder="Digite a pergunta">
                                 </div>
 
@@ -99,13 +92,13 @@ Você não está logado no sistema<br/>
                                 </div>	
                                 <br>
                                 <label for="nome">Adicionar lista de PIDS</label>
-                                <input name= "planilha" type="file" accept=".xls,.xlsx"><br>
+                                <input type="file" name="planilha" accept=".xlsx"><br>
                                 </li>
 
 
                                 <div class="row text-right">
 
-                                    <td><button type="submit" id="upload" name="upload"  class="btn btn-primary text-center">Adicionar serviÃ§o</button></td>
+                                    <td><button type="submit" class="btn btn-primary text-center">Adicionar serviços</button></td>
 
                                 </div>
                             </form>
@@ -134,6 +127,7 @@ Você não está logado no sistema<br/>
 
 
 
+
                 </div>
 
             </div>
@@ -141,25 +135,12 @@ Você não está logado no sistema<br/>
 
         </section>
 
-
-        <footer>
-
-            <div class="row row-cinza-escuro">
-
-                <div class="container">
-
-                    <p class="pull-left">Todos os direitos reservados Â© SIS CENTRAL REL.</p>
-
-                </div>
-
-            </div>
-
-        </footer>
+      <%@include file="footer.html" %>
 
 
         <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
 
     </body>
-
-</html><% }%>
+    <% }%>
+</html>
