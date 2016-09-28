@@ -17,19 +17,19 @@
 <%@page import="br.com.minicom.scr.persistence.query.SimpleQueries"%>
 <%
 
-    if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+    if ((session.getAttribute("login") == null) || (session.getAttribute("login") == "")) {
 %>
 
 Você não está logado no sistema<br/>
 <a href="index.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
 <%} else {
-    String userid = String.valueOf(session.getAttribute("userid"));
+    String login = String.valueOf(session.getAttribute("login"));
     String pwd = String.valueOf(session.getAttribute("senha"));
     String pid = String.valueOf(session.getAttribute("pid"));
 
     Usuario usuario = new Usuario();
 
-    String perfil = usuario.autenticarPerfil(userid, pwd);
+    String perfil = usuario.autenticarPerfil(login, pwd);
     perfil = "index_" + perfil + ".jsp";
     SimpleQueries queries = new SimpleQueries();
     Servico servico = new Servico();
@@ -53,8 +53,8 @@ Você não está logado no sistema<br/>
 
     <body>
 
-
-        <%@include file="header.html" %>
+        <header><%@include file="header.html" %></header>
+        
 
 
         <section>
@@ -85,7 +85,7 @@ Você não está logado no sistema<br/>
 
                             <c:forEach items="${sq.selectList()}" var="servico">
 
-                                <a  class='list-group-item'onclick=''>
+                                <a  href="chamados.jsp?idchamado=<c:out value="${servico.getCell(0).getValue()}"/>"class='list-group-item'onclick=''>
                                     <h4 class='list-group-item-heading' >Servico <c:out value="${servico.getCell(0).getValue()}"/> </h4>
                                     <h4 class='list-group-item-heading' id = "<c:out value="${servico.getCell(0).getValue()}"/>}"><c:out value="${servico.getCell(1).getValue()}"/> </h4>
                                     <p class='list-group-item-text'>${servico.getCell(2).getValue()}</p>
@@ -100,8 +100,9 @@ Você não está logado no sistema<br/>
 
                 </div>
             </div>
-
-            <%@include file="footer.html" %>
+  
+                            <footer><%@include file="footer.html" %></footer>      
+            
 
         </section>
 

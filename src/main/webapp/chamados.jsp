@@ -1,56 +1,21 @@
-<%@page import="br.com.minicom.scr.entity.Municipio"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="br.com.minicom.scr.persistence.query.Queries"%>
-<%@page import="br.com.minicom.scr.consultas.ChamadoConsulta"%>
-<%@page import="br.com.minicom.scr.entity.Usuario;"%>
-<%@page import="br.com.minicom.scr.persistence.query.SimpleQueries;"%>
-<%@page import ="java.util.HashMap;"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="br.com.minicom.scr.entity.Usuario"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="br.com.minicom.scr.consultas.ChamadoConsulta"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.List"%>
-<%@page import="br.com.minicom.scr.persistence.query.SimpleQueries"%>
 <%
 
-    if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+    if ((session.getAttribute("login") == null) || (session.getAttribute("login") == "")) {
 %>
 
 Você não está logado no sistema<br/>
 <a href="index.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
 <%} else {
-    String userid = String.valueOf(session.getAttribute("userid"));
+    String login = String.valueOf(session.getAttribute("login"));
     String pwd = String.valueOf(session.getAttribute("senha"));
-    String pid = String.valueOf(session.getAttribute("pid"));
 
     Usuario usuario = new Usuario();
-
-    String perfil = usuario.autenticarPerfil(userid, pwd);
+    String servico = request.getParameter("idchamado");
+    String perfil = usuario.autenticarPerfil(login, pwd);
     perfil = "index_" + perfil + ".jsp";
-    SimpleQueries queries = new SimpleQueries();
-
-    List<ChamadoConsulta> consultas = queries.getChamado("12209", "17");
-    String[][] filtro = new String[consultas.size()][3];
-    for (int i = 0; i < consultas.size(); i++) {
-        for (int j = 0; j < 3; j++) {
-            if (j == 0) {
-
-                filtro[i][j] = consultas.get(i).getNome();
-            }
-            if (j == 1) {
-                filtro[i][j] = consultas.get(i).getDdd();
-            }
-            if (j == 2) {
-                filtro[i][j] = consultas.get(i).getTelefone();
-            }
-        }
-    }
-    List<String> perguntasList = queries.getPerguntas("12208", "17");
-
-
 %>
-
 
 
 
@@ -66,14 +31,12 @@ Você não está logado no sistema<br/>
 
 
     <body>
+        <%@include file="header.html" %>
 
-      <%@include file="header.html" %>
-   
 
 
         <section>
-
-               <% if (perfil.contains("gerente")) {
+            <% if (perfil.contains("gerente")) {
             %><%@include file= 'barra_gerente.jsp' %> 
 
             <% }%>  <% if (perfil.contains("administrador")) {
@@ -84,72 +47,110 @@ Você não está logado no sistema<br/>
             %><%@include file= 'barra_atendente.jsp' %> 
             <% }%>
 
-	
+
 
             <div id="painel" class="container">
 
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div class="panel-heading">Chamado - <b>PID:<%out.print(consultas.get(1).getCodPid());%></b></div>
+                    <div class="panel-heading">Chamado <%out.print(servico);%></div>
 
                     <!-- Table -->
                     <ul class="list-group">
-
-                        <li class="list-group-item">Endereço:<% out.print(consultas.get(1).getDescricao()
-                                    + ",Bairro: " + consultas.get(1).getBairro() + ", Numero: " + consultas.get(1).getNumero()
-                                    + ", Complemento:" + consultas.get(1).getComplemento() + ", Municipio:" + consultas.get(1).getNomeMunicipio()
-                                    + ", UF:" + consultas.get(1).getUf());%> </li><%for (int i = 0; i < consultas.size(); i++) {
-                                            out.print("    <li class='list-group-item'>Contato: " + consultas.get(i).getNome() + " Numero: " + consultas.get(i).getDdd() + "-" + consultas.get(i).getTelefone() + "</li>");
-                                        }%>
-
-
-
                         <li class="list-group-item">
 
 
-                            <form method="POST" action="#">
-                                <%for (int i = 0; i < perguntasList.size(); i++) {
-                                        out.print("<div class='form-group'>");
-                                        out.print("  <div class='form-group'>      <label for='nome'>Pergunta " + i + ":</label>");
-                                        out.print(" <div class='well well-sm'>" + perguntasList.get(i) + "</div>");
-                                        out.print("  <input type='text' name='resposta' id='resposta" + i + "' class='form - control' placeholder='Resposta'> </div> ");
-                                    }%>
-
-
-
-
-                                <div class="row text-left">
-                                    <div>          
-                                        <button type="submit" class="btn btn-primary besquerda">Enviar Repostas</button>
+                            <form method="POST" action="ChamadoSrv" enctype="multipart/form-data">
+                                <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
+                                <c:forEach items="${sq.getChamado(param.idchamado)}" var="consulta">
+                                    <div class="form-group">
+                                        <label for="nome">PID: <c:out value="${consulta.getCodPid()}"/></label>
                                     </div>
-                                </div>	
+                                    <div  class="form-group">
+                                        <label for="nome"> Endereço: <c:out value="${consulta.getNomeEstabelecimento()}"/></label>
+
+
+
+                                        <label for="nome"><c:out value="${consulta.getDescricao()}"/></label>
+                                        <label for="nome"><c:out value="${consulta.getNumero()}"/></label>
+                                        <label for="nome"><c:out value="${consulta.getComplemento()}"/></label>
+                                        <label for="nome"><c:out value="${consulta.getBairro()}"/></label>
+                                        <label for="nome"><c:out value="${consulta.getNomeMunicipio()}"/></label>
+                                        <label for="nome"><c:out value="${consulta.getUf()}"/></label>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <input type="hidden" name="idSolicitacao" id="idSolicitacao" class="form-control" value="<c:out value='${consulta.getId_solicitacao()}'/>">
+                                    </div>
+
+                                </c:forEach>
+                                <c:forEach items="${sq.getContatos(param.idchamado)}" var="contato">
+
+
+                                    <div class="form-group">
+                                        <label for="nome">  <c:out value="${contato.getNome()}"/> :</label>
+                                        <label for="nome">  <c:out value="${contato.getDdd()}"/></label>
+                                        <label for="nome">  <c:out value="${contato.getTelefone()}"/></label>
+
+                                    </div>
+
+                                </c:forEach>
+                                <div class="form-group">
+                                    <label for="nome">Observação</label>
+                                    <input type="text" name="observacao" id="observacao" class="form-control" placeholder="observacao">
+                                </div>
+
+                                <c:forEach items="${sq.getPerguntas(param.idchamado)}" var="Perguntas">
+                                    <div class="form-group">
+                                        <label for="nome"><c:out value="${Perguntas.getCell(1).getValue()}"/> <c:out value="${Perguntas.getCell(0).getValue()}"/></label>
+                                        <input type="text" name="resposta <c:out value="${Perguntas.getCell(0).getValue()}"/>" id="resposta <c:out value="${Perguntas.getCell(0).getValue()}"/>" class="form-control" placeholder="Resposta">
+                                    </div>
+
+                                </c:forEach>
+                                <div class="form-group">
+                                    <label for="nome">Contato ok?</label>
+                                    <input type="radio" name="ok" id="ok " size="10px"  value="1">Sim 
+                                    <input type="radio" name="ok" id="ok " class="form-group" value="0">Não
+                                </div> <div class="form-group">
+                                    <label for="nome">Contato Realizado?</label>
+                                    <input type="radio" name="sucesso" id="sucesso " size="10px"  value="1">Sim 
+                                    <input type="radio" name="sucesso" id="sucesso " class="form-group" value="0">Não
+                                </div>
                         </li>
 
+
+                        <div class="row text-right">
+
+                            <td><button type="submit" class="btn btn-primary text-center">Adicionar serviços</button></td>
+
+                        </div>
                         </form>
+
+
+                        <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+
+
 
                     </ul>
 
-                    <div class="row text-right"> 
 
-                        <td><a href="editar_endereco.jsp"><button class="btn btn-primary text-center">Editar endereço</button></a></td>
 
-                    </div>
 
                 </div>
 
             </div>
-
-
+            <%@include file="footer.html" %>
         </section>
 
 
-      <%@include file="footer.html" %>
+
 
 
         <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
 
     </body>
-
+    <% }%>
 </html>
-<%}%>

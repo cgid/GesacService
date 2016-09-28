@@ -14,7 +14,7 @@ public class Solicitacoes implements Entity {
 	public Solicitacoes() {
 		values[0] = new Cell(true, true,Type.NUM, 0, true);
 		values[1] = new Cell(Type.NUM, 0, false);
-		values[2] = new Cell(Type.DATE, null, false);
+		values[2] = new Cell(Type.DATE, null, true);
 		values[3] = new Cell(Type.NUM, 0, false);
 		values[4] = new Cell(Type.NUM, 0, false);
 		values[5] = new Cell(Type.NUM, 0, true);

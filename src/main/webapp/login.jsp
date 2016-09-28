@@ -12,10 +12,11 @@
 
     <body>
 
-        <%@include file="header.html" %>
 
 
         <section>
+
+            <header>  <%@include file="header.html" %> </header>
 
             <div id="painellogin" class="container">
                 <div class="panel panel-primary">
@@ -47,11 +48,12 @@
                     </div>
                 </div>
             </div>
-
+            <footer>
+                <%@include file="footer.html" %>
+        </footer>
         </section>
 
 
-        <%@include file="footer.html" %>
 
 
         <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>

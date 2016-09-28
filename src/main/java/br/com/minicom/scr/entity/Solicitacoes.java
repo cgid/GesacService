@@ -8,7 +8,13 @@ public class Solicitacoes implements Entity {
 
     private final String DB = "SisCentralRel";
     private final String TABLENAME = "solicitacoes";
-    private final String[] COLUMNNAMES = {"id_solicitacao", "Qtde_tentativas", "Dt_ult_tentativa", "em_chamado", "contato_ok", "Servico_cod_servico", "PID_cod_pid"};
+    private final String[] COLUMNNAMES = {"id_solicitacao", 
+        "Qtde_tentativas",
+        "Dt_ult_tentativa",
+        "em_chamado",
+        "contato_ok",
+        "Servico_cod_servico",
+        "PID_cod_pid"};
     private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
     public Solicitacoes() {

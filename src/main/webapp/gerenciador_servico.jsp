@@ -1,4 +1,4 @@
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+
 <%@page import="java.util.List"%>
 <%@page import="br.com.minicom.scr.persistence.Entity"%>
 <%@page import="br.com.minicom.scr.entity.Servico"%>
@@ -11,18 +11,18 @@
 <%@page import="br.com.minicom.scr.entity.Usuario"%>
 <%
 
-    if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+    if ((session.getAttribute("login") == null) || (session.getAttribute("login") == "")) {
 %>
 
 Você não está logado no sistema<br/>
 <a href="index.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
 <%} else {
-    String userid = String.valueOf(session.getAttribute("userid"));
+    String login = String.valueOf(session.getAttribute("login"));
     String pwd = String.valueOf(session.getAttribute("senha"));
 
     Usuario usuario = new Usuario();
 
-    String perfil = usuario.autenticarPerfil(userid, pwd);
+    String perfil = usuario.autenticarPerfil(login, pwd);
     perfil = "index_" + perfil + ".jsp";
 %>
 
@@ -34,16 +34,27 @@ Você não está logado no sistema<br/>
         <title> SIS CENTRAL REL</title>
         <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/gerenciador_servico.css">
-    </head>
+    </head><link rel="stylesheet" href="lib/jquery/jquery.mobile-1.4.5.css">
 
 
+
+    <script>
+        function form() {
+
+            var form = document.getElementById("form");
+            form.style.hidden = 'false';
+        }
+        ;
+
+
+    </script>
     <body>
+        <header> <%@include file="header.html" %></header>
 
-        <%@include file="header.html" %>
 
         <section>
 
-           <% if (perfil.contains("gerente")) {
+            <% if (perfil.contains("gerente")) {
             %><%@include file= 'barra_gerente.jsp' %> 
 
             <% }%>  <% if (perfil.contains("administrador")) {
@@ -64,37 +75,121 @@ Você não está logado no sistema<br/>
 
                     <!-- Table -->
                     <table class="table">
-                       
-                            <thead> 
-                                <tr> 
-                                    <th>ID</th> 
-                                    <th>Descrição</th> 
-                                    <th>Data</th> 
-                                    <th>Ações</th> 
-                                </tr> 
-                                
-                            </thead>
-                             <c:forEach items="${sq.selectList()}" var="servico">
+
+                        <thead> 
+                            <tr> 
+                                <th>ID</th> 
+                                <th>Descrição</th> 
+                                <th>Data</th> 
+                                <th>Ações</th> 
+                            </tr> 
+
+                        </thead>
+                        <c:forEach items="${sq.selectList()}" var="servico">
+
+
                             <tbody> 
                                 <tr> 
                                     <th scope=row'><c:out value="${servico.getCell(0).getValue()}"/></th>
-                                    <td> <c:out value="${servico.getCell(2).getValue()}"/></td>
+                                    <td> <c:out value="${servico.getCell(2).getValue()}"/><div data-role="popup" id="editarserv${servico.getCell(0).getValue()}" class="ui-content" style="min-width:250px;">
+                                            <form method="POST" action="servicoSrv" enctype="multipart/form-data">
+                                                <div class="form-group" hidden="true">
+                                                    <label hidden="true" for="id">id</label>
+                                                    <input value="${servico.getCell(0).getValue()}"type="hide" name="id" id="id" class="form-control" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nome">Descrição</label>
+                                                    <input type="text" name="descricao" id="descricao" class="form-control" placeholder="Digite a descrição do serviço">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="nome">Intervalo de ligaçoes</label>
+                                                    <input type="text" name="intervaloligacoes" id="intervaloligacoes" class="form-control" placeholder="Digite o intervalo das ligações">
+                                                </div>
+
+
+                                                <label for="nome">Adicionar lista de PIDS</label>
+                                                <input type="file" name="planilha" accept=".xlsx"><br>
+                                                </li>
+
+
+                                                <div class="row text-right">
+
+                                                    <button type="submit" class="btn btn-primary text-center">Adicionar serviços</button>
+
+                                                </div>
+                                            </form>
+                                        </div></td>
                                     <td> <c:out value="${servico.getCell(3).getValue()}"/></td>  
+
                                     <td>
-                                        <!-- Single button -->
-                                        <div class="btn-group">
-                                            <button type='button' onclick='${sq.delete(servico)}' class='btn btn-default'>Deletar</button>
-                                            <button type='button' onclick='${sq.delete(servico)}' class='btn btn-default'>encerrar</button>
+
+                                        <div data-role="main" class="ui-content">
+                                            <a href="#editarserv${servico.getCell(0).getValue()} " data-rel="popup" type="button" class=" ui-btn-inline btn btn-default">Editar servico </a>
+
+                                        </div> </td>
+                                    <td>
+                                        <div data-role="main" class="ui-content">
+                                            <a href="#adicionarperguntas" data-rel="popup" type="button" class="btn btn-default btn-group- ">Adicionar perguntas </a>
+
+                                            <div data-role="popup" id="adicionarperguntas" class="ui-content" style="min-width:250px;">
+                                                <form method="post" action="demoform.asp">
+                                                    <div>
+
+                                                        <label for="perguntas" class="ui-btn-inline">perguntas:</label>
+                                                        <input type="text" name="pergunta" id="pergunta" >
+                                                        <label for="nome">Mais Perguntas</label>
+                                                        <div id="fields"></div>
+
+                                                        <div class="row text-left">
+                                                            <div>          
+                                                                <button id="btn-add-input-text" type="button" class="btn btn-primary besquerda">Adicionar pergunta</button>
+                                                            </div>
+                                                        </div>	
+
+                                                        <input type="submit" data-inline="true" value="Editar">
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
-                                        
+
                                     </td>
+
                                 </tr> 
-                                
 
                             </tbody>
+
+
                         </c:forEach>
+                        <td>
+
+                            <div data-role="main" class="ui-content">
+                                <a href="#addServico" data-rel="popup" type="button" class=" ui-btn-inline btn btn-default">Editar servico </a>
+
+                            </div> </td>
+                        <td>
                     </table>
 
+                    <script src="lib/jquery/external/jquery/jquery.js"></script>
+                    <script src="lib/jquery/jquery.min.js"></script>
+                    <script src="lib/jquery/jquery.mobile-1.4.5.js"   </script>
+                    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+                    <script>
+        $(function () {
+            var count = 0;
+
+            $("#btn-add-input-text").click(function () {
+                $("#fields").append($("<input/>").attr({
+                    class: "form-control",
+                    type: "text",
+                    placeholder: "Digite a pergunta",
+                    name: "pergunta" + count++
+                }));
+
+                $("#fields").append("<br/><br/>");
+            });
+        });
+                    </script>
 
                 </div>
 
@@ -104,12 +199,79 @@ Você não está logado no sistema<br/>
 
             </div>
 
+            <div data-role="popup" id="addServico" class="ui-content" style="min-width:250px;">
+              
+           
+                <form method="POST" action="servicoSrv" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label for="nome">Descrição</label>
+                        <input type="text" name="descricao" id="descricao" class="form-control" placeholder="Digite a descrição do serviço">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nome">Intervalo de ligaçoes</label>
+                        <input type="text" name="intervaloligacoes" id="intervaloligacoes" class="form-control" placeholder="Digite o intervalo das ligações">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nome">Pergunta</label>
+                        <input type="text" name="pergunta" id="pergunta" class="form-control" placeholder="Digite a pergunta">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nome">Pergunta</label>
+                        <input type="text" name="pergunta" id="pergunta" class="form-control" placeholder="Digite a pergunta">
+                    </div>
+
+
+                    <label for="nome">Mais Perguntas</label>
+                    <div id="fields"></div>
+
+                    <div class="row text-left">
+                        <div>          
+                            <button id="btn-add-input-text" type="button" class="btn btn-primary besquerda">Adicionar pergunta</button>
+                        </div>
+                    </div>	
+                    <br>
+                    <label for="nome">Adicionar lista de PIDS</label>
+                    <input type="file" name="planilha" accept=".xlsx"><br>
 
 
 
-            <%@include file="footer.html" %>
+                    <div class="row text-right">
 
-        </section>
+                        <td><button type="submit" class="btn btn-primary text-center">Adicionar serviços</button></td>
+
+                    </div>
+                </form>
+
+
+                <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+
+                <script>
+        $(function () {
+            var count = 0;
+
+            $("#btn-add-input-text").click(function () {
+                $("#fields").append($("<input/>").attr({
+                    class: "form-control",
+                    type: "text",
+                    placeholder: "Digite a pergunta",
+                    name: "pergunta" + count++
+                }));
+
+                $("#fields").append("<br/><br/>");
+            });
+        });
+                </script>
+
+
+
+            </div>
+            <footer><%@include file="footer.html" %></footer>
+
+        </section
 
 
 

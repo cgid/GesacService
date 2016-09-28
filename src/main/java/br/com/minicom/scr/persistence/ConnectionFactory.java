@@ -38,6 +38,7 @@ public class ConnectionFactory {
         catch (ClassNotFoundException ex) {System.out.println(ex);}
         */
         Connection conn = null;
+        
         try {
             Class.forName(JDBC_DRIVER);
             //Propriedades prop = Propriedades.getInstance();

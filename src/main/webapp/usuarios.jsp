@@ -1,19 +1,20 @@
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@page import="br.com.minicom.scr.entity.Usuario"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 
-    if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+    if ((session.getAttribute("login") == null) || (session.getAttribute("login") == "")) {
 %>
 
 Você não está logado no sistema<br/>
-<a href="index.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
+<a href="login.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
 <%} else {
-    String userid = String.valueOf(session.getAttribute("userid"));
+    String login = String.valueOf(session.getAttribute("login"));
     String pwd = String.valueOf(session.getAttribute("senha"));
 
     Usuario usuario = new Usuario();
 
-    String perfil = usuario.autenticarPerfil(userid, pwd);
+    String perfil = usuario.autenticarPerfil(login, pwd);
     perfil = "index_" + perfil + ".jsp";
 %>
 
@@ -25,16 +26,24 @@ Você não está logado no sistema<br/>
         <title>UsuÃ¡rios - SIS CENTRAL REL</title>
         <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/usuarios.css">
+        <link rel="stylesheet" href="lib/jquery/jquery.mobile-1.4.5.css">
+        <script src="lib/jquery/jquery.min.js"></script>
+        <script src="lib/jquery/jquery.mobile-1.4.5.js"   </script>
+        <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+
+        <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
     </head>
 
+    <header >  <%@include file="header.html" %></header>
 
     <body>
-
-
-        <%@include file="header.html" %>
-
-
         <section>
+
+
+
+
+
 
             <% if (perfil.contains("gerente")) {
             %><%@include file= 'barra_gerente.jsp' %> 
@@ -47,7 +56,10 @@ Você não está logado no sistema<br/>
             %><%@include file= 'barra_atendente.jsp' %> 
             <% }%>
 
-
+            <c:set value="${param.nome}" var="nome"/>
+            <c:set value="${param.login}" var="login"/>
+            <c:set value="${param.senha}" var="senha"/>
+            <c:set value="${param.perfil}" var="perfil"/>
 
             <div id="painel" class="container">
 
@@ -62,7 +74,7 @@ Você não está logado no sistema<br/>
                                 <th>id</th> 
                                 <th>Nome</th> 
                                 <th>Login</th> 
-                                <th>Açes</th> 
+                                <th>Senha</th> 
                             </tr> 
                         </thead> 
                         <tbody> 
@@ -73,50 +85,79 @@ Você não está logado no sistema<br/>
 
 
                             <c:forEach items="${sq.selectList(usuario1)}" var="usuario">
-                                <tr> 
+                                <tr>
+
+
+                                    </div>
+
                                     <th scope="row"><c:out value="${usuario.getCell(0).getValue()}"/></th> 
-                                    <td><c:out value="${usuario.getCell(1).getValue()}"/></td> 
+                                    <td><c:out value="${usuario.getCell(1).getValue()}"/>   <div data-role="popup" id="editarserv${usuario.getCell(0).getValue()}" class="ui-content" style="min-width:250px;">
+                                            <form method="POST" action="update.jsp" enctype="multipart/form-data" >
+                                                <h3>Usuario : ${usuario.getCell(1).getValue()}  ${usuario.getCell(0).getValue()}</h3>
+                                                <input type="hidden" name="id" id="id" value=<c:out value="${usuario.getCell(0).getValue()}"/> >
+                                                <label for="nome" class="ui-btn-inline">Nome:</label>
+                                                <input type="text" name="nome" id="nome"  >
+                                                <label for="login" class="ui-content">Login:</label>
+                                                <input type="text" name="login" id="login" >
+                                                <label for="senha" class="ui-content">senha:</label>
+                                                <input type="password" name="senha" id="senha" >
+                                                <label for="perfil">Perfil</label>
+                                                <select name="perfil">
+                                                    <option  value="1">atendente</option>
+                                                    <option  value="2">gerente</option>
+                                                    <option  value="3">administrador</option>
+                                                </select>
+                                                <button type="submit" class="btn btn-primary text-center">Editar</button>
+
+
+
+                                            </form></div></td> 
+
                                     <td><c:out value="${usuario.getCell(2).getValue()}"/></td> 
+                                    <td><c:out value="${usuario.getCell(2).getValue()}"/>
                                     <td>
-                                        <!-- Single button -->
-                                      <div class="btn-group">
-                                            <button type='button' onclick='' class='btn btn-default'>Deletar</button>
-                                            <button type='button' onclick='' class='btn btn-default'>editar</button>
-                                        </div>
-                                    </td>
+                                        <div data-role="main" class="ui-content">
+                                            <a href="#editarserv${usuario.getCell(0).getValue()} " data-rel="popup" type="button" class=" ui-btn-inline btn btn-default">Editar usuario </a>
+                                            <!-- Single button -->
+                                            <div class="btn-group">
 
-                                </tr> 
-                            </c:forEach>
+                                                <button type='button' onclick='' class='btn btn-default'>excluir</button>
+                                            </div>
+                                        </div></td>
 
+
+                                </c:forEach>
+
+
+
+
+                            </tr> 
+                        <li><a type="button" href="addusuarios.jsp"> Adicionar Usuarios</a></li>
                         </tbody>
 
                     </table>
-                    <div class="row text-right">
-                        <a href="addusuarios.jsp" class="btn btn-primary">Adicionar Usuario</a>
-                    </div>
+
                 </div>
-
-
-
-
 
             </div>
 
 
 
 
-            <%@include file="footer.html" %>
 
-
-        </section>
-
+        </div>
 
 
 
 
-        <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
-        <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
 
-    </body>
+
+
+
+        <footer><%@include file="footer.html" %></footer>
+
+
+    </section>
+</body> 
 
 </html><%}%>

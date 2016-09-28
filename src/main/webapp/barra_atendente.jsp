@@ -1,13 +1,5 @@
 
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body> <div class="container">
 
             <div class="menu">
 
@@ -16,7 +8,7 @@
                     <nav id="menu" class="pull-left">
                         <ul>
                           <li><a href= "index.jsp" >  Inicio</a></li>
-                            <li><a href="servico.jsp"> ServiÃ§os</a></li></a> 
+                            <li><a href="servico.jsp"> Serviços</a></li></a> 
 
 
                         </ul>
@@ -26,8 +18,3 @@
                 </div>
 
             </div>
-
-
-        </div>
-    </body>
-</html>

@@ -6,9 +6,11 @@
 package br.com.minicom.scr.persistence.query;
 
 import br.com.minicom.scr.cell.Type;
-import br.com.minicom.scr.consultas.ChamadoConsulta;
-import br.com.minicom.scr.entity.PID;
+import br.com.minicom.scr.consultas.ChamadoEnderecos;
+import br.com.minicom.scr.consultas.ConsultaContatos;
+import br.com.minicom.scr.entity.Perguntas;
 import br.com.minicom.scr.entity.Servico;
+import br.com.minicom.scr.entity.Solicitacoes;
 import br.com.minicom.scr.entity.exceptions.NotIsDeletableEntityException;
 import br.com.minicom.scr.entity.exceptions.NotIsInsertableEntityException;
 import br.com.minicom.scr.entity.exceptions.NotIsSelectableEntityException;
@@ -23,16 +25,9 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-
-@ManagedBean(name = "teste")
 
 /**
  *
@@ -41,6 +36,8 @@ import javax.faces.bean.SessionScoped;
 public class SimpleQueries implements Queries<Entity> {
 
     Connection conn;
+    Statement stmt = null;
+    ResultSet rs = null;
 
     public SimpleQueries() {
         conn = ConnectionFactory.getConnection();
@@ -153,7 +150,7 @@ public class SimpleQueries implements Queries<Entity> {
                 }
             }
             stmt.executeUpdate();
-
+            System.err.println(qg.updateGenerator(e));
             stmt.close();
 
         } catch (SQLException | ArrayIndexOutOfBoundsException er) {
@@ -195,7 +192,7 @@ public class SimpleQueries implements Queries<Entity> {
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 for (int i = 1; i <= e.getNumOfColumns(); i++) {
-                    e.setCell(i, rs.getString(i));
+                    e.setCell(i - 1, rs.getString(i));
                 }
             }
             rs.close();
@@ -298,21 +295,13 @@ public class SimpleQueries implements Queries<Entity> {
         }
     }
 
-    @Override
-    public List getChamado(String pid, String servico) {
-        List<ChamadoConsulta> consultas = new ArrayList<>();
+    public List getContatos(String servico) {
+        Solicitacoes e = chamadoHandler(servico);
+        List<ConsultaContatos> consultas = new ArrayList<>();
         String sql = "SELECT DISTINCT\n"
-                + "	pid.cod_pid,\n"
-                + "    pid.nome_estabelecimento,\n"
-                + "    contato.nome,\n"
-                + "    telefone.ddd,\n"
-                + "    telefone.telefone,\n"
-                + "    endereco.descricao,\n"
-                + "    endereco.numero,\n"
-                + "    endereco.bairro,\n"
-                + "    endereco.complemento,\n"
-                + "    municipio.nome_municipio,\n"
-                + "    municipio.UF\n"
+                + "contato.nome,\n"
+                + "telefone.ddd,\n"
+                + "telefone.telefone\n"
                 + "    \n"
                 + "    \n"
                 + "FROM \n"
@@ -325,30 +314,22 @@ public class SimpleQueries implements Queries<Entity> {
                 + "    INNER JOIN servico  on	(solicitacoes.Servico_cod_servico=servico.id_servico)\n"
                 + "   \n"
                 + "    \n"
-                + " WHERE pid.cod_pid=" + pid + " and servico.id_servico=" + servico + ";";
+                + " WHERE solicitacoes.em_chamado= 3 and servico.id_servico=" + servico + ";";
 
-        Statement stmt = null;
-        ResultSet rs = null;
-        System.out.println(sql);
+        stmt = null;
+        rs = null;
+        System.out.println("GETCONTATOS: " + sql);
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                consultas.add(new ChamadoConsulta(rs.getString(1),
+                consultas.add(new ConsultaContatos(rs.getString(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10),
-                        rs.getString(11)));
+                        rs.getString(3)
+                ));
             }
 
-            rs.close();
-            stmt.close();
+            mudaStatus(e);
 
         } catch (SQLException | ArrayIndexOutOfBoundsException ex) {
             Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
@@ -356,38 +337,107 @@ public class SimpleQueries implements Queries<Entity> {
         return consultas;
     }
 
-    public List<String> getPerguntas(String pid, String servico) {
-        List<String> perguntas = new ArrayList<>();
+    /**
+     *
+     * @param servico
+     * @return
+     */
+    public List getChamado(String servico) {
+        Solicitacoes e = chamadoHandler(servico);
+        System.err.println(e.toString());
+        List<ChamadoEnderecos> consultas = new ArrayList<>();
+        String sql = "SELECT DISTINCT\n"
+                + "	pid.cod_pid,\n"
+                + "    pid.nome_estabelecimento,\n"
+                + "    endereco.descricao,\n"
+                + "    endereco.numero,\n"
+                + "    endereco.bairro,\n"
+                + "    endereco.complemento,\n"
+                + "    municipio.nome_municipio,\n"
+                + "    municipio.uf,\n"
+                + "    solicitacoes.id_solicitacao\n"
+                + "    \n"
+                + "    \n"
+                + "FROM \n"
+                + "	pid \n"
+                + "    INNER JOIN contato  on 	(pid.cod_pid = contato.PID_cod_pid)\n"
+                + "    INNER JOIN endereco on 	(pid.cod_pid = endereco.PID_cod_pid)\n"
+                + "    INNER JOIN telefone  on 	(contato.id_contato = telefone.Contato_id_contato)\n"
+                + "    INNER JOIN municipio on 	(endereco.Municipio_cod_IBGE = municipio.cod_IBGE)\n"
+                + "    INNER JOIN solicitacoes on  (pid.cod_pid= solicitacoes.PID_cod_pid)\n"
+                + "    INNER JOIN servico  on	(solicitacoes.Servico_cod_servico=servico.id_servico)\n"
+                + "   \n"
+                + "    \n"
+                + " WHERE solicitacoes.em_chamado= 3 and servico.id_servico=" + servico + ";";
+
+        stmt = null;
+        rs = null;
+        System.out.println("GETCHAMADO: " + sql);
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                consultas.add(new ChamadoEnderecos(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9)
+                ));
+
+            }
+
+            mudaStatus(e);
+        } catch (SQLException | ArrayIndexOutOfBoundsException ex) {
+            Logger.getLogger(SimpleQueries.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return consultas;
+    }
+
+    public List<Perguntas> getPerguntas(String servico) {
+        Solicitacoes e = chamadoHandler(servico);
+        List<Perguntas> perguntas = new ArrayList<>();
 
         String sql = "Select\n"
-                + "    perguntas.pergunta\n"
+                + "    perguntas.Id_Perguntas,\n"
+                + "    perguntas.pergunta,\n"
+                + "    perguntas.Servico_cod_servico\n"
                 + "FROM \n"
                 + "	pid \n"
                 + "\n"
                 + "INNER JOIN solicitacoes on  (pid.cod_pid= solicitacoes.PID_cod_pid)\n"
                 + "    INNER JOIN servico  on	(solicitacoes.Servico_cod_servico=servico.id_servico)\n"
                 + "    INNER JOIN perguntas on 	(servico.id_servico=perguntas.Servico_cod_servico)\n"
-                + " WHERE pid.cod_pid=" + pid + " and servico.id_servico = " + servico + ";";
+                + " WHERE solicitacoes.em_chamado = 3 and servico.id_servico = " + servico + ";";
 
-        Statement stmt = null;
-        ResultSet rs = null;
-        System.out.println(sql);
+        stmt = null;
+        rs = null;
+        System.out.println("GETPERGUNTAS: " + sql);
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                perguntas.add(rs.getString(1));
+                Perguntas p = new Perguntas();
+
+                p.setIdPerguntas(rs.getInt(1));
+                p.setCodServico(rs.getInt(3));
+                p.setPergunta(rs.getString(2));
+                perguntas.add(p);
             }
+            mudaStatus(e);
 
-            rs.close();
-            stmt.close();
+            return perguntas;
 
-            return (ArrayList) perguntas;
         } catch (SQLException | ArrayIndexOutOfBoundsException ex) {
-            Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SimpleQueries.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
-        return (ArrayList) perguntas;
+        return perguntas;
     }
 
     private static boolean validaInsert(Entity e, int id) throws SQLException {
@@ -402,8 +452,63 @@ public class SimpleQueries implements Queries<Entity> {
         conn.close();
         return true;
 
-    }public  void chamadoHandler(Servico servico) {
-        
-        
+    }
+
+    public Solicitacoes chamadoHandler(String servico) {
+        Solicitacoes e = new Solicitacoes();
+
+        String sql = "SELECT * FROM " + e.getTableName() + " WHERE " + e.getColumnName(5) + "= " + servico + " and " + e.getColumnName(3) + "=0 order by " + e.getColumnName(0) + "  limit 1";
+        try {
+            stmt = conn.createStatement();
+            System.err.println("CHAMADOHANDLER: " + sql);
+            rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+               
+
+                for (int i = 1; i <= e.getNumOfColumns(); i++) {
+
+                    e.setCell(i - 1, rs.getString(i));
+                   
+                }
+
+                sql = "UPDATE solicitacoes SET em_chamado=3 WHERE  " + e.getColumnName(0) + "= " + e.getCell(0).getValue();
+                System.err.println("CHAMADOHANDLER: " + sql);
+                stmt.executeUpdate(sql);
+                rs.close();
+                stmt.close();
+                return e;
+            } else {
+             
+                sql = "SELECT * FROM " + e.getTableName() + " WHERE " + e.getColumnName(5) + "= " + servico + " and " + e.getColumnName(3) + "=1 order by " + e.getColumnName(0) + "  limit 1";
+                stmt = conn.createStatement();
+                System.err.println("CHAMADOHANDLER: " + sql);
+                rs = stmt.executeQuery(sql);
+
+                while (rs.next()) {
+                    for (int i = 1; i <= e.getNumOfColumns(); i++) {
+
+                        e.setCell(i - 1, rs.getString(i));
+
+                    }
+                }
+                sql = "UPDATE solicitacoes SET em_chamado=3 WHERE  " + e.getColumnName(0) + "= " + e.getCell(0).getValue();
+                System.err.println("CHAMADOHANDLER: " + sql);
+                stmt.executeUpdate(sql);
+                rs.close();
+                stmt.close();
+                return e;
+            }
+        } catch (Exception f) {
+            System.out.println(f);
+        }
+        return e;
+    }
+
+    public void mudaStatus(Solicitacoes e) throws SQLException {
+        String sql = "UPDATE solicitacoes SET em_chamado=1 WHERE  " + e.getColumnName(0) + "= " + e.getCell(0).getValue();
+        System.err.println("MUDASTATUS: " + sql);
+        stmt.executeUpdate(sql);
+        stmt.close();
+        rs.close();
     }
 }

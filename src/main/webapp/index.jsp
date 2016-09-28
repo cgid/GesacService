@@ -1,18 +1,18 @@
 <%@page import="br.com.minicom.scr.entity.Usuario"%>
 <%
 
-    if ((session.getAttribute("userid") == null) || (session.getAttribute("userid") == "")) {
+    if ((session.getAttribute("login") == null) || (session.getAttribute("login") == "")) {
 %>
 
 Você não está logado no sistema<br/>
-<a href="index.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
+<a href="login.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
 <%} else {
-    String userid = String.valueOf(session.getAttribute("userid"));
+    String login = String.valueOf(session.getAttribute("login"));
     String pwd = String.valueOf(session.getAttribute("senha"));
 
     Usuario usuario = new Usuario();
 
-    String perfil = usuario.autenticarPerfil(userid, pwd);
+    String perfil = usuario.autenticarPerfil(login, pwd);
     perfil = "index_" + perfil + ".jsp";
 %>
 
@@ -30,9 +30,10 @@ Você não está logado no sistema<br/>
 
 
     <body>
+        <header><%@include file="header.html" %></header>
 
-      <%@include file="header.html" %>
-      
+
+
 
 
         <section>
@@ -62,12 +63,13 @@ Você não está logado no sistema<br/>
         </section>
 
 
-           <%@include file="footer.html" %>
 
 
         <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
 
     </body>
+    <footer><%@include file="footer.html" %></footer>
+
 
 </html><%}%>

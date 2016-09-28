@@ -5,7 +5,7 @@
  */
 package br.com.minicom.scr.persistence.query;
 
-import br.com.minicom.scr.consultas.ChamadoConsulta;
+import br.com.minicom.scr.consultas.ConsultaContatos;
 import br.com.minicom.scr.entity.exceptions.NotIsDeletableEntityException;
 import br.com.minicom.scr.entity.exceptions.NotIsInsertableEntityException;
 import br.com.minicom.scr.entity.exceptions.NotIsSelectableEntityException;
@@ -44,6 +44,6 @@ public interface Queries<E extends Entity> {
 
     public void close();
 
-    public List<ChamadoConsulta> getChamado(String pid, String servico);
+   
 
 }

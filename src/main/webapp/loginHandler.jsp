@@ -9,35 +9,35 @@
 <%@page import="br.com.minicom.scr.entity.Usuario"%>
 <%@ page import ="java.sql.*" %>
 <%
-    String userid = request.getParameter("login");
+    String login = request.getParameter("login");
     String pwd = request.getParameter("senha");
     SimpleQueries simpleQueries = new SimpleQueries();
     Usuario usuario = new Usuario();
-    int id = simpleQueries.select(userid, pwd, usuario);
-    System.out.print("id: " + id);
+    int usuarioid = simpleQueries.select(login, pwd, usuario);
+    System.out.print("usuarioid: " + usuarioid);
 
-    if (usuario.autenticar(userid, pwd)) {
+    if (usuario.autenticar(login, pwd)) {
 
-        if (usuario.autenticarPerfil(userid, pwd).equals("atendente")) {
+        if (usuario.autenticarPerfil(login, pwd).equals("atendente")) {
            
-            session.setAttribute("userid", userid);
+            session.setAttribute("login", login);
             session.setAttribute("senha", pwd);
-            session.setAttribute("id", id);
+            session.setAttribute("usuarioid", usuarioid);
         
            
         }
-        else if (usuario.autenticarPerfil(userid, pwd).equals("gerente")) {
+        else if (usuario.autenticarPerfil(login, pwd).equals("gerente")) {
           
-            session.setAttribute("userid", userid);
+            session.setAttribute("login", login);
             session.setAttribute("senha", pwd);
-            session.setAttribute("id", id);
+            session.setAttribute("usuarioid", usuarioid);
            
         }
-       else if (usuario.autenticarPerfil(userid, pwd).equals("administrador")) {
+       else if (usuario.autenticarPerfil(login, pwd).equals("administrador")) {
     
-            session.setAttribute("userid", userid);
+            session.setAttribute("login", login);
             session.setAttribute("senha", pwd);
-            session.setAttribute("id", id);
+            session.setAttribute("usuarioid", usuarioid);
         
         }    response.sendRedirect("index.jsp");
     } else {
