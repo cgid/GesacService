@@ -786,7 +786,7 @@ public class SimpleQueries implements Queries<Entity> {
         ResultSet rs3 = ps3.executeQuery();
         while (rs3.next()) {
 
-            contador3++;
+            contador3=contador3+rs3.getInt(1);
         }
         PreparedStatement ps4 = conn.prepareStatement("SELECT * FROM `solicitacoes` WHERE servico_id_servico =? and em_chamado= 2 ");
         ps4.setInt(1, servico);

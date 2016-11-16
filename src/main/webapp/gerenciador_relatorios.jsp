@@ -39,7 +39,7 @@
 
             %><%@include file= 'barra_atendente.jsp' %> 
             <% }%>
-            
+
 
 
 
@@ -165,22 +165,20 @@
 
 
 
-                            <label class="checkbox-inline"><input id="chamados_usu" onclick="bloqueio(this.id)" type ="checkbox">Chamados&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <label class="checkbox-inline"><input id="chamados_usu" name="chamados_usu" onclick="bloqueio(this.id)" type ="checkbox">Chamados&nbsp;&nbsp;&nbsp;&nbsp;</label>
 
                             <div id="div_chamados_usu" style="display: none">
                                 <label class="checkbox-inline"><input id="end_novo_usu" name="end_novo_usu" type="checkbox" onclick="bloqueio(this.id)">Endereços adicionados&nbsp;&nbsp;&nbsp;&nbsp;</label> 
                                 <label class="checkbox-inline"><input id="telefone_usu"name="telefone_usu" onclick="bloqueio(this.id)" type="checkbox" value="telefoneusu">Telefones&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                 <label class="checkbox-inline"><input id="Respostas_usu" name="Respostas_usu" type="checkbox">Respostas&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                <strong>( </strong><label class="checkbox-inline"><input id="duracao_usu" type="checkbox"><strong>Duração&nbsp;&nbsp;&nbsp;&nbsp;</strong></label> 
+                                <strong>( </strong><label class="checkbox-inline"><input id="duracao_usu" name="duracao_usu" type="checkbox"><strong>Duração&nbsp;&nbsp;&nbsp;&nbsp;</strong></label> 
                                 <label class="checkbox-inline"><input id="qtd_atendidos_usu" type="checkbox"><strong>Quantidades de atendidos )</strong>&nbsp;&nbsp;&nbsp;&nbsp;</label> 
 
                             </div> 
                         </div> <div style="padding-top:5px; text-align: center; margin-top:20px; margin-left:25px; background-color:#D6DADF; width: 860px; height: 30px;" class="input-group" hidden="true" id="div_pid">
 
                             <label class="checkbox-inline"><input id="end_pid" name="end_pid" type="checkbox" onclick="bloqueio(this.id)">Endereço Atual&nbsp;&nbsp;&nbsp;&nbsp;</label> 
-
-                            <label class="checkbox-inline"><input id="end_novo_pid"name="end_novo_pid" type="checkbox" onclick="bloqueio(this.id)">Endereço Novo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
-                            <div id="div_end_novo_pid" style="display: none">
+                            <div id="div_end_pid" style="display: none">
 
 
                                 <strong>(</strong> <label class="checkbox-inline"><input id="Descricao_pid"name="Descricao_pid" checked="true" type="checkbox"><strong>Descricão</strong>&nbsp;&nbsp;&nbsp;&nbsp;</label>  
@@ -189,8 +187,18 @@
                                 <label class="checkbox-inline"><input id="Cep_pid"name="Cep_pid" checked="true" type="checkbox"><strong>CEP</strong>&nbsp;&nbsp;&nbsp;&nbsp;</label>  
                                 <label class="checkbox-inline"><input id="Municipio_pid"name="Municipio_pid" type="checkbox" checked="true"><strong>Município )</strong></label>  
                             </div>
+                            <label class="checkbox-inline"><input id="end_novo_pid"name="end_novo_pid" type="checkbox" onclick="bloqueio(this.id)">Endereço Novo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+                            <div id="div_end_novo_pid" style="display: none">
 
-                            <label class="checkbox-inline"><input id="telefone_pid" onclick="bloqueio(this.id)"type="checkbox" value="tel">Telefone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+                                <strong>(</strong> <label class="checkbox-inline"><input id="Descricao_pidn"name="Descricao_pidn" checked="true" type="checkbox"><strong>Descricão</strong>&nbsp;&nbsp;&nbsp;&nbsp;</label>  
+                                <label class="checkbox-inline"><input checked="true" id="Numero_pidn" name="Numero_pidn" type="checkbox"><strong>Número</strong>&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+                                <label class="checkbox-inline"><input id="Bairro_pidn"name="Bairro_pidn" type="checkbox" checked="true"><strong>Bairro</strong>&nbsp;&nbsp;&nbsp;&nbsp;</label>  
+                                <label class="checkbox-inline"><input id="Cep_pidn"name="Cep_pidn" checked="true" type="checkbox"><strong>CEP</strong>&nbsp;&nbsp;&nbsp;&nbsp;</label>  
+                                <label class="checkbox-inline"><input id="Municipio_pidn"name="Municipio_pidn" type="checkbox" checked="true"><strong>Município )</strong></label>  
+                            </div>
+
+                            <label class="checkbox-inline"><input id="telefone_pid"name="telefone_pid" onclick="bloqueio(this.id)"type="checkbox" value="tel">Telefone&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                             <div id="div_telefone_pid" style="display: none">
 
                                 <strong>(</strong> <label class="checkbox-inline"><input id="Invalidos_pid" type="checkbox"><strong>Inválidos</strong>&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -229,43 +237,6 @@
                             <br><br><button type="submit" id="submit"class="btn btn-primary text-center">Gerar Relatórios</button>
 
                         </div> </form> 
-                    <!-- Table -->
-                    <c:set var="aL" value='${requestScope["atributosList"]}'/>
-                    <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
-                    <table class="table">
-                        <c:set var="jL" value='${requestScope["JoinList"]}'/>
-
-                        <c:set var="where" value='${requestScope["where"]}'/>
-                        <c:set var="pesquisa" value='${requestScope["pesquisa"]}'/>
-                        <c:set var="c" value='${requestScope["contadores"]}'/>
-                        <c:set var="i" value='${0}'/>
-                        <thead> 
-                            <tr> 
-                                <c:forEach items="${sq.getTitulosList(aL,jL,c, '2')}" var="titulo">
-
-
-
-
-                                    <th><c:out value="${titulo.toString()}"></c:out></th>
-
-
-
-
-                                </c:forEach>
-                            </tr> 
-                        </thead><tbody>
-
-                            <c:forEach items="${sq.Relatorios(aL,jL,c, where,pesquisa)}" var="consulta">
-                                <tr>    
-
-                                    ${consulta.toString()}
-
-
-
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
                 </div>
 
             </div>

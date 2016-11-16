@@ -49,7 +49,7 @@
 
             var id = $('#id').val();
             if (id != 'null') {
-                $('#titulo').text("EDITAR SERVIÇO");
+                $('#stitulo').text("EDITAR SERVIÇO");
                 $('#submit').text("Aplicar");
 
 
@@ -93,7 +93,7 @@
 
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
-                    <div  id="titulo" class="panel-heading" style="text-align: center;"><strong>ADICIONAR SERVIÇOS</strong></div>
+                    <div  id="titulo" class="panel-heading" style="text-align: center;"><strong  id="stitulo">ADICIONAR SERVIÇOS</strong></div>
 
                     <form method="POST" action="servicoSrv" enctype="multipart/form-data">
 

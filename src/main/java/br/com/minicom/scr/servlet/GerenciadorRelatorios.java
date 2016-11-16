@@ -62,15 +62,14 @@ public class GerenciadorRelatorios extends HttpServlet {
         System.out.println("Entrou na servlet");
         if (request.getParameter("radio").equals("usuario")) {
             System.out.println("PESQUISA POR USUARIO");
-            atributosList.add("usuario.id_usuario");
-            atributosList.add("usuario.nome");
+
             pesquisa = "usuario";
             where = "where usuario.nome='" + request.getParameter("where") + "'";
             System.out.println(request.getParameter("telefone_usu"));
             System.out.println(request.getParameter("end_novo_usu"));
             if (request.getParameter("telefone_usu") != null) {
                 System.out.println("PESQUISA POR USUARIO telefone");
-                atributosList.add("telefone.id_telefone");
+              
 
                 atributosList.add("telefone.ddd");
                 atributosList.add("telefone.telefone");
@@ -115,8 +114,19 @@ public class GerenciadorRelatorios extends HttpServlet {
 
             }
             if (request.getParameter("chamados_usu") != null) {
-                JoinsList.add(" INNER JOIN chamado on (usuario.id_usuario=chamado.Usuario_cod_usuario)");
+                 System.out.println("PESQUISA POR usuaro chamadoS");
+                atributosList.add("servico.id_servico");
+                atributosList.add("pid.cod_pid");
                 atributosList.add("chamado.id_chamado");
+                atributosList.add("chamado.observacao");
+                atributosList.add("chamado.dt_chamado_aberto");
+                JoinsList.add("INNER JOIN chamado on (usuario.id_usuario=chamado.Usuario_cod_usuario)");
+                JoinsList.add("INNER JOIN solicitacoes on (chamado.Solicitacoes_id_solicitacao=solicitacoes.id_solicitacao)");
+                JoinsList.add(" INNER JOIN servico on (servico.id_servico=solicitacoes.servico_id_servico)");
+                
+                
+                JoinsList.add("INNER JOIN pid on (solicitacoes.PID_cod_pid=pid.cod_pid)");
+
                 if (request.getParameter("duracao_usu") != null) {
                     atributosList.add("log_chamado.duracao");
                     JoinsList.add(" INNER JOIN log_chamado on (chamado.id_chamado=log_chamado.chamado_id_chamado)");
@@ -128,53 +138,81 @@ public class GerenciadorRelatorios extends HttpServlet {
             }
 
         }
-           if (request.getParameter("radio").equals("pid")) {
+        if (request.getParameter("radio").equals("pid")) {
             System.out.println("PESQUISA POR pid");
             atributosList.add("pid.cod_pid");
             atributosList.add("pid.nome_estabelecimento");
             pesquisa = "Pid";
             where = "where pid.cod_pid='" + request.getParameter("where") + "'";
-            if (request.getParameter("telefone_usu") != null) {
+            if (request.getParameter("telefone_pid") != null) {
                 System.out.println("PESQUISA POR USUARIO telefone");
-                atributosList.add("telefone.id_telefone");
-
+                
                 atributosList.add("telefone.ddd");
                 atributosList.add("telefone.telefone");
 
                 atributosList.add("contato.nome");
-                atributosList.add("contato.usuario_id_usuario");
-                JoinsList.add(" INNER JOIN contato  on 	(usuario.id_usuario = contato.usuario_id_usuario) ");
+              
+                JoinsList.add(" INNER JOIN contato  on 	(pid.cod_pid = contato.PID_cod_pid)  ");
                 JoinsList.add(" INNER JOIN telefone  on 	(contato.id_contato = telefone.Contato_id_contato) ");
 
             }
 //            if (request.getParameter("end_novo_pid") != null) {
 //                JoinsList.add(" INNER JOIN endereco_novo on (pid.cod_pid=endereco_novo.PID_cod_pid)");
 //            }
-            if (request.getParameter("end_novo_pid") != null) {
-                JoinsList.add(" INNER JOIN endereco_novo on (pid.cod_pid=endereco_novo.PID_cod_pid)");
+            if (request.getParameter("end_pid") != null) {
+                JoinsList.add(" INNER JOIN endereco on (pid.cod_pid=endereco.PID_cod_pid)");
 
-                atributosList.add("endereco_novo.id_endereco");
+              
                 if (request.getParameter("Descricao_pid") != null) {
-                    atributosList.add("endereco_novo.descricao");
+                    atributosList.add("endereco.descricao");
 
                 }
                 if (request.getParameter("Numero_pid") != null) {
-                    atributosList.add("endereco_novo.numero");
+                    atributosList.add("endereco.numero");
 
                 }
                 if (request.getParameter("Bairro_pid") != null) {
-                    atributosList.add("endereco_novo.bairro");
+                    atributosList.add("endereco.bairro");
 
                 }
                 if (request.getParameter("Cep_pid") != null) {
-                    atributosList.add("endereco_novo.cep");
+                    atributosList.add("endereco.cep");
 
                 }
                 if (request.getParameter("Complemento_id") != null) {
-                    atributosList.add("endereco_novo.complemento");
+                    atributosList.add("endereco.complemento");
 
                 }
                 if (request.getParameter("Municipio_usu") != null) {
+                    atributosList.add("municipio.nome_municipio");
+                    JoinsList.add(" INNER JOIN municipio on (endereco.Municipio_cod_IBGE=municipio.cod_IBGE)");
+                }
+            }
+            if (request.getParameter("end_novo_pid") != null) {
+                JoinsList.add(" INNER JOIN endereco_novo on (pid.cod_pid=endereco_novo.PID_cod_pid)");
+
+             
+                if (request.getParameter("Descricao_pidn") != null) {
+                    atributosList.add("endereco_novo.descricao");
+
+                }
+                if (request.getParameter("Numero_pidn") != null) {
+                    atributosList.add("endereco_novo.numero");
+
+                }
+                if (request.getParameter("Bairro_pidn") != null) {
+                    atributosList.add("endereco_novo.bairro");
+
+                }
+                if (request.getParameter("Cep_pidn") != null) {
+                    atributosList.add("endereco_novo.cep");
+
+                }
+                if (request.getParameter("Complemento_idn") != null) {
+                    atributosList.add("endereco_novo.complemento");
+
+                }
+                if (request.getParameter("Municipio_usun") != null && request.getParameter("Municipio_usu") == null) {
                     atributosList.add("municipio.nome_municipio");
                     JoinsList.add(" INNER JOIN municipio on (endereco_novo.Municipio_cod_IBGE=municipio.cod_IBGE)");
                 }
@@ -217,10 +255,6 @@ public class GerenciadorRelatorios extends HttpServlet {
 
         }
 
-        System.out.println(atributosList);
-        System.out.println(JoinsList);
-        System.out.println("AINDA TA NESSA");
-        System.out.println(contadoresList);
         request.setAttribute("atributosList", atributosList);
         if (!contadoresList.isEmpty()) {
             request.setAttribute("contadores", contadoresList);
@@ -230,7 +264,7 @@ public class GerenciadorRelatorios extends HttpServlet {
         request.setAttribute("JoinList", JoinsList);
         request.setAttribute("JoinList", JoinsList);
         System.out.println("AINDA TA NESSA");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("gerenciador_relatorios.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("teste_ajax.jsp");
         System.out.println("AINDA TA NESSA");
         dispatcher.forward(request, response);
     }
