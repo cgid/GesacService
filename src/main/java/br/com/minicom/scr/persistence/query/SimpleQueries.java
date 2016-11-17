@@ -9,6 +9,7 @@ import br.com.minicom.scr.cell.Type;
 import br.com.minicom.scr.consultas.ChamadoEnderecos;
 import br.com.minicom.scr.consultas.ChamadosAtendidos;
 import br.com.minicom.scr.consultas.ConsultaContatos;
+import br.com.minicom.scr.entity.Chamado;
 import br.com.minicom.scr.entity.Perguntas;
 import br.com.minicom.scr.entity.Servico;
 import br.com.minicom.scr.entity.Solicitacoes;
@@ -21,6 +22,7 @@ import br.com.minicom.scr.persistence.Entity;
 import br.com.minicom.scr.persistence.querygen.QueryGenerator;
 import br.com.minicom.scr.persistence.querygen.SimpleQueryGenerator;
 import br.com.minicom.scr.relatorios.RelatorioPid;
+import br.com.minicom.scr.relatorios.RelatorioPorPid;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -42,7 +44,10 @@ public class SimpleQueries implements Queries<Entity> {
 
     Connection conn;
     Statement stmt = null;
+    Statement stmt2 = null;
+
     ResultSet rs = null;
+    ResultSet rs2 = null;
     PreparedStatement pstmt = null;
 
     public SimpleQueries() {
@@ -288,14 +293,15 @@ public class SimpleQueries implements Queries<Entity> {
      */
     public List<Entity> selectList(Entity e) throws SQLException {
 
-        String sql = "SELECT * FROM  " + e.getTableName() + " order by " + e.getColumnName(0) + " desc";
-
-        String clazz = "br.com.minicom.scr.entity." + e.getTableName();
-        Statement stmt = null;
-        ResultSet rs = null;
-        List<Entity> l = new ArrayList<>();
-        Entity aux;
         try {
+            String sql = "SELECT * FROM  " + e.getTableName() + " order by " + e.getColumnName(0) + " desc";
+
+            String clazz = "br.com.minicom.scr.entity." + e.getTableName();
+            stmt = null;
+            rs = null;
+            List<Entity> l = new ArrayList<>();
+            Entity aux;
+
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -312,36 +318,51 @@ public class SimpleQueries implements Queries<Entity> {
         } catch (SQLException | ArrayIndexOutOfBoundsException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         return null;
     }
 
-    public List<Entity> selectList(int teste, String entidade) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        String clazz = "br.com.minicom.scr.entity." + entidade;
-        Entity e = (Entity) Class.forName(clazz).newInstance();
-        String sql = "SELECT * FROM  " + entidade + " order by " + e.getColumnName(0) + " desc";
+    public List<RelatorioPorPid> selectChamadoPorPid(int pid) throws SQLException {
 
-        Statement stmt = null;
-        ResultSet rs = null;
-        List<Entity> l = new ArrayList<>();
-        Entity aux;
-        try {
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                aux = (Entity) Class.forName(clazz).newInstance();
-                for (int i = 1; i <= aux.getNumOfColumns(); i++) {
-                    aux.setCell(i - 1, rs.getString(i));
-                }
-                l.add(aux);
+        String sql = "  select\n"
+                + "servico.id_servico,\n"
+                + "usuario.nome,\n"
+                + "chamado.dt_chamado_aberto,\n"
+                + "chamado.observacao,\n"
+                + "chamado.id_chamado\n"
+                + "from chamado\n"
+                + "INNER JOIN solicitacoes ON(chamado.Solicitacoes_id_solicitacao=solicitacoes.id_solicitacao)\n"
+                + "INNER JOIN  pid on (solicitacoes.PID_cod_pid=pid.cod_pid)\n"
+                + "INNER JOIN servico on (servico.id_servico=solicitacoes.servico_id_servico)\n"
+                + "INNER JOIN usuario on (chamado.Usuario_cod_usuario=usuario.id_usuario)\n"
+                + "where pid.cod_pid=" + pid;
+        System.out.println(sql);
+        stmt = null;
+        rs = null;
+        List<RelatorioPorPid> l = new ArrayList<>();
+        String duracao = "indefinido";
+        stmt = conn.createStatement();
+        rs = stmt.executeQuery(sql);
+        while (rs.next()) {
+            stmt2 = conn.createStatement();
+            String sql2 = "SELECT log_chamado.duracao FROM `log_chamado` WHERE `chamado_id_chamado`=" + rs.getInt(5);
+            rs2 = stmt2.executeQuery(sql2);
+            while (rs2.next()) {
+                duracao = rs2.getString(1);
             }
-            rs.close();
-            stmt.close();
-
-            return l;
-        } catch (SQLException | ArrayIndexOutOfBoundsException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
+            RelatorioPorPid rpp = new RelatorioPorPid(
+                    rs.getInt(1),
+                    rs.getString(2),
+                    duracao,
+                    rs.getString(4),
+                    rs.getString(5));
+            l.add(rpp);
         }
-        return null;
+        rs.close();
+        stmt.close();
+
+        return l;
+
     }
 
     @Override
@@ -349,8 +370,10 @@ public class SimpleQueries implements Queries<Entity> {
         try {
             System.out.println("conexao fechada");
             conn.close();
+
         } catch (SQLException ex) {
-            Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SimpleQueries.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -400,10 +423,60 @@ public class SimpleQueries implements Queries<Entity> {
                         rs.getString(5),
                         rs.getString(6)
                 ));
+
             }
 
         } catch (SQLException | ArrayIndexOutOfBoundsException ex) {
-            Logger.getLogger(SimpleQueries.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SimpleQueries.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+        return consultas;
+    }
+
+    public List getContatosRelatorio(String pid) {
+
+        List<ConsultaContatos> consultas = new ArrayList<>();
+        String sql = "SELECT DISTINCT\n"
+                + "telefone.id_telefone,\n" + "contato.nome,\n"
+                + "contato.email,\n"
+                + "telefone.Situacao,\n"
+                + "telefone.ddd,\n"
+                + "telefone.telefone\n"
+                + "    \n"
+                + "    \n"
+                + "FROM \n"
+                + "	pid \n"
+                + "    INNER JOIN contato  on 	(pid.cod_pid = contato.PID_cod_pid)\n"
+                + "    INNER JOIN endereco on 	(pid.cod_pid = endereco.PID_cod_pid)\n"
+                + "    INNER JOIN telefone  on 	(contato.id_contato = telefone.Contato_id_contato)\n"
+                + "    INNER JOIN municipio on 	(endereco.Municipio_cod_IBGE = municipio.cod_IBGE)\n"
+                + "    INNER JOIN solicitacoes on  (pid.cod_pid= solicitacoes.PID_cod_pid)\n"
+                + "    INNER JOIN servico  on	(solicitacoes.Servico_id_servico=servico.id_servico)\n"
+                + "   \n"
+                + "    \n"
+                + " WHERE pid.cod_pid=" + pid + ";";
+
+        stmt = null;
+        rs = null;
+
+        System.out.println("GETCONTATOS: sql 2" + sql.substring(sql.length() - 63));
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                consultas.add(new ConsultaContatos(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6)
+                ));
+
+            }
+
+        } catch (SQLException | ArrayIndexOutOfBoundsException ex) {
+            Logger.getLogger(SimpleQueries.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return consultas;
     }
@@ -786,7 +859,7 @@ public class SimpleQueries implements Queries<Entity> {
         ResultSet rs3 = ps3.executeQuery();
         while (rs3.next()) {
 
-            contador3=contador3+rs3.getInt(1);
+            contador3 = contador3 + rs3.getInt(1);
         }
         PreparedStatement ps4 = conn.prepareStatement("SELECT * FROM `solicitacoes` WHERE servico_id_servico =? and em_chamado= 2 ");
         ps4.setInt(1, servico);
@@ -803,7 +876,7 @@ public class SimpleQueries implements Queries<Entity> {
         return CAList;
     }
 
-    public List<String> getTitulosList(List<String> atributos, List<String> Joins, List<String> contadores, String where) throws SQLException {
+    public List<String> getTitulosList(List<String> atributos, List<String> Joins) throws SQLException {
         List<String> titulos = new ArrayList();
 
         for (Iterator<String> iterator = atributos.iterator(); iterator.hasNext();) {
@@ -816,20 +889,33 @@ public class SimpleQueries implements Queries<Entity> {
             if (next.contains("_")) {
                 next = next.replaceAll("_", " de ");
             }
+            if (next.equals("id de servico")) {
+                next = "Lista";
+            }
+            if (next.equals("cod de pid")) {
+                next = "PID";
+            }
+            if (next.equals("id de chamado")) {
+                next = "Nº Chamado";
+            }
+            if (next.equals("dt de chamado de aberto")) {
+                next = "Data de Abertura";
+            }
+            if (next.equals("duracao")) {
+                next = "Duração";
+            }
+
+            if (next.equals("observacao")) {
+                next = "Observação";
+            }
 
             titulos.add(next);
-        }
-        if (contadores != null) {
-            for (Iterator<String> iterator = contadores.iterator(); iterator.hasNext();) {
-                String next = iterator.next();
-                titulos.add(next);
 
-            }
         }
         return titulos;
     }
 
-    public List<RelatorioPid> Relatorios(List<String> atributos, List<String> Joins, List<String> contadores, String where, String pesquisa) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public List<RelatorioPid> RelatorioUsuario(List<String> atributos, List<String> Joins, String where, String pesquisa) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         List<RelatorioPid> relatorioPids = new ArrayList<>();
         List<String> columNames = new ArrayList();
         String sql = "Select DISTINCT ";
@@ -842,28 +928,7 @@ public class SimpleQueries implements Queries<Entity> {
             size++;
             columNames.add(atributos.get(i + 1));
         }
-//        for (int i = 0; i < contadores.size() - 1; i++) {
-//            sql = sql.concat("\n" + atributos.get(i) + ",\n");
-//            size++;
-//            columNames.add(atributos.get(i + 1));
-//        }
-//        if (contadores != null) {
-//            for (Iterator<String> iterator = contadores.iterator(); iterator.hasNext();) {
-//
-//                String sqlc = "Select * from ";
-//                sqlc = sqlc.concat(iterator.next());
-//                Entity aux = (Entity) Class.forName(iterator.next()).newInstance();
-//                if (pesquisa.equals("usuario")) {
-//                    if (contadores.contains("invalidos")) {
-//                        sqlc = sqlc.concat(" INNER JOIN contato  on 	(usuario.id_usuario = contato.usuario_id_usuario)/n ");
-//                        sqlc = sqlc.concat(" INNER JOIN telefone  on 	(contato.id_contato = telefone.Contato_id_contato)/n ");
-//
-//                    }
-//                }
-//                sql = sql.concat(where);
-//
-//            }
-//        }
+//       
 
         sql = sql.concat("\n" + atributos.get(atributos.size() - 1) + "\n");
         sql = sql.concat("from " + pesquisa);
@@ -874,6 +939,7 @@ public class SimpleQueries implements Queries<Entity> {
         }
 
         sql = sql.concat(where);
+        sql = sql.concat(" order by chamado.dt_chamado_aberto desc");
         System.out.println(sql);
         stmt = conn.createStatement();
         rs = stmt.executeQuery(sql);

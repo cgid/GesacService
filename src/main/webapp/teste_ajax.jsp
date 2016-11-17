@@ -25,9 +25,12 @@
             }</script>
     </head>
     <body>
-        <!-- Table -->
-        <c:set var="aL" value='${requestScope["atributosList"]}'/>
-        <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
+
+        <label>
+            <input type="checkbox" name="checkbox" value="checkbox" onclick="bloqueio()" />  
+            EXIBIR</label>
+            <c:set var="aL" value='${requestScope["atributosList"]}'/>
+            <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
         <table class="table">
             <c:set var="jL" value='${requestScope["JoinList"]}'/>
 
