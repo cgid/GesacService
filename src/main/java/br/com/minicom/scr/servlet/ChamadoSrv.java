@@ -40,15 +40,15 @@ public class ChamadoSrv extends HttpServlet {
 
     //Initialize global variables
     public void init() throws ServletException {
-        
+
     }
 
     //Process the HTTP Post request
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         doGet(request, response);
-        
+
     }
 
     /**
@@ -62,44 +62,46 @@ public class ChamadoSrv extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpServletRequest reqt = (HttpServletRequest) request;
         HttpSession ses = reqt.getSession(false);
-        Chamado c = new Chamado();
+
         Contato contato = new Contato();
-        c.setCodUsuario(Integer.parseInt(String.valueOf(ses.getAttribute("usuarioid"))));
+
         Solicitacoes s = new Solicitacoes();
-        
-        c.setChamadoAberto(request.getParameter("dt_chamado_aberto"));
+
         Log_chamado log = new Log_chamado();
         SimpleQueries equery = new SimpleQueries();
+        Chamado c = new Chamado();
+
         String operacaoLog = null;
         try {
-            
+            int idChamado = equery.select(c);
+            System.out.println("ID CHAMDO? "+idChamado);
+            c = (Chamado) equery.select(c, idChamado);
             c.setIdSolicitacao(Integer.parseInt(request.getParameter("idSolicitacao")));
-            
+
             s = (Solicitacoes) equery.select(s, Integer.parseInt(request.getParameter("idSolicitacao")));
             int QtdeTentativas = (1 + Integer.parseInt(String.valueOf(s.getCell(1).getValue())));
             s.setUltTentativa(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             System.out.println(s.toString());
             s.setQtdeTentativas(QtdeTentativas);
             equery.update(s);
-            
+
             c.setObservacao(request.getParameter("observacao"));
-            
-            equery.insert(c);
-            
+
+            equery.update(c);
+
             String[] invalidos = request.getParameterValues("invalido");
-            
+
             String[] contatonovo = request.getParameterValues("contatonovo");
-            
-            
+
             String[] telefonenovo = request.getParameterValues("telefonenovo");
             String[] emailnovo = request.getParameterValues("emailnovo");
-            
+
             String[] contatos = request.getParameterValues("contato");
             String[] respostas = request.getParameterValues("resposta");
-            
+
             List contatosList = new ArrayList();
             int contador = 0;
-            
+
             if (null != invalidos) { //invalída contatos que foram selecionados como invalidos
                 for (int i = 0; i < invalidos.length; i++) {
                     Telefone telefone = new Telefone();
@@ -118,7 +120,7 @@ public class ChamadoSrv extends HttpServlet {
             if (contatosList.isEmpty()) {
                 System.out.println("LISTA VAZIA");
             }
-            
+
             if (request.getParameter("realizado").equals("1")) {
                 operacaoLog = "realizado com sucesso";
             }
@@ -130,34 +132,35 @@ public class ChamadoSrv extends HttpServlet {
             if (request.getParameter("realizado").equals("1") || contador == contatos.length && contatosList.isEmpty()) {
                 // insere as repostas caso tenha sido contatado 
                 if (respostas != null) {
-                    
+
                     if (0 < respostas.length) {
-                        
+
                         for (int i = 0; i < respostas.length; i++) {
-                            
+
                             if (respostas[i].trim().length() > 0) {
-                                
+
                                 Respostas resposta = new Respostas();
-                                resposta.setCodChamado(equery.select(c));
-                                
+                                resposta.setCodChamado(idChamado);
+
                                 resposta.setResposta(respostas[i]);
+                                System.out.println("ID CHAMDO"+idChamado);
                                 System.out.println(resposta.toString());
                                 equery.insert(resposta);
-                                
+
                             }
                         }
                     }
                 }
                 String sql = "UPDATE solicitacoes SET em_chamado=4 WHERE  " + s.getColumnName(0) + "= " + s.getCell(0).getValue();
                 operacaoLog = "realizado com sucesso";
-                
+
                 System.err.println(sql);
                 Connection conn = ConnectionFactory.getConnection();
                 Statement stmt;
                 stmt = conn.createStatement();
-                
+
                 stmt.executeUpdate(sql);
-                
+
                 stmt.close();
                 conn.close();
             }
@@ -172,40 +175,38 @@ public class ChamadoSrv extends HttpServlet {
                 Connection conn = ConnectionFactory.getConnection();
                 Statement stmt;
                 stmt = conn.createStatement();
-                
+
                 stmt.executeUpdate(sql);
-                
+
                 s.setDtAgenda(request.getParameter("datepicker") + " " + request.getParameter("timepicker"));
-                
+
                 equery.update(s);
-                 stmt.close();
+                stmt.close();
                 conn.close();
             }
 
             //adiciona telefone e contatos novos caso tenha sido inserido 
-        
-            
             RequestDispatcher dispatcher = request.getRequestDispatcher("/chamados.jsp?idchamado=" + request.getParameter("idchamado")
             );
-            
-            log.setIdChamado(equery.select(c));
-            
+
+            log.setIdChamado(idChamado);
+
             log.setOperacao(operacaoLog);
             log.setDuracao(request.getParameter("duracao"));
             equery.insert(log);
             equery.close();
             dispatcher.forward(request, response);
             equery.close();
-            
+
         } catch (Exception ex) {
             equery.close();
             ex.printStackTrace();
             System.out.println("Erro na Solicitação. Tente de novo ou entre em contato do Administrador do Banco de Dados");
             RequestDispatcher dispatcher = request.getRequestDispatcher("erro.jsp");
             dispatcher.forward(request, response);
-            
+
         }
-        
+
     }
 
     /**

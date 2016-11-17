@@ -186,7 +186,7 @@ public class SimpleQueries implements Queries<Entity> {
             }
             switch (e.getTableName()) {
                 case "Chamado":
-                    sql = "SELECT * from " + e.getTableName() + " where  Usuario_cod_usuario =" + e.getCell(3).getValue() + " order by " + e.getColumnName(0) + " desc limit 1";
+                    sql = "SELECT * from " + e.getTableName() + " order by " + e.getColumnName(0) + " desc limit 1";
 
                     break;
 
