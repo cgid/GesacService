@@ -74,14 +74,14 @@ public class ChamadoSrv extends HttpServlet {
         String operacaoLog = null;
         try {
             int idChamado = equery.select(c);
-            System.out.println("ID CHAMDO? "+idChamado);
-            c = (Chamado) equery.select(c, idChamado);
+            Chamado secC = new Chamado();
+            c = (Chamado) equery.select(secC, idChamado);
             c.setIdSolicitacao(Integer.parseInt(request.getParameter("idSolicitacao")));
 
             s = (Solicitacoes) equery.select(s, Integer.parseInt(request.getParameter("idSolicitacao")));
             int QtdeTentativas = (1 + Integer.parseInt(String.valueOf(s.getCell(1).getValue())));
             s.setUltTentativa(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            System.out.println(s.toString());
+
             s.setQtdeTentativas(QtdeTentativas);
             equery.update(s);
 
@@ -107,7 +107,7 @@ public class ChamadoSrv extends HttpServlet {
                     Telefone telefone = new Telefone();
                     telefone = (Telefone) equery.select(telefone, Integer.parseInt(invalidos[i]));
                     telefone.setSituacao(0);
-                    System.out.println("TELEFONE INVALIDADO");
+                    System.out.println("TELEFONE INVALIDADO pelo usuario: " + request.getSession().getAttribute("usuarioid"));
                     equery.update(telefone);
                     contador++;
                 }
@@ -122,6 +122,7 @@ public class ChamadoSrv extends HttpServlet {
             }
 
             if (request.getParameter("realizado").equals("1")) {
+                System.err.println("o usuario " + request.getSession().getAttribute("usuarioid") + " finalizou o chamado ");
                 operacaoLog = "realizado com sucesso";
             }
             if (contador == contatos.length && contatosList.isEmpty()) {
@@ -143,8 +144,7 @@ public class ChamadoSrv extends HttpServlet {
                                 resposta.setCodChamado(idChamado);
 
                                 resposta.setResposta(respostas[i]);
-                                System.out.println("ID CHAMDO"+idChamado);
-                                System.out.println(resposta.toString());
+
                                 equery.insert(resposta);
 
                             }
@@ -154,6 +154,7 @@ public class ChamadoSrv extends HttpServlet {
                 String sql = "UPDATE solicitacoes SET em_chamado=4 WHERE  " + s.getColumnName(0) + "= " + s.getCell(0).getValue();
                 operacaoLog = "realizado com sucesso";
 
+                System.err.println(sql);
                 System.err.println(sql);
                 Connection conn = ConnectionFactory.getConnection();
                 Statement stmt;
@@ -170,8 +171,7 @@ public class ChamadoSrv extends HttpServlet {
             if (request.getParameter("realizado").equals("0")) {
                 String sql = "UPDATE solicitacoes SET em_chamado=2 WHERE  " + s.getColumnName(0) + "= " + s.getCell(0).getValue();
                 operacaoLog = "realizado sem sucesso";
-                System.err.println("Entrou no if de set=4");
-                System.err.println(sql);
+
                 Connection conn = ConnectionFactory.getConnection();
                 Statement stmt;
                 stmt = conn.createStatement();
@@ -179,7 +179,7 @@ public class ChamadoSrv extends HttpServlet {
                 stmt.executeUpdate(sql);
 
                 s.setDtAgenda(request.getParameter("datepicker") + " " + request.getParameter("timepicker"));
-
+                System.out.println("Usuario:" + request.getSession().getAttribute("usuarioid") + " escolheu nao e agendou para: " + request.getParameter("datepicker") + " " + request.getParameter("timepicker"));
                 equery.update(s);
                 stmt.close();
                 conn.close();

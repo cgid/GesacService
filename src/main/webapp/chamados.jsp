@@ -11,7 +11,7 @@
         <script src="lib/jquery/external/jquery/jquery.js"></script>
         <script src="lib/jquery/jquery.min.js"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="/resources/demos/style.css">
+       
 
         <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 
@@ -111,6 +111,7 @@
 
                 });
                 $('#addcontato').click(function (event) {
+                    $("#addcontato").show();
                     var contatos = $(document.getElementsByName("contatonovo")).val();
                     var tels = $(document.getElementsByName("telefonenovo")).val();
                     var emails = $(document.getElementsByName("emailnovo")).val();
@@ -122,7 +123,9 @@
                     $.get('ContatoActionServlet', {emailnovo: emails, telefonenovo: tels, pid2: pid2, contatonovo: contatos}, function (responseText) {
 
                         $("#fields").hide();
+                        $("#fields").text("");
                         $('#sucess2').show().text(responseText);
+                        $("#addcontato").hide();
 
                     });
                 });
@@ -389,9 +392,10 @@
 
                                     <div id="fields">
                                         <div>
-                                            <button hidden="true" style="display: none" type="button"id="addcontato" class="btn btn-primary">add</button>
+
                                         </div>
                                     </div>
+                                    <button hidden="true" style="margin-left: 40px;margin-top:-10px; display: none" type="button"id="addcontato" class="btn btn-primary">Inserir contato</button>
                                     <center><div class="alert alert-success" id="sucess2" hidden="true" role="alert"></center>
 
 

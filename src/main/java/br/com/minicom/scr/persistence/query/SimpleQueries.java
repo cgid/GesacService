@@ -152,7 +152,7 @@ public class SimpleQueries implements Queries<Entity> {
                 if (e.getCell(0).isIterable()) {
                     if (e.getCell(i).getType().equals(Type.NUM)) {
                         pstmt.setInt(i, e.getCell(i).getValue() == null ? 0 : Integer.parseInt(String.valueOf(e.getCell(i).getValue())));
-                        System.err.println("GENERATOR: " + e.getCell(i).getValue());
+                        
                     } else {
                         pstmt.setString(i, String.valueOf(e.getCell(i).getValue()));
                     }
@@ -411,7 +411,7 @@ public class SimpleQueries implements Queries<Entity> {
         stmt = null;
         rs = null;
 
-        System.out.println("GETCONTATOS: sql 2" + sql.substring(sql.length() - 63));
+    
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
@@ -519,7 +519,7 @@ public class SimpleQueries implements Queries<Entity> {
 
         stmt = null;
         rs = null;
-        System.out.println("GETCHAMADO: " + sql.substring(sql.length() - 63));
+        
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
