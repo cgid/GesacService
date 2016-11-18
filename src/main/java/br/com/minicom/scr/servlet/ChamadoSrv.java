@@ -17,12 +17,17 @@ import br.com.minicom.scr.persistence.query.SimpleQueries;
 
 import java.io.IOException;
 import java.sql.Connection;
+
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -74,7 +79,7 @@ public class ChamadoSrv extends HttpServlet {
         String operacaoLog = null;
         try {
             int idChamado = equery.select(c);
-            System.out.println("ID CHAMDO? "+idChamado);
+            System.out.println("ID CHAMDO? " + idChamado);
             c = (Chamado) equery.select(c, idChamado);
             c.setIdSolicitacao(Integer.parseInt(request.getParameter("idSolicitacao")));
 
@@ -143,7 +148,7 @@ public class ChamadoSrv extends HttpServlet {
                                 resposta.setCodChamado(idChamado);
 
                                 resposta.setResposta(respostas[i]);
-                                System.out.println("ID CHAMDO"+idChamado);
+                                System.out.println("ID CHAMDO" + idChamado);
                                 System.out.println(resposta.toString());
                                 equery.insert(resposta);
 
@@ -177,9 +182,13 @@ public class ChamadoSrv extends HttpServlet {
                 stmt = conn.createStatement();
 
                 stmt.executeUpdate(sql);
+                String data = request.getParameter("datepicker");
+                String[] dataarray = data.split("/");
+                String dataCerta = dataarray[2].concat("-" + dataarray[0]).concat("-" + dataarray[1]);
 
-                s.setDtAgenda(request.getParameter("datepicker") + " " + request.getParameter("timepicker"));
-
+                s.setDtAgenda(dataCerta + " " + request.getParameter("timepicker")
+                );
+                System.err.println(s.toString());
                 equery.update(s);
                 stmt.close();
                 conn.close();

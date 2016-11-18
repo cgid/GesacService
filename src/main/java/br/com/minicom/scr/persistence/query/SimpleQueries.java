@@ -93,7 +93,7 @@ public class SimpleQueries implements Queries<Entity> {
             }
 
             pstmt.executeUpdate();
-            System.out.println(e.getCell(0).getValue() + " inserido com sucesso!");
+            System.out.println("O " + e.getTableName() + ":" + e.getCell(1).getValue() + " inserido com sucesso!");
 
             pstmt.close();
         } else {
@@ -152,7 +152,7 @@ public class SimpleQueries implements Queries<Entity> {
                 if (e.getCell(0).isIterable()) {
                     if (e.getCell(i).getType().equals(Type.NUM)) {
                         pstmt.setInt(i, e.getCell(i).getValue() == null ? 0 : Integer.parseInt(String.valueOf(e.getCell(i).getValue())));
-                        System.err.println("GENERATOR: " + e.getCell(i).getValue());
+
                     } else {
                         pstmt.setString(i, String.valueOf(e.getCell(i).getValue()));
                     }
@@ -164,7 +164,7 @@ public class SimpleQueries implements Queries<Entity> {
             }
 
             pstmt.executeUpdate();
-            System.err.println(qg.updateGenerator(e));
+
             pstmt.close();
 
         } catch (SQLException | ArrayIndexOutOfBoundsException er) {
@@ -201,7 +201,6 @@ public class SimpleQueries implements Queries<Entity> {
                     break;
             }
 
-            System.out.println(sql);
             stmt = conn.createStatement();
             ResultSet resultSet = stmt.executeQuery(sql);
             while (resultSet.next()) {
@@ -336,7 +335,7 @@ public class SimpleQueries implements Queries<Entity> {
                 + "INNER JOIN servico on (servico.id_servico=solicitacoes.servico_id_servico)\n"
                 + "INNER JOIN usuario on (chamado.Usuario_cod_usuario=usuario.id_usuario)\n"
                 + "where pid.cod_pid=" + pid;
-        System.out.println(sql);
+
         stmt = null;
         rs = null;
         List<RelatorioPorPid> l = new ArrayList<>();
@@ -411,7 +410,6 @@ public class SimpleQueries implements Queries<Entity> {
         stmt = null;
         rs = null;
 
-        System.out.println("GETCONTATOS: sql 2" + sql.substring(sql.length() - 63));
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
@@ -459,7 +457,6 @@ public class SimpleQueries implements Queries<Entity> {
         stmt = null;
         rs = null;
 
-        System.out.println("GETCONTATOS: sql 2" + sql.substring(sql.length() - 63));
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
@@ -519,7 +516,7 @@ public class SimpleQueries implements Queries<Entity> {
 
         stmt = null;
         rs = null;
-        System.out.println("GETCHAMADO: " + sql.substring(sql.length() - 63));
+
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
@@ -612,7 +609,7 @@ public class SimpleQueries implements Queries<Entity> {
 
         stmt = null;
         rs = null;
-        System.out.println("GETPERGUNTAS:  WHERE servico_id_servico = " + servico + ";");
+
         try {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
@@ -657,7 +654,7 @@ public class SimpleQueries implements Queries<Entity> {
             sql = "select * from " + e.getTableName() + " where  " + e.getColumnName(6) + "= '" + String.valueOf(e.getCell(6).getValue()) + "' and " + e.getColumnName(7) + "= '" + String.valueOf(e.getCell(7).getValue()) + "';";
 
         }
-        System.out.println(sql);
+
         rs = stmt.executeQuery(sql);
         if (rs.next()) {
             stmt.close();
@@ -679,7 +676,7 @@ public class SimpleQueries implements Queries<Entity> {
     public Solicitacoes chamadoHandler(String servico) {
         Solicitacoes solicitacao = new Solicitacoes();
 
-        String sql = "SELECT * FROM " + solicitacao.getTableName() + " WHERE " + solicitacao.getColumnName(7) + "= " + servico + " and " + solicitacao.getColumnName(4) + "=0 order by RAND()   limit 1";
+        String sql = "SELECT * FROM " + solicitacao.getTableName() + " WHERE " + solicitacao.getColumnName(7) + "= " + servico + " and " + solicitacao.getColumnName(4) + "=5 order by RAND()   limit 1";
         try {
             stmt = conn.createStatement();
 
@@ -700,24 +697,44 @@ public class SimpleQueries implements Queries<Entity> {
                 return solicitacao;
             } else {
 
-                sql = "SELECT * FROM " + solicitacao.getTableName() + " WHERE " + solicitacao.getColumnName(7) + "= " + servico + " and " + solicitacao.getColumnName(4) + "=1 order by RAND()   limit 1";
+                sql = "SELECT * FROM " + solicitacao.getTableName() + " WHERE " + solicitacao.getColumnName(7) + "= " + servico + " and " + solicitacao.getColumnName(4) + "=0 order by RAND()   limit 1";
                 stmt = conn.createStatement();
 
                 rs = stmt.executeQuery(sql);
+                if (rs.next()) {
+                    while (rs.next()) {
+                        for (int i = 1; i <= solicitacao.getNumOfColumns(); i++) {
 
-                while (rs.next()) {
-                    for (int i = 1; i <= solicitacao.getNumOfColumns(); i++) {
+                            solicitacao.setCell(i - 1, rs.getString(i));
 
-                        solicitacao.setCell(i - 1, rs.getString(i));
-
+                        }
                     }
-                }
-                sql = "UPDATE solicitacoes SET em_chamado=3 WHERE  " + solicitacao.getColumnName(0) + "= " + solicitacao.getCell(0).getValue();
+                    sql = "UPDATE solicitacoes SET em_chamado=3 WHERE  " + solicitacao.getColumnName(0) + "= " + solicitacao.getCell(0).getValue();
 
-                stmt.executeUpdate(sql);
-                rs.close();
-                stmt.close();
-                return solicitacao;
+                    stmt.executeUpdate(sql);
+                    rs.close();
+                    stmt.close();
+                    return solicitacao;
+                } else {
+                    sql = "SELECT * FROM " + solicitacao.getTableName() + " WHERE " + solicitacao.getColumnName(7) + "= " + servico + " and " + solicitacao.getColumnName(4) + "=1 order by RAND()   limit 1";
+                    stmt = conn.createStatement();
+
+                    rs = stmt.executeQuery(sql);
+
+                    while (rs.next()) {
+                        for (int i = 1; i <= solicitacao.getNumOfColumns(); i++) {
+
+                            solicitacao.setCell(i - 1, rs.getString(i));
+
+                        }
+                    }
+                    sql = "UPDATE solicitacoes SET em_chamado=3 WHERE  " + solicitacao.getColumnName(0) + "= " + solicitacao.getCell(0).getValue();
+
+                    stmt.executeUpdate(sql);
+                    rs.close();
+                    stmt.close();
+                    return solicitacao;
+                }
             }
         } catch (Exception f) {
             System.out.println(f);
@@ -818,7 +835,6 @@ public class SimpleQueries implements Queries<Entity> {
         servico.setStatus(0);
         servico.setDtEncerramento(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-        System.out.println(servico.toString());
         update(servico);
         String sql = "UPDATE solicitacoes SET em_chamado=4 WHERE  servico_id_servico= " + servico.getCell(0).getValue();
 
@@ -940,7 +956,7 @@ public class SimpleQueries implements Queries<Entity> {
 
         sql = sql.concat(where);
         sql = sql.concat(" order by chamado.dt_chamado_aberto desc");
-        System.out.println(sql);
+
         stmt = conn.createStatement();
         rs = stmt.executeQuery(sql);
         size = size + 1;

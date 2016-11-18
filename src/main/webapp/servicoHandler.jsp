@@ -13,7 +13,7 @@
     c.setChamadoAberto(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     SimpleQueries simpleQueries = new SimpleQueries();
     simpleQueries.insert(c);
-
+    System.err.print("chamado aberto pelo usuario " + request.getSession().getAttribute("login") + " as :" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     response.setContentType("text/plain");
     response.setCharacterEncoding("UTF-8");
     Connection conn;
@@ -29,7 +29,7 @@
             + " ORDER by chamado.dt_chamado_aberto ";
     stmt = conn.createStatement();
     rs = stmt.executeQuery(sql);
-    System.err.print(sql);
+    
     String obs = "";
     while (rs.next()) {
         if (!rs.getString(1).equals("null")) {
@@ -39,7 +39,7 @@
             System.err.print("observacao nova " + obs);
 
         }
-    }
+    }System.err.print(c.toString());
     response.getWriter().write(obs);
     response.setContentType("text/plain");
     response.setCharacterEncoding("UTF-8");

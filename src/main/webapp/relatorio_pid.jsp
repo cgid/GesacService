@@ -55,31 +55,56 @@
                         <ul class="list-group">
 
                             <li  id="painel" class="list-group-item" style="border-width: 0px 0;">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6"><div >
+                                                <label for="nome">PID:&nbsp;</label><c:out value="${consulta.getCodPid()}"/>
+                                            </div>
+                                            <div  >
+                                                <label for="nome"> Descrição:&nbsp;</label><c:out value="${consulta.getNomeEstabelecimento()}"/><br>
 
 
-                                <div >
-                                    <label for="nome">PID:&nbsp;</label><c:out value="${consulta.getCodPid()}"/>
+
+                                                <label for="nome">Endereço:&nbsp;</label><c:out value="${consulta.getDescricao()}"/><br>
+
+                                                <label for="nome">Numero:&nbsp;</label><c:out value="${consulta.getNumero()}"/><br>
+                                                <label for="nome">Complemento:&nbsp;</label><c:out value="${consulta.getComplemento()}"/><br>
+                                                <label for="nome">Bairro:&nbsp;</label><c:out value="${consulta.getBairro()}"/><br>                                      
+                                                <label for="nome">Municipio:&nbsp;</label><c:out value="${consulta.getNomeMunicipio()}"/><br>
+                                                <label for="nome">UF:&nbsp;</label><c:out value="${consulta.getUf()}"/><br>
+
+
+
+
+                                            </div></div>
+                                        <div class="col-md-6">     <div >
+                                                <label for="nome">PID:&nbsp;</label><c:out value="${consulta.getCodPid()}"/>
+                                            </div>
+                                            <div  >
+                                                <label for="nome"> Descrição:&nbsp;</label><c:out value="${consulta.getNomeEstabelecimento()}"/><br>
+
+
+
+                                                <label for="nome">Endereço:&nbsp;</label><c:out value="${consulta.getDescricao()}"/><br>
+
+                                                <label for="nome">Numero:&nbsp;</label><c:out value="${consulta.getNumero()}"/><br>
+                                                <label for="nome">Complemento:&nbsp;</label><c:out value="${consulta.getComplemento()}"/><br>
+                                                <label for="nome">Bairro:&nbsp;</label><c:out value="${consulta.getBairro()}"/><br>                                      
+                                                <label for="nome">Municipio:&nbsp;</label><c:out value="${consulta.getNomeMunicipio()}"/><br>
+                                                <label for="nome">UF:&nbsp;</label><c:out value="${consulta.getUf()}"/><br>
+
+
+
+
+                                            </div></div>
+                                    </div>
+                                    <div class="row"></div>
                                 </div>
-                                <div  >
-                                    <label for="nome"> Descrição:&nbsp;</label><c:out value="${consulta.getNomeEstabelecimento()}"/><br>
 
 
-
-                                    <label for="nome">Endereço:&nbsp;</label><c:out value="${consulta.getDescricao()}"/><br>
-
-                                    <label for="nome">Numero:&nbsp;</label><c:out value="${consulta.getNumero()}"/><br>
-                                    <label for="nome">Complemento:&nbsp;</label><c:out value="${consulta.getComplemento()}"/><br>
-                                    <label for="nome">Bairro:&nbsp;</label><c:out value="${consulta.getBairro()}"/><br>                                      
-                                    <label for="nome">Municipio:&nbsp;</label><c:out value="${consulta.getNomeMunicipio()}"/><br>
-                                    <label for="nome">UF:&nbsp;</label><c:out value="${consulta.getUf()}"/><br>
-
-
-
-
-                                </div>
                             </li>
 
-                            <table>
+                            <table class="table">
 
 
 
@@ -121,7 +146,7 @@
                                             <td>    <c:out value="${contato.getTelefone()}"/>  
                                             </td>   
                                             <td>
-                                              
+
                                             </td> 
                                         </tr>
 
@@ -132,14 +157,14 @@
                                     </c:forEach>
 
                                 </tbody>
-                            </table>  <table> <thead> 
+                            </table>  <table class="table"> <thead> 
                                     <tr style="background-color: #e2e1e1;"> 
                                         <th>Lista</th> 
                                         <th>Usuario</th> 
                                         <th>duracao</th> 
                                         <th>dt abertura </th> 
                                         <th>obs</th> 
-                                        
+
 
                                     </tr>  
                                 </thead>     <tbody>

@@ -1,6 +1,13 @@
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="br.com.minicom.scr.entity.Chamado"%>
+
 <html><%@include file="valida.jsp" %>
+
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
     <head>
+
         <meta charset="utf-8">
         <title>Chamados - SIS CENTRAL REL</title>   
         <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
@@ -11,14 +18,34 @@
         <script src="lib/jquery/external/jquery/jquery.js"></script>
         <script src="lib/jquery/jquery.min.js"></script>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 
-        <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
 
         <script src="http://code.jquery.com/jquery-latest.js">
         </script>
+
         <script>
             $(document).ready(function () {
+
+
+
+
+
+                $("#idchamado2").val($("#idchamado").val());
+
+                $("#pid2").val($("#pid").val());
+
+                $("#ibge2").val($("#ibge1").val());
+
+
+                var iSolicitacao = $('#idSolicitacao').val();
+                $.get('servicoHandler.jsp', {iSolicitacao: iSolicitacao}, function (responseText) {
+                    console.log(responseText);
+
+                    $("#observacao").val(responseText);
+
+                });
+                $("#idSolicitacao2").val(iSolicitacao);
                 var data = new Date();
                 var ano = data.getFullYear();
                 var mes = data.getMonth() + 1;
@@ -46,11 +73,13 @@
                 var data3 = hora + ':' + min + ':' + sec;
                 data = ano + '-' + mes + '-' + dia + ' ' + hora + ':' + min + ':' + sec;
 //                yyyy-MM-dd HH:mm:ss
-                $('#dt_chamado_aberto').val(data);
+                $('#dt_chamado_aberto2').val(data);
                 var contador2 = 0;
                 var contador = 0;
-                var idS = $('#idSolicitacao').val();
-                if (idS == null) {
+                var idS = $('#pid1').val();
+
+                console.log(iSolicitacao);
+                if (iSolicitacao == null) {
                     $('#painel').hide();
                     $('#divcontador').hide();
                     $('#sucess').text("Lista concluída no momento.");
@@ -64,10 +93,10 @@
                     if (resultado == 1) {
 
                         $('#editarendereco').show();
-                        $('#divtabform').hide("now");
+                        $('#tabela_contatos').hide("now");
                     } else {
 
-                        $('#divtabform').show();
+                        $('#tabela_contatos').show();
                         $('#editarendereco').hide("now");
                     }
                 });
@@ -95,8 +124,9 @@
                     var radio = $('#realizado2').val();
                     $('#divdate').show();
                     $('#divtime').show();
+
                     $('#datepicker').attr({required: true, min: data2.trim()});
-//                    $('#timepicker').attr({required: true, min: data3.trim()});
+                    $('#timepicker').attr({required: true, min: data3.trim()});
 
                     $(document.getElementsByName('resposta')).attr({disabled: true});
                     document.getElementById("resposta").required = false;
@@ -106,11 +136,12 @@
 
 //          
                     $('#timepicker').show();
-
+                    $('#datepicker').datepicker();
 
 
                 });
                 $('#addcontato').click(function (event) {
+
                     var contatos = $(document.getElementsByName("contatonovo")).val();
                     var tels = $(document.getElementsByName("telefonenovo")).val();
                     var emails = $(document.getElementsByName("emailnovo")).val();
@@ -122,8 +153,11 @@
                     $.get('ContatoActionServlet', {emailnovo: emails, telefonenovo: tels, pid2: pid2, contatonovo: contatos}, function (responseText) {
 
                         $("#fields").hide();
+                        $("#fields").text("");
                         $('#sucess2').show().text(responseText);
 
+                        $('#addcontato').hide();
+                        $("#botaoadd").attr({disabled: ""});
                     });
                 });
                 $('#submit').click(function (event) {
@@ -166,14 +200,14 @@
                 document.getElementById(campo).innerHTML = sHors + "<font color=#000000>:</font>" + sMins + "<font color=#000000>:</font>" + sSecs;
 
                 setTimeout("getSecs(" + sHors + ", " + sMins + "," + sSecs + ", '" + campo + "')", 1000);
-                document.getElementById("duracao").value = sHors + ":" + sMins + ":" + sSecs;
+                document.getElementById("duracao2").value = sHors + ":" + sMins + ":" + sSecs;
             }
             //-->
         </SCRIPT>
+
         <script src = "lib/jquery/jquery.min.js"></script>
 
     </head>   
-
 
     <script type="text/javascript">
             function get(id) {
@@ -188,15 +222,14 @@
                     get("telefonenovo").value = get("telefonenovo").value + "-";
                 }
             }
-    </script>   
-
-
-    <script>
+    </script>     <script>
         $(function () {
             var count = 0;
             $("#botaoadd").click(function () {
+
+                $("#addcontato").show();
                 $('#addcontato').attr({style: "display:inline"});
-                $("#fields").show();
+
                 $("#fields").append($("<input/>").attr({
                     class: "form-control",
                     type: "text",
@@ -232,10 +265,24 @@
                 $("#fields").append("<br/><br/>");
 
                 $("#fields").append("<br/><br/>");
+
+
+                $("#botaoadd").attr({disabled: "true"});
             });
+
         });
 
     </script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker("yy-mm-dd", "dateFormat", $(this).val());
+        });
+
+    </script>
+
+
 
 
 
@@ -259,27 +306,16 @@
 
 
             <div id="painel2" class="container">
+                
 
-
-
-
-                <div  class="container">
 
                     <center><div class="alert alert-success" id="sucess" hidden="true" role="alert"></center>
                     <div  class="panel panel-default">
                         <!-- Default panel contents -->
-                        <div class="panel-heading" style="text-align: center;"><strong>LISTA <%out.print(request.getParameter("idchamado"));%></strong> - <%out.print(request.getParameter("descricao"));%></div>
-
-                        <!--                                                 Table
-                        
-                        --><div id="divcontador" style="text-align: right; margin-top: 10px; margin-right: 10px;">                             &nbsp; &nbsp;Duração<br>
-                            <font color="#FF0000" size="3" face="Arial Black"><span  id="clock1"></span>
-                            <script>setTimeout("getSecs(0,0,-1, \"clock1\")", 1000);</script></font></div>
-                        <ul class="list-group">
-
-                            <li  id="painel" class="list-group-item" style="border-width: 0px 0;">
-
-
+                        <div class="panel-heading" style="text-align: center;"><strong>LISTA <%out.print(request.getParameter("idchamado"));%></strong> - <%out.print(request.getParameter("descricao"));%>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5"> 
                                 <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
                                 <c:forEach items="${sq.getChamado(param.idchamado)}" var="consulta">
                                     <div >
@@ -302,95 +338,193 @@
                                         <button id="botaoeditar" type="button" class="ui-btn-inline btn btn-primary">Editar endereço </button>
 
                                     </div>
-                                </li><div id="divtabform" >
-                                    <form method="POST" action="ChamadoSrv" id="formchamado">
+                                    <div class="form-group">
+                                        <input type="hidden" name="idchamado" id="idchamado"  value="<%out.print(request.getParameter("idchamado"));%>" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="idSolicitacao" id="idSolicitacao"  value="<c:out value='${consulta.getId_solicitacao()}'/>" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input   type="hidden" name="pid" id="pid"  value=' <c:out value="${consulta.getCodPid()}"/>' >
+                                    </div> <div class="form-group">
+                                        <input type="hidden" name="dt_chamado_aberto" id="dt_chamado_aberto"   >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="ibge1" id="ibge1"  value='<c:out value="${consulta.getIbge()}"/>' >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="descricao" id="descricao"  value='<%out.print(request.getParameter("descricao"));%>' >
+                                    </div>
+
+
+
+
+
+
+                                </c:forEach>  </div>
+
+                            <div class="col-md-4"> 
+                                <div style="margin-left: 10px; margin-right: 10px;" hidden="true" id="editarendereco" class="ui-content" style="min-width:250px;">
+                                    <form id="form">
                                         <div class="form-group">
-                                            <input type="hidden" name="idchamado" id="idchamado"  value="<%out.print(request.getParameter("idchamado"));%>" >
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="hidden" name="idSolicitacao" id="idSolicitacao"  value="<c:out value='${consulta.getId_solicitacao()}'/>" >
-                                        </div>
-                                        <div class="form-group">
-                                            <input   type="hidden" name="pid" id="pid"  value=' <c:out value="${consulta.getCodPid()}"/>' >
-                                        </div> <div class="form-group">
-                                            <input type="hidden" name="dt_chamado_aberto" id="dt_chamado_aberto"   >
+                                            <input type="hidden" name="pid1" id="pid1"  value=' <c:out value="${consulta.getCodPid()}"/>' >
                                         </div>
                                         <div class="form-group">
                                             <input type="hidden" name="ibge1" id="ibge1"  value='<c:out value="${consulta.getIbge()}"/>' >
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden" name="descricao" id="descricao"  value='<%out.print(request.getParameter("descricao"));%>' >
+                                            <label for="nome">Endereço</label>
+                                            <input type="text" name="descricao_end" id="descricao_end" class="form-control" placeholder="Descrição do endereço">
                                         </div>
+
                                         <div class="form-group">
-                                            <input type="hidden" name="duracao" id="duracao"   >
+                                            <label for="nome">Número</label>
+                                            <input type="text" name="numero" id="numero" class="form-control" placeholder="Número do endereço">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="nome">Bairro</label>
+                                            <input type="text" name="bairro" id="bairro" class="form-control" placeholder="Digite o bairro">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="nome">CEP</label>
+                                            <input type="text" name="cep" id="cep" class="form-control" placeholder="Digite o CEP">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="nome">Complemento</label>
+                                            <input type="text" name="complemento" id="complemento" class="form-control" placeholder="Digite o complemento">
                                         </div>
 
 
 
 
 
-                                    </c:forEach>     <table class="table">
+                                        <div class="row text-left">
+                                            <div>
+                                                <button style="margin-left: 20px;" type="button"id="submit" class="btn btn-primary">Aplicar</button>
+                                            </div>
+                                        </div>	
+                                        <script src="lib/jquery/jquery.maskedinput.js"></script>
 
-                                        <thead> 
-                                            <tr style="background-color: #e2e1e1;"> 
-                                                <th>Nome</th> 
-                                                <th>Email</th> 
-                                                <th>DDD</th> 
-                                                <th>Telefone</th> 
-                                                <th>Inválido</th> 
 
-                                            </tr>  
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach items="${sq.getContatos(param.idchamado)}" var="contato">
+                                    </form>
 
 
 
+                                </div>
+                                <table  id="tabela_contatos" class="table">
+
+                                    <thead> 
+                                        <tr class="arrow "> 
+                                            <th>Nome</th> 
+                                            <th>Email</th> 
+                                            <th>DDD</th> 
+                                            <th>Telefone</th> 
+                                            <th>Inválido</th> 
+
+                                        </tr>  
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${sq.getContatos(param.idchamado)}" var="contato">
 
 
-                                                <tr id="tr<c:out value='${contato.getId()}'/>">
-
-                                                    <td>
-                                                        <c:out value="${contato.getNome()}"/> 
-                                                        <input type="hidden" name="contato" id="contato"  value='<c:out value="${contato.getNome()}"/>' >
-                                                    </td>  <td>
-                                                        <c:out value="${contato.getEmail()}"/> 
-
-                                                    </td>
-
-                                                    <td>  
-                                                        <input type="hidden" name="situacao" id="situacao<c:out value='${contato.getId()}'/>"  value='<c:out value="${contato.getSituacao()}"/>' >
-                                                        <c:out value="${contato.getDdd()}"/>
-                                                    </td>
-
-                                                    <td>    <c:out value="${contato.getTelefone()}"/>  
-                                                    </td>   
-                                                    <td>
-                                                        <input id="invalido" name="invalido" type="checkbox" value='<c:out value="${contato.getId()}"/>'>   
-                                                    </td> 
-                                                </tr>
 
 
-                                            <script>
-                                                $(document).ready(function () {
-                                                    var situacao = $('#situacao<c:out value="${contato.getId()}"/>').val();
-                                                    if (situacao == 0) {
-                                                        $('#tr<c:out value="${contato.getId()}"/>').hide();
-                                                    }
-                                                });
-                                            </script>
+
+                                            <tr id="tr<c:out value='${contato.getId()}'/>">
+
+                                                <td>
+                                                    <c:out value="${contato.getNome()}"/> 
+                                                    <input type="hidden" name="contato" id="contato"  value='<c:out value="${contato.getNome()}"/>' >
+                                                </td>  <td>
+                                                    <c:out value="${contato.getEmail()}"/> 
+
+                                                </td>
+
+                                                <td>  
+                                                    <input type="hidden" name="situacao" id="situacao<c:out value='${contato.getId()}'/>"  value='<c:out value="${contato.getSituacao()}"/>' >
+                                                    <c:out value="${contato.getDdd()}"/>
+                                                </td>
+
+                                                <td>    <c:out value="${contato.getTelefone()}"/>  
+                                                </td>   
+                                                <td>
+                                                    <input id="invalido" name="invalido" type="checkbox" value='<c:out value="${contato.getId()}"/>'>   
+                                                </td> 
+                                            </tr>
 
 
-                                        </c:forEach>
+                                        <script>
+        $(document).ready(function () {
+            var situacao = $('#situacao<c:out value="${contato.getId()}"/>').val();
+            if (situacao == 0) {
+                $('#tr<c:out value="${contato.getId()}"/>').hide();
+            }
+        });
+                                        </script>
 
-                                        </tbody>
-                                    </table>
-                                    <input style="margin-left: 10px;" id="botaoadd" type="button" class="ui-btn-inline btn btn-primary" value="Adicionar contato">
 
-                                    <div id="fields">
-                                        <div>
-                                            <button hidden="true" style="display: none" type="button"id="addcontato" class="btn btn-primary">add</button>
-                                        </div>
+                                    </c:forEach>
+
+                                    </tbody>
+                                </table>
+                                <input  style="margin-left: 10px;" id="botaoadd" type="button" class="ui-btn-inline btn btn-primary" value="Adicionar contato">
+                            </div>
+
+                            <div  class="col-md-6" >
+                                <div id="divcontador" style="text-align: right; margin-top: 10px; margin-right: 10px;">                             &nbsp; &nbsp;Duração<br>
+                                    <font color="#FF0000" size="3" face="Arial Black"><span  id="clock1"></span>
+                                    <script>setTimeout("getSecs(0,0,-1, \"clock1\")", 1000);</script></font></div>
+                                <div id="fields">
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+
+                            </div>
+
+
+
+
+
+                            <!--                                                 Table
+                            
+                            -->
+                            <script>
+
+
+
+                            </script>
+                            <div id="divtabform" >
+                                <form method="POST" action="ChamadoSrv" id="formchamado">
+                                    <div class="form-group">
+                                        <input type="hidden" name="idchamado2" id="idchamado2"  >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="idSolicitacao2" id="idSolicitacao2"   >
+                                    </div>
+                                    <div class="form-group">
+                                        <input   type="hidden" name="pid2" id="pid2"  >
+                                    </div> <div class="form-group">
+                                        <input type="hidden" name="dt_chamado_aberto2" id="dt_chamado_aberto2"   >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="hidden" name="ibge2" id="ibge2"  >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="hidden" name="duracao2" id="duracao2"   >
+                                    </div>
+
+
+
+
+                                    <div>
+                                        <button hidden="true" style="display: none" type="button"id="addcontato" class="btn btn-primary">Aplicar</button>
                                     </div>
                                     <center><div class="alert alert-success" id="sucess2" hidden="true" role="alert"></center>
 
@@ -411,7 +545,7 @@
 
 
                                     <div style="margin-left: 10px; margin-right: 10px;" id="divdate" hidden="true">Data:
-                                        <input   hidden="true" type="date" id="datepicker" name="datepicker">
+                                        <input   hidden="true" type="text" id="datepicker" name="datepicker">
                                     </div>
                                     <div style="margin-left: 10px; margin-right: 10px;" id="divtime" hidden="true">Hora:
                                         <input  hidden="true" type="time"  id="timepicker"name="timepicker">
@@ -433,76 +567,23 @@
                                 </form>
 
                             </div>
-                            <div style="margin-left: 10px; margin-right: 10px;" hidden="true" id="editarendereco" class="ui-content" style="min-width:250px;">
-                                <form id="form">
-                                    <div class="form-group">
-                                        <input type="hidden" name="pid1" id="pid1"  value=' <c:out value="${consulta.getCodPid()}"/>' >
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="hidden" name="ibge1" id="ibge1"  value='<c:out value="${consulta.getIbge()}"/>' >
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nome">Endereço</label>
-                                        <input type="text" name="descricao_end" id="descricao_end" class="form-control" placeholder="Descrição do endereço">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="nome">Número</label>
-                                        <input type="text" name="numero" id="numero" class="form-control" placeholder="Número do endereço">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="nome">Bairro</label>
-                                        <input type="text" name="bairro" id="bairro" class="form-control" placeholder="Digite o bairro">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="nome">CEP</label>
-                                        <input type="text" name="cep" id="cep" class="form-control" placeholder="Digite o CEP">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="nome">Complemento</label>
-                                        <input type="text" name="complemento" id="complemento" class="form-control" placeholder="Digite o complemento">
-                                    </div>
 
 
 
-
-
-                                    <div class="row text-left">
-                                        <div>
-                                            <button style="margin-left: 20px;" type="button"id="submit" class="btn btn-primary">Aplicar</button>
-                                        </div>
-                                    </div>	
-                                    <script src="lib/jquery/jquery.maskedinput.js"></script>
-                                    <script type="text/javascript">
-                                                $(document).ready(function () {
-                                                    $("#cep").mask("99.999-999");
-                                                });
-                                    </script>
-
-                                </form>
+                            </ul>
 
 
 
-                            </div>
-
-
-                        </ul>
-
-
+                        </div>
 
                     </div>
 
+
+
+
+
                 </div>
-
-
-
-
-
-            </div>
-            <%@include file="footer.html" %>
+                <%@include file="footer.html" %>
         </section>
 
 

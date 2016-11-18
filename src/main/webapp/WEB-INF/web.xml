@@ -5,7 +5,7 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
-        
+     
 <servlet>
     <servlet-name>ActionServlet</servlet-name>
     <servlet-class>br.com.minicom.scr.servlet.ActionServlet</servlet-class>
@@ -46,16 +46,14 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-<!--    <servlet>
-        <servlet-name>ServicoSrv</servlet-name>
-        <servlet-class>br.com.minicom.scr.servlet.ServicoSrv</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet> 
-    <servlet-mapping>
-        <servlet-name>ServicoSrv</servlet-name>
-        <load-on-startup>1</load-on-startup>
-        <url-pattern>servicoSrv</url-pattern>
-    </servlet-mapping>-->
+   <servlet>
+ <servlet-name>Resource Servlet</servlet-name>
+ <servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+ <servlet-name>Resource Servlet</servlet-name>
+ <url-pattern>/primefaces_resource/*</url-pattern>
+</servlet-mapping> 
     
     <session-config>
         <session-timeout>
