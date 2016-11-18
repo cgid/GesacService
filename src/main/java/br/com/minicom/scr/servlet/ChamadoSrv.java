@@ -81,9 +81,9 @@ public class ChamadoSrv extends HttpServlet {
             int idChamado = equery.select(c);
             System.out.println("ID CHAMDO? " + idChamado);
             c = (Chamado) equery.select(c, idChamado);
-            c.setIdSolicitacao(Integer.parseInt(request.getParameter("idSolicitacao")));
+            c.setIdSolicitacao(Integer.parseInt(request.getParameter("idSolicitacao2")));
 
-            s = (Solicitacoes) equery.select(s, Integer.parseInt(request.getParameter("idSolicitacao")));
+            s = (Solicitacoes) equery.select(s, Integer.parseInt(request.getParameter("idSolicitacao2")));
             int QtdeTentativas = (1 + Integer.parseInt(String.valueOf(s.getCell(1).getValue())));
             s.setUltTentativa(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             System.out.println(s.toString());
@@ -98,8 +98,7 @@ public class ChamadoSrv extends HttpServlet {
 
             String[] contatonovo = request.getParameterValues("contatonovo");
 
-            String[] telefonenovo = request.getParameterValues("telefonenovo");
-            String[] emailnovo = request.getParameterValues("emailnovo");
+        
 
             String[] contatos = request.getParameterValues("contato");
             String[] respostas = request.getParameterValues("resposta");
@@ -201,7 +200,7 @@ public class ChamadoSrv extends HttpServlet {
             log.setIdChamado(idChamado);
 
             log.setOperacao(operacaoLog);
-            log.setDuracao(request.getParameter("duracao"));
+            log.setDuracao(request.getParameter("duracao2"));
             equery.insert(log);
             equery.close();
             dispatcher.forward(request, response);

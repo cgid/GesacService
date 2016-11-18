@@ -74,13 +74,14 @@
                 data = ano + '-' + mes + '-' + dia + ' ' + hora + ':' + min + ':' + sec;
 //                yyyy-MM-dd HH:mm:ss
                 $('#dt_chamado_aberto2').val(data);
-                var contador2 = 0;
+
+
                 var contador = 0;
                 var idS = $('#pid1').val();
 
                 console.log(iSolicitacao);
                 if (iSolicitacao == null) {
-                    $('#painel').hide();
+                    $('#painel2').hide();
                     $('#divcontador').hide();
                     $('#sucess').text("Lista concluída no momento.");
                     $('#sucess').show();
@@ -126,7 +127,7 @@
                     $('#divtime').show();
 
                     $('#datepicker').attr({required: true, min: data2.trim()});
-                    $('#timepicker').attr({required: true, min: data3.trim()});
+//                    $('#timepicker').attr({required: true, min: data3.trim()});
 
                     $(document.getElementsByName('resposta')).attr({disabled: true});
                     document.getElementById("resposta").required = false;
@@ -157,8 +158,11 @@
                         $('#sucess2').show().text(responseText);
 
                         $('#addcontato').hide();
-                        $("#botaoadd").attr({disabled: ""});
+
                     });
+                    document.getElementById("botaoadd").disabled = false;
+
+
                 });
                 $('#submit').click(function (event) {
                     var pid = $('#pid').val();
@@ -173,6 +177,7 @@
                         $('#sucess').show().text(responseText);
                         $('#divtabform').show();
                         $('#editarendereco').hide("now");
+
                     });
                 });
 
@@ -305,285 +310,305 @@
             <% }%>
 
 
+
+
+
+
+            <center><div class="alert alert-success" id="sucess" hidden="true" role="alert"></center> 
             <div id="painel2" class="container">
-                
-
-
-                    <center><div class="alert alert-success" id="sucess" hidden="true" role="alert"></center>
-                    <div  class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading" style="text-align: center;"><strong>LISTA <%out.print(request.getParameter("idchamado"));%></strong> - <%out.print(request.getParameter("descricao"));%>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-5"> 
-                                <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
-                                <c:forEach items="${sq.getChamado(param.idchamado)}" var="consulta">
-                                    <div >
-                                        <label for="nome">PID:&nbsp;</label><c:out value="${consulta.getCodPid()}"/>
-                                    </div>
-                                    <div  >
-                                        <label for="nome"> Descrição:&nbsp;</label><c:out value="${consulta.getNomeEstabelecimento()}"/><br>
+                <div  class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading" style="text-align: center;"><strong>LISTA <%out.print(request.getParameter("idchamado"));%></strong> - <%out.print(request.getParameter("descricao"));%>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5"> 
+                            <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
+                            <c:forEach items="${sq.getChamado(param.idchamado)}" var="consulta">
+                                <div >
+                                    <label for="nome">PID:&nbsp;</label><c:out value="${consulta.getCodPid()}"/>
+                                </div>
+                                <div  >
+                                    <label for="nome"> Descrição:&nbsp;</label><c:out value="${consulta.getNomeEstabelecimento()}"/><br>
 
 
 
-                                        <label for="nome">Endereço:&nbsp;</label><c:out value="${consulta.getDescricao()}"/><br>
+                                    <label for="nome">Endereço:&nbsp;</label><c:out value="${consulta.getDescricao()}"/><br>
 
-                                        <label for="nome">Numero:&nbsp;</label><c:out value="${consulta.getNumero()}"/><br>
-                                        <label for="nome">Complemento:&nbsp;</label><c:out value="${consulta.getComplemento()}"/><br>
-                                        <label for="nome">Bairro:&nbsp;</label><c:out value="${consulta.getBairro()}"/><br>                                      
-                                        <label for="nome">Municipio:&nbsp;</label><c:out value="${consulta.getNomeMunicipio()}"/><br>
-                                        <label for="nome">UF:&nbsp;</label><c:out value="${consulta.getUf()}"/><br>
+                                    <label for="nome">Numero:&nbsp;</label><c:out value="${consulta.getNumero()}"/><br>
+                                    <label for="nome">Complemento:&nbsp;</label><c:out value="${consulta.getComplemento()}"/><br>
+                                    <label for="nome">Bairro:&nbsp;</label><c:out value="${consulta.getBairro()}"/><br>                                      
+                                    <label for="nome">Municipio:&nbsp;</label><c:out value="${consulta.getNomeMunicipio()}"/><br>
+                                    <label for="nome">UF:&nbsp;</label><c:out value="${consulta.getUf()}"/><br>
 
 
-                                        <button id="botaoeditar" type="button" class="ui-btn-inline btn btn-primary">Editar endereço </button>
+                                    <button id="botaoeditar" type="button" class="ui-btn-inline btn btn-primary">Editar endereço </button>
 
-                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="idchamado" id="idchamado"  value="<%out.print(request.getParameter("idchamado"));%>" >
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="idSolicitacao" id="idSolicitacao"  value="<c:out value='${consulta.getId_solicitacao()}'/>" >
+                                </div>
+                                <div class="form-group">
+                                    <input   type="hidden" name="pid" id="pid"  value=' <c:out value="${consulta.getCodPid()}"/>' >
+                                </div> <div class="form-group">
+                                    <input type="hidden" name="dt_chamado_aberto" id="dt_chamado_aberto"   >
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="ibge1" id="ibge1"  value='<c:out value="${consulta.getIbge()}"/>' >
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="descricao" id="descricao"  value='<%out.print(request.getParameter("descricao"));%>' >
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="contatos" id="contato"   >
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="invalidos" id="invalidos" >
+                                </div>
+
+
+
+
+
+
+                            </c:forEach>  </div>
+
+                        <div class="col-md-4"> 
+                            <div style="margin-left: 10px; margin-right: 10px;" hidden="true" id="editarendereco" class="ui-content" style="min-width:250px;">
+                                <form id="form">
                                     <div class="form-group">
-                                        <input type="hidden" name="idchamado" id="idchamado"  value="<%out.print(request.getParameter("idchamado"));%>" >
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="hidden" name="idSolicitacao" id="idSolicitacao"  value="<c:out value='${consulta.getId_solicitacao()}'/>" >
-                                    </div>
-                                    <div class="form-group">
-                                        <input   type="hidden" name="pid" id="pid"  value=' <c:out value="${consulta.getCodPid()}"/>' >
-                                    </div> <div class="form-group">
-                                        <input type="hidden" name="dt_chamado_aberto" id="dt_chamado_aberto"   >
+                                        <input type="hidden" name="pid1" id="pid1"  value=' <c:out value="${consulta.getCodPid()}"/>' >
                                     </div>
                                     <div class="form-group">
                                         <input type="hidden" name="ibge1" id="ibge1"  value='<c:out value="${consulta.getIbge()}"/>' >
                                     </div>
                                     <div class="form-group">
-                                        <input type="hidden" name="descricao" id="descricao"  value='<%out.print(request.getParameter("descricao"));%>' >
+                                        <label for="nome">Endereço</label>
+                                        <input type="text" name="descricao_end" id="descricao_end" class="form-control" placeholder="Descrição do endereço">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nome">Número</label>
+                                        <input type="text" name="numero" id="numero" class="form-control" placeholder="Número do endereço">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nome">Bairro</label>
+                                        <input type="text" name="bairro" id="bairro" class="form-control" placeholder="Digite o bairro">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nome">CEP</label>
+                                        <input type="text" name="cep" id="cep" class="form-control" placeholder="Digite o CEP">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nome">Complemento</label>
+                                        <input type="text" name="complemento" id="complemento" class="form-control" placeholder="Digite o complemento">
                                     </div>
 
 
 
 
 
-
-                                </c:forEach>  </div>
-
-                            <div class="col-md-4"> 
-                                <div style="margin-left: 10px; margin-right: 10px;" hidden="true" id="editarendereco" class="ui-content" style="min-width:250px;">
-                                    <form id="form">
-                                        <div class="form-group">
-                                            <input type="hidden" name="pid1" id="pid1"  value=' <c:out value="${consulta.getCodPid()}"/>' >
+                                    <div class="row text-left">
+                                        <div>
+                                            <button style="margin-left: 20px;" type="button"id="submit" class="btn btn-primary">Aplicar</button>
                                         </div>
-                                        <div class="form-group">
-                                            <input type="hidden" name="ibge1" id="ibge1"  value='<c:out value="${consulta.getIbge()}"/>' >
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="nome">Endereço</label>
-                                            <input type="text" name="descricao_end" id="descricao_end" class="form-control" placeholder="Descrição do endereço">
-                                        </div>
+                                    </div>	
+                                    <script src="lib/jquery/jquery.maskedinput.js"></script>
 
-                                        <div class="form-group">
-                                            <label for="nome">Número</label>
-                                            <input type="text" name="numero" id="numero" class="form-control" placeholder="Número do endereço">
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label for="nome">Bairro</label>
-                                            <input type="text" name="bairro" id="bairro" class="form-control" placeholder="Digite o bairro">
-                                        </div>
+                                </form>
 
-                                        <div class="form-group">
-                                            <label for="nome">CEP</label>
-                                            <input type="text" name="cep" id="cep" class="form-control" placeholder="Digite o CEP">
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label for="nome">Complemento</label>
-                                            <input type="text" name="complemento" id="complemento" class="form-control" placeholder="Digite o complemento">
-                                        </div>
+
+                            </div>
+                            <table  id="tabela_contatos" class="table">
+
+                                <thead> 
+                                    <tr class="arrow "> 
+                                        <th>Nome</th> 
+                                        <th>Email</th> 
+                                        <th>DDD</th> 
+                                        <th>Telefone</th> 
+                                        <th>Inválido</th> 
+
+                                    </tr>  
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${sq.getContatos(param.idchamado)}" var="contato">
 
 
 
 
 
-                                        <div class="row text-left">
-                                            <div>
-                                                <button style="margin-left: 20px;" type="button"id="submit" class="btn btn-primary">Aplicar</button>
-                                            </div>
-                                        </div>	
-                                        <script src="lib/jquery/jquery.maskedinput.js"></script>
+                                        <tr id="tr<c:out value='${contato.getId()}'/>">
+
+                                            <td>
+                                                <c:out value="${contato.getNome()}"/> 
+                                                <input type="hidden" name="contato" id="contato"  value='<c:out value="${contato.getNome()}"/>' >
+                                            </td>  <td>
+                                                <c:out value="${contato.getEmail()}"/> 
+
+                                            </td>
+
+                                            <td>  
+                                                <input type="hidden" name="situacao" id="situacao<c:out value='${contato.getId()}'/>"  value='<c:out value="${contato.getSituacao()}"/>' >
+                                                <c:out value="${contato.getDdd()}"/>
+                                            </td>
+
+                                            <td>    <c:out value="${contato.getTelefone()}"/>  
+                                            </td>   
+                                            <td>
+                                                <input id="<c:out value="${contato.getId()}"/>" name="<c:out value="${contato.getId()}"/>" type="button" class="ui-btn-inline btn btn-primary" value='Invalidar'>   
+                                            </td> 
+                                        </tr>
 
 
-                                    </form>
-
-
-
-                                </div>
-                                <table  id="tabela_contatos" class="table">
-
-                                    <thead> 
-                                        <tr class="arrow "> 
-                                            <th>Nome</th> 
-                                            <th>Email</th> 
-                                            <th>DDD</th> 
-                                            <th>Telefone</th> 
-                                            <th>Inválido</th> 
-
-                                        </tr>  
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach items="${sq.getContatos(param.idchamado)}" var="contato">
-
-
-
-
-
-                                            <tr id="tr<c:out value='${contato.getId()}'/>">
-
-                                                <td>
-                                                    <c:out value="${contato.getNome()}"/> 
-                                                    <input type="hidden" name="contato" id="contato"  value='<c:out value="${contato.getNome()}"/>' >
-                                                </td>  <td>
-                                                    <c:out value="${contato.getEmail()}"/> 
-
-                                                </td>
-
-                                                <td>  
-                                                    <input type="hidden" name="situacao" id="situacao<c:out value='${contato.getId()}'/>"  value='<c:out value="${contato.getSituacao()}"/>' >
-                                                    <c:out value="${contato.getDdd()}"/>
-                                                </td>
-
-                                                <td>    <c:out value="${contato.getTelefone()}"/>  
-                                                </td>   
-                                                <td>
-                                                    <input id="invalido" name="invalido" type="checkbox" value='<c:out value="${contato.getId()}"/>'>   
-                                                </td> 
-                                            </tr>
-
-
-                                        <script>
-        $(document).ready(function () {
+                                    <script>
+        $(window).load(function () {
+            var contados = document.getElementsByName("contatos").length;
+            console.log("numero de contatos: " + contados);
             var situacao = $('#situacao<c:out value="${contato.getId()}"/>').val();
+            console.log(situacao)
             if (situacao == 0) {
                 $('#tr<c:out value="${contato.getId()}"/>').hide();
             }
+
+            $('#<c:out value="${contato.getId()}"/>').click(function (event) {
+                var id = '<c:out value="${contato.getId()}"/>';
+
+                $.get('InvalidaServlet', {id: id}, function (responseText) {
+                    if (responseText != "nao inserido") {
+                        $('#tr<c:out value="${contato.getId()}"/>').hide();
+                    }
+                });
+            });
         });
-                                        </script>
+                                    </script>
 
 
-                                    </c:forEach>
+                                </c:forEach>
 
-                                    </tbody>
-                                </table>
-                                <input  style="margin-left: 10px;" id="botaoadd" type="button" class="ui-btn-inline btn btn-primary" value="Adicionar contato">
+                                </tbody>
+                            </table>
+                            <input  style="margin-left: 10px;" id="botaoadd" type="button" class="ui-btn-inline btn btn-primary" value="Adicionar contato">
+                        </div>
+
+                        <div  class="col-md-6" >
+                            <div id="divcontador" style="text-align: right; margin-top: 10px; margin-right: 10px;">                             &nbsp; &nbsp;Duração<br>
+                                <font color="#FF0000" size="3" face="Arial Black"><span  id="clock1"></span>
+                                <script>setTimeout("getSecs(0,0,-1, \"clock1\")", 1000);</script></font></div>
+                            <div id="fields">
                             </div>
-
-                            <div  class="col-md-6" >
-                                <div id="divcontador" style="text-align: right; margin-top: 10px; margin-right: 10px;">                             &nbsp; &nbsp;Duração<br>
-                                    <font color="#FF0000" size="3" face="Arial Black"><span  id="clock1"></span>
-                                    <script>setTimeout("getSecs(0,0,-1, \"clock1\")", 1000);</script></font></div>
-                                <div id="fields">
-                                </div>
-                            </div>
+                        </div>
 
 
 
-                            <div class="row">
-
-                            </div>
-
-
-
-
-
-                            <!--                                                 Table
-                            
-                            -->
-                            <script>
-
-
-
-                            </script>
-                            <div id="divtabform" >
-                                <form method="POST" action="ChamadoSrv" id="formchamado">
-                                    <div class="form-group">
-                                        <input type="hidden" name="idchamado2" id="idchamado2"  >
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="hidden" name="idSolicitacao2" id="idSolicitacao2"   >
-                                    </div>
-                                    <div class="form-group">
-                                        <input   type="hidden" name="pid2" id="pid2"  >
-                                    </div> <div class="form-group">
-                                        <input type="hidden" name="dt_chamado_aberto2" id="dt_chamado_aberto2"   >
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="hidden" name="ibge2" id="ibge2"  >
-                                    </div>
-
-                                    <div class="form-group">
-                                        <input type="hidden" name="duracao2" id="duracao2"   >
-                                    </div>
-
-
-
-
-                                    <div>
-                                        <button hidden="true" style="display: none" type="button"id="addcontato" class="btn btn-primary">Aplicar</button>
-                                    </div>
-                                    <center><div class="alert alert-success" id="sucess2" hidden="true" role="alert"></center>
-
-
-
-                                    <div class="form-group" style="margin-left: 10px; margin-right: 10px;">
-                                        <br><label for="nome">Observação: </label><br>
-                                        <textarea class="form-control" required="required" name="observacao" id="observacao" placeholder="Observação"></textarea> 
-                                    </div> 
-
-                                    <c:forEach items="${sq.getPerguntas(param.idchamado)}" var="Perguntas">
-                                        <div class="form-group" style="margin-left: 10px; margin-right: 10px;">
-                                            <label for="nome"><c:out value="${Perguntas.getCell(1).getValue()}"/></label>
-                                            <input class="form-control" type="text" name="resposta" id="resposta"  placeholder="Resposta">
-                                        </div>
-
-                                    </c:forEach>
-
-
-                                    <div style="margin-left: 10px; margin-right: 10px;" id="divdate" hidden="true">Data:
-                                        <input   hidden="true" type="text" id="datepicker" name="datepicker">
-                                    </div>
-                                    <div style="margin-left: 10px; margin-right: 10px;" id="divtime" hidden="true">Hora:
-                                        <input  hidden="true" type="time"  id="timepicker"name="timepicker">
-                                    </div>
-
-
-                                    <div class="form-group" style="margin-left: 10px; margin-right: 10px;">
-                                        <br><br><label for="nome">Atendimento concluído com sucesso?</label><br>
-                                        <input required="true" type="radio" name="realizado" id="realizado" value="1">Sim &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input type="radio" name="realizado" id="realizado2" value="0">Não
-
-                                    </div>
-
-                                    <!-- conteudo -->
-
-
-
-                                    <button type="submit" style="margin-left: 10px;" class="ui-btn-inline btn btn-primary">Finalizar chamado</button>
-                                </form>
-
-                            </div>
-
-
-
-                            </ul>
-
-
+                        <div class="row">
 
                         </div>
 
+
+
+
+
+                        <!--                                                 Table
+                        
+                        -->
+                        <script>
+
+
+
+                        </script>
+                        <div id="divtabform" >
+                            <form method="POST" action="ChamadoSrv" id="formchamado">
+                                <div class="form-group">
+                                    <input type="hidden" name="idchamado2" id="idchamado2"  >
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="idSolicitacao2" id="idSolicitacao2"   >
+                                </div>
+                                <div class="form-group">
+                                    <input   type="hidden" name="pid2" id="pid2"  >
+                                </div> <div class="form-group">
+                                    <input type="hidden" name="dt_chamado_aberto2" id="dt_chamado_aberto2"   >
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="ibge2" id="ibge2"  >
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="hidden" name="duracao2" id="duracao2"   >
+                                </div>
+
+
+
+
+                                <div>
+                                    <button hidden="true" style="display: none" type="button"id="addcontato" class="btn btn-primary">Aplicar</button>
+                                </div>
+                                <center><div class="alert alert-success" id="sucess2" hidden="true" role="alert"></center>
+
+
+
+                                <div class="form-group" style="margin-left: 10px; margin-right: 10px;">
+                                    <br><label for="nome">Observação: </label><br>
+                                    <textarea class="form-control" required="required" name="observacao" id="observacao" placeholder="Observação"></textarea> 
+                                </div> 
+
+                                <c:forEach items="${sq.getPerguntas(param.idchamado)}" var="Perguntas">
+                                    <div class="form-group" style="margin-left: 10px; margin-right: 10px;">
+                                        <label for="nome"><c:out value="${Perguntas.getCell(1).getValue()}"/></label>
+                                        <input class="form-control" type="text" name="resposta" id="resposta"  placeholder="Resposta">
+                                    </div>
+
+                                </c:forEach>
+
+
+                                <div style="margin-left: 10px; margin-right: 10px;" id="divdate" hidden="true">Data:
+                                    <input   hidden="true" type="text" id="datepicker" name="datepicker">
+                                </div>
+                                <div style="margin-left: 10px; margin-right: 10px;" id="divtime" hidden="true">Hora:
+                                    <input  hidden="true" type="time"  id="timepicker"name="timepicker">
+                                </div>
+
+
+                                <div class="form-group" style="margin-left: 10px; margin-right: 10px;">
+                                    <br><br><label for="nome">Atendimento concluído com sucesso?</label><br>
+                                    <input required="true" type="radio" name="realizado" id="realizado" value="1">Sim &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="realizado" id="realizado2" value="0">Não
+
+                                </div>
+
+                                <!-- conteudo -->
+
+
+
+                                <button type="submit" style="margin-left: 10px;" class="ui-btn-inline btn btn-primary">Finalizar chamado</button>
+                            </form>
+
+                        </div>
+
+
+
+                        </ul>
+
+
+
                     </div>
 
-
-
-
-
                 </div>
-                <%@include file="footer.html" %>
+
+
+
+
+
+            </div>
+            <%@include file="footer.html" %>
         </section>
 
 
