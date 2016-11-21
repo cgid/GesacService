@@ -1,0 +1,126 @@
+@font-face {
+	font-family: 'Open-Sans';
+	src: url("../fonts/Open_Sans/OpenSans-Semibold.ttf");
+	font-size: 1em;
+}
+@font-face {
+	font-family: 'OpenSans-Light';
+	src: url("../fonts/Open_Sans/OpenSans-Light.ttf");
+	font-size: 1em;
+}
+
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
+header {
+	width: 100%;
+	height: 150px;
+	background-color: #34495e;
+	position: relative;
+}
+#banner h1 {
+	color: #fff;
+	top: 15px;
+	position: relative;
+	font-size: 40px;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, .45);
+	font-family: 'OpenSans-Light';
+	margin-left: 50px;
+}
+#banner h1 small {
+	font-size: 20px;
+	display: block;
+	color: #fff;
+	font-family: 'Open-Sans';
+	margin-left: 0px;
+}
+#painellogin {
+	margin-top: 100px;
+	width: 400px;
+}
+#painellogin button {
+	border-radius: 0;
+	text-align: center;	
+}
+section {
+	width: 100%;
+	height: 42px;
+	background-color: rgba(52,73,94, .2);
+	z-index: 2;
+	position: relative;
+}
+#menu {
+	margin: 18px 0px;
+}
+#menu a {
+	margin-right: 0px;
+}
+#menu a:hover{
+	background-color: rgba(255, 255, 255, .8);
+    -webkit-transition: 0.5s ease-out;
+}
+#menu li {
+	display: inline-block;
+	font-family: "Open-Sans";
+
+}
+#menu li a {
+	color: #2c3e50;
+	font-size: 16px;
+	padding: 10px 25px;
+	text-decoration: none;
+}
+section .alert {
+	margin-top: 20px;
+	width: 450px;
+}
+#painel {
+	margin-top: 10px;
+	width: 800px;
+}
+section .row {
+	margin-top: -8px;
+	margin-bottom: 20px;
+}
+section .btn {
+	margin-top: 13px;
+	margin-bottom: 10px;
+	margin-left: 18px;
+}
+#painel input {
+	width: 600px;
+}
+footer {
+	margin-top: 700px;
+}
+footer .row {
+	width: 100%;
+	margin-left: 0px;
+	bottom: 0;
+
+}
+footer .row-cinza-escuro {
+	height: 40px;
+	background-color: #2c3e50;
+	border-top: #2980b9 1px solid;
+}
+footer .pull-left {
+	font-family: 'OpenSans-Light';
+	font-size: 14px;
+	color: #ecf0f1;
+	margin-top: 9px;
+}
+p {
+  margin: 20px;
+
+}
+input[type=checkbox] {
+	margin-left: -309px;
+}

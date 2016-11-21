@@ -1,0 +1,76 @@
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+     
+    <servlet>
+        <servlet-name>ActionServlet</servlet-name>
+        <servlet-class>br.com.minicom.scr.servlet.ActionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ActionServlet</servlet-name>
+        <url-pattern>/ActionServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>InvalidaServlet</servlet-name>
+        <servlet-class>br.com.minicom.scr.servlet.InvalidaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>InvalidaServlet</servlet-name>
+        <url-pattern>/InvalidaServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ContatoActionServlet</servlet-name>
+        <servlet-class>br.com.minicom.scr.servlet.ContatoActionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContatoActionServlet</servlet-name>
+        <url-pattern>/ContatoActionServlet/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UsuarioSrv</servlet-name>
+        <servlet-class>br.com.minicom.scr.servlet.UsuarioSrv</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsuarioSrv</servlet-name>
+        <url-pattern>/UsuarioSrv/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>GerenciadorRelatorios</servlet-name>
+        <servlet-class>br.com.minicom.scr.servlet.GerenciadorRelatorios</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GerenciadorRelatorios</servlet-name>
+        <url-pattern>/GerenciadorRelatorios/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Resource Servlet</servlet-name>
+        <servlet-class>org.primefaces.resource.ResourceServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Resource Servlet</servlet-name>
+        <url-pattern>/primefaces_resource/*</url-pattern>
+    </servlet-mapping> 
+    
+    <session-config>
+        <session-timeout>
+            300
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>faces/login.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
