@@ -1,26 +1,10 @@
-<%@page import="br.com.minicom.scr.entity.Usuario"%>
-<%
 
-    if ((session.getAttribute("login") == null) || (session.getAttribute("login") == "")) {
-%>
-
-Você não está logado no sistema<br/>
-<a href="login.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
-<%} else {
-    String login = String.valueOf(session.getAttribute("login"));
-    String pwd = String.valueOf(session.getAttribute("senha"));
-
-    Usuario usuario = new Usuario();
-
-    String perfil = usuario.autenticarPerfil(login, pwd);
-    perfil = "index_" + perfil + ".jsp";
-%>
 
 
 
 
 <html>
-
+<%@include file="valida.jsp" %>
     <head>
         <meta charset="utf-8">
         <title>Chamados - SIS CENTRAL REL</title>
@@ -30,8 +14,7 @@ Você não está logado no sistema<br/>
 
 
     <body>
-        <header><%@include file="header.html" %></header>
-
+       <%@include file="header.html" %>
 
 
 
@@ -54,7 +37,7 @@ Você não está logado no sistema<br/>
 
                 <div class="alert alert-success" role="alert">
 
-                    <a href="#" class="alert-link">Bem vindo ao SIS CENTRAL REL. Logado com sucesso!</a>
+                  Bem vindo ao Sistema Central de Relacionamento. 
 
                 </div>
 
@@ -69,7 +52,7 @@ Você não está logado no sistema<br/>
         <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
 
     </body>
-    <footer><%@include file="footer.html" %></footer>
+<%@include file="footer.html" %>
 
 
 </html><%}%>

@@ -7,16 +7,13 @@ import  br.com.minicom.scr.persistence.Entity;
 
 public class Perfil implements Entity {
 	private final String DB = "SisCentralRel";
-	private final String TABLENAME = "perfil";
-	private final String[] COLUMNNAMES = {"id_perfil", "descricao_perfil", "realizar_chamado", "gerenciar_usuarios", "gerenciar_servicos"};
+	private final String TABLENAME = "Perfil";
+	private final String[] COLUMNNAMES = {"id_perfil", "descricao_perfil"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
 	public Perfil() {
 		values[0] = new Cell(true, true,Type.NUM, 0, true);
 		values[1] = new Cell(Type.STR, null, true);
-		values[2] = new Cell(Type.NUM, 0, true);
-		values[3] = new Cell(Type.NUM, 0, true);
-		values[4] = new Cell(Type.NUM, 0, true);
 	}
 
 	public void setIdPerfil(int idPerfil) {
@@ -24,15 +21,6 @@ public class Perfil implements Entity {
 	}
 	public void setDescricaoPerfil(String descricaoPerfil) {
 		this.values[1].setValue(descricaoPerfil);
-	}
-	public void setRealizarChamado(int realizarChamado) {
-		this.values[2].setValue(realizarChamado);
-	}
-	public void setGerenciarUsuarios(int gerenciarUsuarios) {
-		this.values[3].setValue(gerenciarUsuarios);
-	}
-	public void setGerenciarServicos(int gerenciarServicos) {
-		this.values[4].setValue(gerenciarServicos);
 	}
 
 	@Override

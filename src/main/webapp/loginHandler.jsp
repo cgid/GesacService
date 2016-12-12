@@ -1,8 +1,4 @@
-<%-- 
-    Document   : login
-    Created on : 30/05/2016, 15:55:36
-    Author     : VictorHugo
---%>
+
 
 <%@page import="br.com.minicom.scr.persistence.query.Queries"%>
 <%@page import="br.com.minicom.scr.persistence.query.SimpleQueries"%>
@@ -16,32 +12,16 @@
     int usuarioid = simpleQueries.select(login, pwd, usuario);
     System.out.print("usuarioid: " + usuarioid);
 
-    if (usuario.autenticar(login, pwd)) {
+    if (simpleQueries.autenticar(login, pwd)) {
 
-        if (usuario.autenticarPerfil(login, pwd).equals("atendente")) {
-           
-            session.setAttribute("login", login);
-            session.setAttribute("senha", pwd);
-            session.setAttribute("usuarioid", usuarioid);
-        
-           
-        }
-        else if (usuario.autenticarPerfil(login, pwd).equals("gerente")) {
-          
-            session.setAttribute("login", login);
-            session.setAttribute("senha", pwd);
-            session.setAttribute("usuarioid", usuarioid);
-           
-        }
-       else if (usuario.autenticarPerfil(login, pwd).equals("administrador")) {
-    
-            session.setAttribute("login", login);
-            session.setAttribute("senha", pwd);
-            session.setAttribute("usuarioid", usuarioid);
-        
-        }    response.sendRedirect("index.jsp");
+        session.setAttribute("login", login);
+        session.setAttribute("senha", pwd);
+        session.setAttribute("usuarioid", usuarioid);
+
+        session.setMaxInactiveInterval(7200);
+        response.sendRedirect("index.jsp");
     } else {
-
         out.println("Senha e/ou Usuário incorreto! <a href='login.jsp'>Tente Novamente</a>");
+
     }
 %>

@@ -7,7 +7,7 @@ import  br.com.minicom.scr.persistence.Entity;
 
 public class Respostas implements Entity {
 	private final String DB = "SisCentralRel";
-	private final String TABLENAME = "respostas";
+	private final String TABLENAME = "Respostas";
 	private final String[] COLUMNNAMES = {"id_Respostas", "Resposta", "chamado_cod_chamado"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 

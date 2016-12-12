@@ -7,8 +7,8 @@ import  br.com.minicom.scr.persistence.Entity;
 
 public class Chamado implements Entity {
 	private final String DB = "SisCentralRel";
-	private final String TABLENAME = "chamado";
-	private final String[] COLUMNNAMES = {"id_chamado", "dt_chamado", "observacao", "Usuario_cod_usuario", "Solicitacoes_id_solicitacao"};
+	private final String TABLENAME = "Chamado";
+	private final String[] COLUMNNAMES = {"id_chamado", "dt_chamado_aberto", "observacao", "Usuario_cod_usuario", "Solicitacoes_id_solicitacao"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
 	public Chamado() {
@@ -22,8 +22,8 @@ public class Chamado implements Entity {
 	public void setIdChamado(int idChamado) {
 		this.values[0].setValue(idChamado);
 	}
-	public void setDtChamado(String dtChamado) {
-		this.values[1].setValue(dtChamado);
+	public void setChamadoAberto(String chamadoAberto) {
+		this.values[1].setValue(chamadoAberto);
 	}
 	public void setObservacao(String observacao) {
 		this.values[2].setValue(observacao);

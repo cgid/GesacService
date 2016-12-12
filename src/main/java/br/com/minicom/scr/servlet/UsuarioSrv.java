@@ -5,31 +5,22 @@
  */
 package br.com.minicom.scr.servlet;
 
-import br.com.minicom.scr.entity.Servico;
 import br.com.minicom.scr.entity.Usuario;
-import br.com.minicom.scr.persistence.query.Queries;
+import br.com.minicom.scr.entity.exceptions.NotIsInsertableEntityException;
 import br.com.minicom.scr.persistence.query.SimpleQueries;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUpload;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
  * @author Edilson Jr
  */
-@WebServlet(name = "UsuarioSrv", urlPatterns = {"/UsuarioSrv"})
 public class UsuarioSrv extends HttpServlet {
 
     /**
@@ -57,79 +48,75 @@ public class UsuarioSrv extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-       
-        System.out.println("teste!");
-  
-            System.out.println("it is!");
-            FileItemFactory factory = new DiskFileItemFactory();
-            Servico servico = new Servico();
-            ServletFileUpload upload = new ServletFileUpload(factory);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpServletRequest reqt = (HttpServletRequest) request;
+        String id = request.getParameter("id");
+        String operacao = request.getParameter("operacao");
+        if (request.getParameter("operacao") == null) {
+            operacao = "";
+        }
 
-            HttpServletRequest reqt = (HttpServletRequest) request;
-
-            Usuario usuario= new Usuario();
-            HttpSession ses = reqt.getSession(false);
-            Queries equery = new SimpleQueries();
-            
-            
-            System.out.println("usuario ID: " + usuario);
-
+        System.err.println(operacao + request.getParameter("perfil") + request.getParameter("senha"));
+        SimpleQueries sq = new SimpleQueries();
+        if (id != null) {
+            Usuario usuario;
             try {
-                int i = 0;
-
-                List items = upload.parseRequest(request);
-
-                Iterator iter = items.iterator();
-                if (items.isEmpty()) {
-                    System.out.println("Vazio");
-                }
-
-                while (iter.hasNext()) {
-                    i++;
-                    System.out.println("iterador: " + i);
-                    FileItem item = (FileItem) iter.next();
-                    if (item.getFieldName().equals("id")) {
-                        usuario.setIdUsuario(Integer.parseInt(item.getString()));
-
-                    }
-                    if (item.getFieldName().equals("nome")) {
-                        usuario.setNome(item.getString());
-                    }
-
-                    if (item.getFieldName().equals("login")) {
-                        usuario.setLogin(item.getString());
-                    }
-
-                    if (item.getFieldName().equals("senha")) {
-                        usuario.setSenha(item.getString());
-                    }
-                    if (item.getFieldName().contains("perfil")) {
-                        usuario.setCodPerfil(Integer.parseInt(item.getString()));
-                    }
+                usuario = (Usuario) sq.select(new Usuario(), Integer.parseInt(id));
+                System.out.println("DOGET1: " + usuario.toString());
+                if (request.getParameter("perfil") != null) {
+                    usuario.setCodPerfil(Integer.parseInt(request.getParameter("perfil")));
 
                 }
-              
-                    equery.insert(usuario);
+                if (request.getParameter("ativo") != null) {
+                    usuario.setAtivo(Integer.parseInt(request.getParameter("ativo")));
+                }
 
-              
-         
-                
-                equery.close();
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+                if (request.getParameter("senha") != null) {
+                    usuario.setSenha(reqt.getParameter("senha"));
 
-                dispatcher.forward(request, response);
-                return;
-            } catch (Exception ex) {
+                }
 
-                ex.printStackTrace();
-                System.out.println("Erro na Solicitação. Tente de novo ou entre em contato do Administrador do Banco de Dados");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("erro.jsp");
-                dispatcher.forward(request, response);
+                System.out.println("DOGET2: " + usuario.toString());
+                sq.update(usuario);
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioSrv.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
 
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
+
+            if (operacao.equals("desativar")) {
+                sq.close();
+                response.getWriter().write("Usuario desativado!");
+            } else if (operacao.equals("ativar")) {
+
+                response.getWriter().write("Usuario ativado!");
+            } else {
+                sq.close();
+                response.getWriter().write("usuario alterado com sucesso!");
+            }
+        } else {
+            Usuario usuario = new Usuario();
+
+            usuario.setNome(reqt.getParameter("nome"));
+            usuario.setLogin(reqt.getParameter("login"));
+            usuario.setSenha(reqt.getParameter("senha"));
+            usuario.setAtivo(1);
+            System.out.println(usuario);
+            usuario.setCodPerfil(Integer.parseInt(reqt.getParameter("perfil")));
+            try {
+                sq.insert(usuario);
+                sq.close();
+            } catch (NotIsInsertableEntityException ex) {
+                Logger.getLogger(UsuarioSrv.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioSrv.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("inserido com sucesso!!");
+
+        }
     }
 
     /**

@@ -8,21 +8,26 @@
 
 
 
-<div class="menu">
+<div class="container">
+    <div class="menu">
 
-    <div class="row">
+        <div class="row">
 
-        <nav id="menu" class="pull-left">
-            <ul>
-                <li><a href= "index.jsp" >  Inicio</a></li>
-                <li><a href="servico.jsp"> Serviços</a></li></a> 
+            <nav id="menu" class="pull-left">
+                <ul>
+
+                    <li><a href="servico.jsp"> Serviços</a></li>
 
 
-                <li><a href="usuarios.jsp"> Usuarios</a></li></a>  
-            </ul>
+                    <li><a href="usuarios.jsp"> Usuarios</a></li> 
+                    <li><a href="addusuarios.jsp"> Adicionar Usuarios</a></li> 
+                    <li><a href="gerenciador_relatorios.jsp"> Relatórios</a></li>
+                    <li><a href="login.jsp"> Logout</a></li> 
+                </ul>
 
-        </nav>
+            </nav>
 
+        </div>
     </div>
 
 </div>

@@ -3,7 +3,6 @@ package br.com.minicom.scr.autoclass;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.util.Scanner;
 
 /**
  *
@@ -20,10 +19,10 @@ public class Main {
         File file;
         try {
             for (int i = 0; i < tabelas.length; i++) {
-                file = new File("C:\\Users\\Edilson Jr\\Documents\\GitHub\\GesacService\\arquivos\\excell\\" + tabelas[i].toUpperCase().charAt(0)+tabelas[i].substring(1, tabelas[i].length())+".java");
+                file = new File("C:\\Users\\idigital\\Desktop" + tabelas[i].toUpperCase().charAt(0)+tabelas[i].substring(1, tabelas[i].length())+".java");
                 System.out.println(file.getAbsolutePath());
                 arquivo = new FileWriter(file);
-                arquivo.write(ClassPrototype.buildClass(Dados.getTableData(tabelas[i]), tabelas[i]));
+                arquivo.write(ClassPrototype.buildClass(Dados.getTableData(tabelas[i]), tabelas[i].toUpperCase().charAt(0)+tabelas[i].substring(1, tabelas[i].length())));
                 arquivo.close();
             }
         } catch (Exception e) {

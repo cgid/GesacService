@@ -12,28 +12,38 @@ package br.com.minicom.scr.consultas;
 public class ChamadoEnderecos {
 
     String codPid,
-            nomeEstabelecimento,          
-            descricao, 
+            nomeEstabelecimento,
+            descricao,
             numero,
             bairro,
             complemento,
             nomeMunicipio,
             uf,
+            ibge,
             id_solicitacao;
 
-    public ChamadoEnderecos(String codPid, String nomeEstabelecimento, String descricao, String numero, String bairro, String complemento, String nomeMunicipio, String uf, String id_solicitacao) {
+    public ChamadoEnderecos(String codPid, String nomeEstabelecimento, String descricao, String numero, String bairro, String complemento, String nomeMunicipio, String uf, String ibge, String id_solicitacao) {
         this.codPid = codPid;
         this.nomeEstabelecimento = nomeEstabelecimento;
-       
         this.descricao = descricao;
         this.numero = numero;
         this.bairro = bairro;
         this.complemento = complemento;
         this.nomeMunicipio = nomeMunicipio;
         this.uf = uf;
+        this.ibge = ibge;
         this.id_solicitacao = id_solicitacao;
     }
 
+    public String getIbge() {
+        return ibge;
+    }
+
+    public void setIbge(String ibge) {
+        this.ibge = ibge;
+    }
+
+  
     public String getNumero() {
         return numero;
     }
@@ -41,8 +51,6 @@ public class ChamadoEnderecos {
     public void setNumero(String numero) {
         this.numero = numero;
     }
-
-
 
     public String getCodPid() {
         return codPid;
@@ -59,8 +67,6 @@ public class ChamadoEnderecos {
     public void setNomeEstabelecimento(String nomeEstabelecimento) {
         this.nomeEstabelecimento = nomeEstabelecimento;
     }
-
-  
 
     public String getDescricao() {
         return descricao;

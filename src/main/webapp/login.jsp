@@ -16,7 +16,7 @@
 
         <section>
 
-            <header>  <%@include file="header.html" %> </header>
+         <%@include file="header.html" %>
 
             <div id="painellogin" class="container">
                 <div class="panel panel-primary">
@@ -28,7 +28,7 @@
                         <form method="POST" action="loginHandler.jsp">
                             <div class="form-group">
                                 <label for="login">Usuario</label>
-                                <input type="text" name="login" id="login" class="form-control" placeholder="Digite seu usuário" required>
+                                <input type="text" name="login" id="login" class="form-control" placeholder="Digite seu Login" required>
                             </div>
 
                             <div class="form-group">
@@ -48,12 +48,12 @@
                     </div>
                 </div>
             </div>
-            <footer>
-                <%@include file="footer.html" %>
-        </footer>
+           
+               
+
         </section>
 
-
+ <%@include file="footer.html" %>
 
 
         <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>

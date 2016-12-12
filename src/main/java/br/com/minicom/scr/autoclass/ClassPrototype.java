@@ -9,6 +9,7 @@ import java.util.Locale;
 public class ClassPrototype {
 
     public static String buildClass(String[][] dados, String nome) {
+      
         fixString(nome);
 
         String dateType = "Type.DATE";

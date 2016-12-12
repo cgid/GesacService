@@ -8,7 +8,7 @@ import  br.com.minicom.scr.persistence.Entity;
 public class Telefone implements Entity {
 	private final String DB = "SisCentralRel";
 	private final String TABLENAME = "telefone";
-	private final String[] COLUMNNAMES = {"id_telefone", "ddd", "telefone", "Contato_id_contato"};
+	private final String[] COLUMNNAMES = {"id_telefone", "ddd", "telefone", "Contato_id_contato", "Situacao"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
 	public Telefone() {
@@ -16,6 +16,7 @@ public class Telefone implements Entity {
 		values[1] = new Cell(Type.NUM, 0, true);
 		values[2] = new Cell(Type.NUM, 0, true);
 		values[3] = new Cell(Type.NUM, 0, true);
+		values[4] = new Cell(Type.NUM, 0, false);
 	}
 
 	public void setIdTelefone(int idTelefone) {
@@ -29,6 +30,9 @@ public class Telefone implements Entity {
 	}
 	public void setIdContato(int idContato) {
 		this.values[3].setValue(idContato);
+	}
+	public void setSituacao(int Situacao) {
+		this.values[4].setValue(Situacao);
 	}
 
 	@Override

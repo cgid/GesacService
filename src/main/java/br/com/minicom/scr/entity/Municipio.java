@@ -7,7 +7,7 @@ import  br.com.minicom.scr.persistence.Entity;
 
 public class Municipio implements Entity {
 	private final String DB = "SisCentralRel";
-	private final String TABLENAME = "municipio";
+	private final String TABLENAME = "Municipio";
 	private final String[] COLUMNNAMES = {"cod_IBGE", "nome_municipio", "UF"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 

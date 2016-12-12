@@ -8,23 +8,27 @@ import  br.com.minicom.scr.persistence.Entity;
 public class Log implements Entity {
 	private final String DB = "SisCentralRel";
 	private final String TABLENAME = "log";
-	private final String[] COLUMNNAMES = {"id_log", "duracao", "Chamado_id_chamado"};
+	private final String[] COLUMNNAMES = {"id_log", "operacao", "chamado_id_chamado", "servico_id_servico"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 
 	public Log() {
-		values[0] = new Cell(true, true,Type.NUM, 0, true);
-		values[1] = new Cell(Type.STR, null, true);
-		values[2] = new Cell(Type.NUM, 0, true);
+		values[0] = new Cell(true, false,Type.NUM, 0, true);
+		values[1] = new Cell(Type.STR, null, false);
+		values[2] = new Cell(Type.NUM, 0, false);
+		values[3] = new Cell(Type.NUM, 0, false);
 	}
 
 	public void setIdLog(int idLog) {
 		this.values[0].setValue(idLog);
 	}
-	public void setDuracao(String duracao) {
-		this.values[1].setValue(duracao);
+	public void setOperacao(String operacao) {
+		this.values[1].setValue(operacao);
 	}
 	public void setIdChamado(int idChamado) {
 		this.values[2].setValue(idChamado);
+	}
+	public void setIdServico(int idServico) {
+		this.values[3].setValue(idServico);
 	}
 
 	@Override
@@ -76,9 +80,4 @@ public class Log implements Entity {
             throw new ArrayIndexOutOfBoundsException("Indice inserido esta fora do intervalo.");
         }
         this.values[index].setValue(v);
-    }
-
-    public void setCodChamado(int select) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-}
+    }}

@@ -68,10 +68,13 @@ public class SimpleQueryGenerator implements QueryGenerator<Entity>{
                 sql.append(", ");
             
         }
-        sql.append(" WHERE = ").
-        append(e.getCell(0)).
+        sql.append(" WHERE  ").
+        append(e.getColumnName(0)
+                ).
+        append("=").
+        append(e.getCell(0).getValue()).
         append(";");
-        System.out.println();
+        System.out.println(sql);
         return sql.toString();
     }
 

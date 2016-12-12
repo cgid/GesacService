@@ -11,6 +11,7 @@ import br.com.minicom.scr.entity.exceptions.NotIsInsertableEntityException;
 import br.com.minicom.scr.entity.exceptions.NotIsSelectableEntityException;
 import br.com.minicom.scr.entity.exceptions.NotIsUpgradeableEntityException;
 import br.com.minicom.scr.persistence.Entity;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public interface Queries<E extends Entity> {
     /**
      * @param l
      */
-    public void insert(E l) throws NotIsInsertableEntityException;
+       public void insert(Entity e) throws NotIsInsertableEntityException,SQLException;
 
     /**
      *

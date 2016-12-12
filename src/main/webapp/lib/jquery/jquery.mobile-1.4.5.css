@@ -955,6 +955,7 @@ html body .ui-group-theme-a .ui-bar-inherit {
 	border-color:	 		#bbb /*{a-page-border}*/;
 	color: 					#333 /*{a-page-color}*/;
 	text-shadow: 0 /*{a-page-shadow-x}*/ 1px /*{a-page-shadow-y}*/ 0 /*{a-page-shadow-radius}*/ 	#f3f3f3 /*{a-page-shadow-color}*/;
+
 }
 /* Body: Read-only lists, text inputs, collapsible content */
 .ui-body-a,
@@ -967,6 +968,8 @@ html .ui-panel-page-container-a {
 	border-color:	 		#ddd /*{a-body-border}*/;
 	color: 					#333 /*{a-body-color}*/;
 	text-shadow: 0 /*{a-body-shadow-x}*/ 1px /*{a-body-shadow-y}*/ 0 /*{a-body-shadow-radius}*/ 	#f3f3f3 /*{a-body-shadow-color}*/;
+  width: 90%;
+  margin-left: 10px;
 }
 .ui-body-a {
 	border-width: 1px;
@@ -977,7 +980,7 @@ html .ui-panel-page-container-a {
 html .ui-bar-a a,
 html .ui-body-a a,
 html body .ui-group-theme-a a {
-	color: #3388cc /*{a-link-color}*/;
+	color: #000; /*{a-link-color}*/;
 	font-weight: bold;
 }
 .ui-page-theme-a a:visited,
@@ -1004,16 +1007,22 @@ html .ui-bar-a .ui-btn,
 html .ui-body-a .ui-btn,
 html body .ui-group-theme-a .ui-btn,
 html head + body .ui-btn.ui-btn-a,
-/* Button visited */
+ /*Button visited*/ 
 .ui-page-theme-a .ui-btn:visited,
 html .ui-bar-a .ui-btn:visited,
 html .ui-body-a .ui-btn:visited,
 html body .ui-group-theme-a .ui-btn:visited,
 html head + body .ui-btn.ui-btn-a:visited {
-	background-color: 			#f6f6f6 /*{a-bup-background-color}*/;
+	background-color: 			#eaeaea /*{a-bup-background-color}*/;
 	border-color:	 		#ddd /*{a-bup-border}*/;
 	color: 					#333 /*{a-bup-color}*/;
 	text-shadow: 0 /*{a-bup-shadow-x}*/ 1px /*{a-bup-shadow-y}*/ 0 /*{a-bup-shadow-radius}*/ #f3f3f3 /*{a-bup-shadow-color}*/;
+        width: 64%;
+    text-align: center;
+    padding-top:  7px;
+    margin-left: 7px;
+      height: 34px;
+	left: 23%;
 }
 /* Button hover */
 .ui-page-theme-a .ui-btn:hover,
@@ -1565,7 +1574,10 @@ div.ui-mobile-viewport {
 .ui-btn-inline {
 	display: inline-block;
 	vertical-align: middle;
+	
 	margin-right: .625em;
+	margin-left: .625em;
+        
 }
 .ui-btn-icon-left {
 	padding-left: 2.5em;
@@ -1691,6 +1703,8 @@ button.ui-btn-icon-notext,
 .ui-controlgroup-label {
 	display: block;
 	margin: 0 0 .4em;
+        margin-left: 10px;
+
 }
 /* Accessible content hiding */
 /* ui-hide-label deprecated in 1.4. TODO: Remove in 1.5 */
@@ -3398,8 +3412,8 @@ fieldset.ui-controlgroup {
 	position: absolute;
 	left: .466em;
 	top: 50%;
-	width: 22px;
-	height: 22px;
+	width: 15px;
+	height: 43px;
 	margin: -11px 0 0 0;
 	outline: 0 !important;
 	z-index: 1;
@@ -4210,6 +4224,8 @@ for Android 4.1 */
 }
 textarea.ui-input-text.ui-textinput-autogrow {
 	overflow: hidden;
+        width: 95%;
+        margin-left: 10px;
 }
 .ui-textinput-autogrow-resize {
 	-webkit-transition: height 0.25s;

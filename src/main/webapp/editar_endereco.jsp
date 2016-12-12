@@ -1,23 +1,6 @@
 
-<%@page import="br.com.minicom.scr.entity.Usuario"%>
-<%
-
-    if ((session.getAttribute("login") == null) || (session.getAttribute("login") == "")) {
-%>
-
-Você não está logado no sistema<br/>
-<a href="index.jsp">Por Favor, Entre com o seu Login clicando aqui!</a>
-<%} else {
-    String login = String.valueOf(session.getAttribute("login"));
-    String pwd = String.valueOf(session.getAttribute("senha"));
-
-    Usuario usuario = new Usuario();
-
-    String perfil = usuario.autenticarPerfil(login, pwd);
-    perfil = "index_" + perfil + ".jsp";
-%>
 <html>
-
+    <%@include file="valida.jsp" %>
     <head>
         <meta charset="utf-8">
         <title>Editar endereÃ§o - SIS CENTRAL REL</title>
@@ -84,11 +67,8 @@ Você não está logado no sistema<br/>
                                     <input type="text" name="complemento" id="complemento" class="form-control" placeholder="Digite o complemento">
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="nome">MunicÃ­pio</label>
-                                    <input type="text" name="municipio" id="municipio" class="form-control" placeholder="Digite o municÃ­pio">
-                                </div>
-                            </form>
+                        
+                         
 
 
                                 <div class="row text-left">

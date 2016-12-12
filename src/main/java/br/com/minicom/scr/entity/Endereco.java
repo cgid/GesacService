@@ -7,7 +7,7 @@ import  br.com.minicom.scr.persistence.Entity;
 
 public class Endereco implements Entity {
 	private final String DB = "SisCentralRel";
-	private final String TABLENAME = "endereco";
+	private final String TABLENAME = "Endereco";
 	private final String[] COLUMNNAMES = {"id_endereco", "descricao", "numero", "bairro", "cep", "complemento", "Municipio_cod_IBGE", "PID_cod_pid", "valido", "dt_atualizacao"};
 	private Cell[] values = new Cell[this.COLUMNNAMES.length];
 

@@ -1,20 +1,23 @@
 
 
 
-            <div class="menu">
+<div class="container">
+    <div class="menu">
 
-                <div class="row">
+        <div class="row">
 
-                    <nav id="menu" class="pull-left">
-                        <ul>
-                          <li><a href= "index.jsp" >  Inicio</a></li>
-                            <li><a href="servico.jsp"> Serviços</a></li></a> 
+            <nav id="menu" class="pull-left">
+                <ul>
+               
+                    <li><a href="servico.jsp"> Serviços</a></li></a> 
+                    <li><a href="login.jsp"> Logout</a></li> 
 
 
-                        </ul>
+                </ul>
 
-                    </nav>
+            </nav>
 
-                </div>
+        </div>
+    </div>
 
-            </div>
+</div>
