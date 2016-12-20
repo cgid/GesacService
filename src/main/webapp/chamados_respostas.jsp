@@ -40,86 +40,68 @@
             <% }%>
 
 
-            <div id="painel2" class="container">
-
-
-
-
-                <div  class="container">
-
-                    <center><div class="alert alert-success" id="sucess" hidden="true" role="alert"></center>
-                    <div  class="panel panel-default">
-                        <!-- Default panel contents -->
-                        <div class="panel-heading" style="text-align: center;"><strong>LISTA <%out.print(request.getParameter("idchamado"));%></strong> - <%out.print(request.getParameter("descricao"));%></div>
-
-                        <ul class="list-group">
-
-
-
-                            <table class="table">
 
 
 
 
 
-                                <thead> 
-                                    <tr style="background-color: #e2e1e1;"> 
-                                        <th>Nome</th> 
-                                        <th>Email</th> 
-                                        <th>DDD</th> 
-                                        <th>Telefone</th> 
-                                        <th>Inválido</th> 
 
-                                    </tr>  
-                                </thead>
-                                <tbody>
-                                    <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
-                                    <c:forEach items="${sq.ChamadosERespostas(2)}" var="contato">
+            <table class="table-hover" >
 
+                <thead class="btn-toolbar" >
+                <th>pid</th>
+                <th>estabelecimento</th>
+                <th>Obs</th>
 
+                <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
+                <c:forEach items="${sq.getTitulosList(param.servico)}" var="contato">
+                    <th><label style="width: 100px"><c:out value="${contato.toString()}"/></label></th>
+                        </c:forEach>
 
+                </thead>
 
 
-                                        <tr >
-                                            <td> <c:out value="${contato.getPid() }"/></td>
+                <tbody >
 
-                                        </tr>
+                    <c:forEach items="${sq.ChamadosERespostas(param.servico)}" var="contato">
 
+                        <tr >
 
 
 
 
-                                    </c:forEach>
-
-                                </tbody>
-                            </table>  
-                    </div>
-
-
-
-
-                </div>
-
-
-                </ul>
+                            <td style="width: 50px;"> <a href="relatorio_pid.jsp?pid=<c:out value='${contato.getPid() }'/>"><c:out value='${contato.getPid() }'/></a></td>
+                            <td style="width: 50px;"> <c:out value="${contato.getEstabelecimento() }"/></td>
+                             <td style="width: 50px;"> <c:out value="${contato.getObs() }"/></td>
+                            <c:forEach items="${contato.getRepostas()}" var="teste">
+                                <td style="width: 50px;"> <p style="width: 50px;"><c:out value="${teste.toString() }"/></p></td>
+                            </c:forEach>
 
 
 
-            </div>
+                        </tr> 
 
-        </div>
+
+                    </c:forEach>
+
+                </tbody>
+            </table>
 
 
 
 
 
-    </div>
-    <%@include file="footer.html" %>
-</section>
 
 
 
 
-</body>
-<% }%>
+
+            <%@include file="footer.html" %>
+        </section>
+
+
+
+
+    </body>
+    <% }%>
 </html>

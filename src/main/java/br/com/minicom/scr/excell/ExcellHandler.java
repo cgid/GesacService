@@ -22,12 +22,19 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.format.CellFormat;
 import jxl.read.biff.BiffException;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
 import org.apache.commons.fileupload.FileItem;
 
 /**
@@ -533,6 +540,84 @@ public class ExcellHandler {
             Logger.getLogger(ExcellHandler.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Arquivo não pode ser carregado");
             return "Erro ao carregar a lista.\n Verifique se ele está em uso ou fora do padrão estabelecido";
+        }
+    }
+
+    public static String writeSheet(String usuario, String[] listaStrings, String[] pidStrings, String[] chamadosStrings, String[] dataStrings, String[] duracaoStrings, String[] obsStrings) {
+        File diretorio = new File("C:\\Users\\Edilson Jr\\Documents\\GitHub\\GesacService\\arquivos\\excell");
+
+        diretorio.mkdir();
+
+        String filename = usuario.concat(".xls");
+        File file = new File(diretorio, filename);
+        WorkbookSettings ws = new WorkbookSettings();
+        ws.setLocale(new Locale("pt", "pt"));
+        WritableWorkbook workbook;
+        try {
+            workbook = Workbook.createWorkbook(file, ws);
+
+            WritableSheet s = workbook.createSheet("Folha1", 0);
+
+            int i = 0;
+            int j = 0;
+
+            while (i < listaStrings.length) {
+                j = 0;
+                System.out.println("linha:" + i);
+
+                System.out.println("valor:" + listaStrings[i]);
+                while (j < 6) {
+                    System.out.println("coluna:" + j);
+                    switch (j) {
+
+                        case 0:
+                            Label c0 = new Label(j, i, listaStrings[i]);
+                            s.addCell(c0);
+                            System.out.println("valor:" + listaStrings[i]);
+                            break;
+                        case 1:
+                            Label c1 = new Label(j, i, pidStrings[i]);
+
+                            s.addCell(c1);
+                            System.out.println("valor:" + pidStrings[i]);
+                            break;
+                        case 2:
+                            Label c2 = new Label(j, i, chamadosStrings[i]);
+                            s.addCell(c2);
+                            System.out.println("valor:" + chamadosStrings[i]);
+                            break;
+                        case 3:
+                            Label c3 = new Label(j, i, dataStrings[i]);
+                            s.addCell(c3);
+                            System.out.println("valor:" + dataStrings[i]);
+                            break;
+                        case 4:
+                            Label c4 = new Label(j, i, duracaoStrings[i]);
+                            s.addCell(c4);
+                            System.out.println("valor:" + duracaoStrings[i]);
+                            break;
+                        case 5:
+                            Label c5 = new Label(j, i, obsStrings[i]);
+                            s.addCell(c5);
+                            System.out.println("valor:" + obsStrings[i]);
+                            break;
+                    }
+                    j++;
+                }
+
+                i++;
+            }
+
+            workbook.write();
+            workbook.close();
+            System.out.println("acabou");
+            return file.getPath();
+        } catch (IOException ex) {
+            Logger.getLogger(ExcellHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return "erro" + ex;
+        } catch (WriteException ex) {
+            Logger.getLogger(ExcellHandler.class.getName()).log(Level.SEVERE, null, ex);
+            return "erro" + ex;
         }
     }
 }

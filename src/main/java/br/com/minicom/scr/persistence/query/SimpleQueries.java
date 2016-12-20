@@ -10,7 +10,6 @@ import br.com.minicom.scr.consultas.ChamadoEnderecos;
 import br.com.minicom.scr.consultas.ChamadoeRespostas;
 import br.com.minicom.scr.consultas.ChamadosAtendidos;
 import br.com.minicom.scr.consultas.ConsultaContatos;
-import br.com.minicom.scr.entity.Chamado;
 import br.com.minicom.scr.entity.Perguntas;
 import br.com.minicom.scr.entity.Servico;
 import br.com.minicom.scr.entity.Solicitacoes;
@@ -23,11 +22,12 @@ import br.com.minicom.scr.persistence.Entity;
 import br.com.minicom.scr.persistence.querygen.QueryGenerator;
 import br.com.minicom.scr.persistence.querygen.SimpleQueryGenerator;
 import br.com.minicom.scr.relatorios.RelatorioPid;
+import br.com.minicom.scr.relatorios.RelatorioUsuario;
 import br.com.minicom.scr.relatorios.RelatorioPorPid;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -983,7 +983,7 @@ public class SimpleQueries implements Queries<Entity> {
             System.out.println(rs3.getInt(1));
             contador3 = rs3.getInt(1);
         }
-     
+
         ch.setTotalDeChamados(contador1);
         ch.setChamadosConcluidos(contador2);
         ch.setChamadosRealizados(contador3 + contador2);
@@ -992,9 +992,15 @@ public class SimpleQueries implements Queries<Entity> {
     }
 
     public List<ChamadoeRespostas> ChamadosERespostas(int servico) throws SQLException {
-
+        PreparedStatement ps = conn.prepareStatement("SELECT COUNT(perguntas.id_perguntas) from perguntas WHERE perguntas.servico_id_servico=?");
+        ps.setInt(1, servico);
+        int qtdPerguntas = 0;
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            qtdPerguntas = rs.getInt(1);
+        }
         List<ChamadoeRespostas> CAList = new ArrayList<>();
-        PreparedStatement ps = conn.prepareStatement("SELECT DISTINCT(chamado.id_chamado),\n"
+        PreparedStatement ps2 = conn.prepareStatement("SELECT DISTINCT(chamado.id_chamado),\n"
                 + "pid.cod_pid,\n"
                 + "pid.nome_estabelecimento,\n"
                 + " chamado.observacao,\n"
@@ -1007,117 +1013,80 @@ public class SimpleQueries implements Queries<Entity> {
                 + " INNER JOIN  contato  on (pid.cod_pid=contato.PID_cod_pid)\n"
                 + " \n"
                 + " WHERE   servico.id_servico=?");
-        List<String> list = new ArrayList<>();
-        ps.setInt(1, servico);
+
+        System.out.println(ps2.toString());
+        ps2.setInt(1, servico);
         int i = 0;
         int ii = 0;
-        ResultSet rs = ps.executeQuery();
-        ChamadoeRespostas cr = new ChamadoeRespostas();
-        while (rs.next()) {
-            cr.setPid(rs.getString("cod_pid"));
-            cr.setEstabelecimento(rs.getString(3));
-            cr.setObs(rs.getString("observacao"));
+        ResultSet rs2 = ps2.executeQuery();
+        List<String> list = new ArrayList<>();
+        while (rs2.next()) {
+            ChamadoeRespostas cr = new ChamadoeRespostas();
+            cr.setPid(rs2.getString("cod_pid"));
+            cr.setEstabelecimento(rs2.getString(3));
+            cr.setObs(rs2.getString("observacao"));
 
-            list.add(rs.getString(6));
+            list.add(rs2.getString(6));
             i++;
-            if (i % 8 == 0) {
+            if (i % qtdPerguntas == 0) {
                 ii++;
                 System.out.println(i);
 
                 cr.setRepostas(list);
 
                 System.out.println(cr.toString());
+                System.out.println("LISTA: " + list.toString());
+                System.out.println("TAMANHO DA LISTA " + list.size());
+
                 CAList.add(cr);
-                list.clear();
+                list = new ArrayList<>();
             }
+
         }
         System.out.println("tamanho do list" + ii);
         System.out.println("tamanho do list" + CAList.size());
+        System.out.println("TO STRING " + CAList.toString());
         return CAList;
     }
 
-    public List<String> getTitulosList(List<String> atributos, List<String> Joins) throws SQLException {
-        List<String> titulos = new ArrayList();
+    public List<String> getTitulosList(int servico) throws SQLException {
+        List<String> titulos = new ArrayList<String>();
+        PreparedStatement ps = conn.prepareStatement("SELECT pergunta from perguntas WHERE perguntas.servico_id_servico=?");
+        ps.setInt(1, servico);
 
-        for (Iterator<String> iterator = atributos.iterator(); iterator.hasNext();) {
-            String next = iterator.next();
-
-            if (next.contains(".")) {
-                next = next.substring(next.indexOf(".") + 1, next.length());
-
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            if (rs.getString("pergunta").length() > 30) {
+                titulos.add(rs.getString("pergunta").substring(0, 20)+"...");
+            } else {
+                titulos.add(rs.getString("pergunta"));
             }
-            if (next.contains("_")) {
-                next = next.replaceAll("_", " de ");
-            }
-            if (next.equals("id de servico")) {
-                next = "Lista";
-            }
-            if (next.equals("cod de pid")) {
-                next = "PID";
-            }
-            if (next.equals("id de chamado")) {
-                next = "Nº Chamado";
-            }
-            if (next.equals("dt de chamado de aberto")) {
-                next = "Data de Abertura";
-            }
-            if (next.equals("duracao")) {
-                next = "Duração";
-            }
-
-            if (next.equals("observacao")) {
-                next = "Observação";
-            }
-
-            titulos.add(next);
-
         }
+
         return titulos;
     }
 
-    public List<RelatorioPid> RelatorioUsuario(List<String> atributos, List<String> Joins, String where, String pesquisa) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        List<RelatorioPid> relatorioPids = new ArrayList<>();
-        List<String> columNames = new ArrayList();
-        String sql = "Select DISTINCT ";
-        int size = 0;
-        stmt = null;
-        rs = null;
-
-        for (int i = 0; i < atributos.size() - 1; i++) {
-            sql = sql.concat("\n" + atributos.get(i) + ",\n");
-            size++;
-            columNames.add(atributos.get(i + 1));
-        }
-//       
-
-        sql = sql.concat("\n" + atributos.get(atributos.size() - 1) + "\n");
-        sql = sql.concat("from " + pesquisa);
-        columNames.add(atributos.get(atributos.size() - 1));
-        for (Iterator<String> iterator = Joins.iterator(); iterator.hasNext();) {
-            sql = sql.concat("\n" + iterator.next() + "\n");
-
-        }
-
-        sql = sql.concat(where);
-        sql = sql.concat(" order by chamado.dt_chamado_aberto desc");
-
-        stmt = conn.createStatement();
-        rs = stmt.executeQuery(sql);
-        size = size + 1;
+    public List<RelatorioUsuario> RelatorioUsuario(String nome) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        List<RelatorioUsuario> rus = new ArrayList<>();
+        PreparedStatement ps = conn.prepareStatement("Select servico.id_servico,  \n"
+                + "pid.cod_pid, \n"
+                + "        chamado.id_chamado, \n"
+                + "        chamado.dt_chamado_aberto, log_chamado.duracao, \n"
+                + "        chamado.observacao \n"
+                + "        from usuario \n"
+                + "        INNER JOIN chamado on(usuario.id_usuario = chamado.Usuario_cod_usuario)\n"
+                + "        INNER JOIN solicitacoes on (chamado.Solicitacoes_id_solicitacao = solicitacoes.id_solicitacao        )\n"
+                + "   INNER JOIN servico on (servico.id_servico = solicitacoes.servico_id_servico        )\n"
+                + "  INNER JOIN pid on (solicitacoes.PID_cod_pid = pid.cod_pid       )\n"
+                + "   INNER JOIN log_chamado on (chamado.id_chamado = log_chamado.chamado_id_chamado)where usuario.nome=?");
+        ps.setString(1, nome);
+        System.out.println(ps);
+        ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-
-//            
-            RelatorioPid rp = new RelatorioPid(columNames);
-            for (int o = 0; o < size; o++) {
-
-                rp.setCell(o, rs.getString(o + 1));
-
-            }
-            relatorioPids.add(rp);
-
+            RelatorioUsuario ru = new RelatorioUsuario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
+            rus.add(ru);
         }
-
-        return relatorioPids;
+        return rus;
     }
 
 }

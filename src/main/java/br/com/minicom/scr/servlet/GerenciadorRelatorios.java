@@ -48,44 +48,20 @@ public class GerenciadorRelatorios extends HttpServlet {
      */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        +"    INNER JOIN contato  on 	(pid.cod_pid = contato.PID_cod_pid)\n"
-//                + "    INNER JOIN endereco on 	(pid.cod_pid = endereco.PID_cod_pid)\n"
-//                + "    INNER JOIN telefone  on 	(contato.id_contato = telefone.Contato_id_contato)\n"
-//                + "    INNER JOIN municipio on 	(endereco.Municipio_cod_IBGE = municipio.cod_IBGE)\n"
-//                + "    INNER JOIN solicitacoes on  (pid.cod_pid= solicitacoes.PID_cod_pid)\n"
-//                + "    INNER JOIN servico  on	(solicitacoes.Servico_id_servico=servico.id_servico)\n"
 
-        List<String> atributosList = new ArrayList<>();
-        List<String> contadoresList = new ArrayList<>();
-        List<String> JoinsList = new ArrayList<>();
+        if (request.getParameter("radio").equals("servico")) {
+            String nome = request.getParameter("where");
+            request.setAttribute("servico", nome);
 
-        System.out.println("Entrou na servlet");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("chamados_respostas.jsp?servico="+nome);
+
+            dispatcher.forward(request, response);
+        }
         if (request.getParameter("radio").equals("usuario")) {
-            System.out.println("PESQUISA POR USUARIO");
+            String nome = request.getParameter("where");
+            request.setAttribute("nome", nome);
 
-            pesquisa = "usuario";
-            where = "where usuario.nome='" + request.getParameter("where") + "'";
-            atributosList.add("servico.id_servico");
-            atributosList.add("pid.cod_pid");
-            atributosList.add("chamado.id_chamado");
-
-            atributosList.add("chamado.dt_chamado_aberto");
-            atributosList.add("log_chamado.duracao");
-            atributosList.add("chamado.observacao");
-            JoinsList.add("INNER JOIN chamado on (usuario.id_usuario=chamado.Usuario_cod_usuario)");
-            JoinsList.add("INNER JOIN solicitacoes on (chamado.Solicitacoes_id_solicitacao=solicitacoes.id_solicitacao)");
-            JoinsList.add(" INNER JOIN servico on (servico.id_servico=solicitacoes.servico_id_servico)");
-
-            JoinsList.add("INNER JOIN pid on (solicitacoes.PID_cod_pid=pid.cod_pid)");
-
-            JoinsList.add(" INNER JOIN log_chamado on (chamado.id_chamado=log_chamado.chamado_id_chamado)");
-
-            request.setAttribute("where", where);
-            request.setAttribute("pesquisa", pesquisa);
-            request.setAttribute("JoinList", JoinsList);
-            request.setAttribute("atributosList", atributosList);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("relatorio_usuario.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("relatorio_usuario.jsp?nome="+nome);
 
             dispatcher.forward(request, response);
         }
@@ -93,7 +69,7 @@ public class GerenciadorRelatorios extends HttpServlet {
         if (request.getParameter("radio").equals("pid")) {
             where = request.getParameter("where");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("relatorio_pid.jsp?pid="+where);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("relatorio_pid.jsp?pid=" + where);
             dispatcher.forward(request, response);
         }
     }

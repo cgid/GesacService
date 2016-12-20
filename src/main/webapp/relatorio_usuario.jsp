@@ -1,9 +1,10 @@
-    <%@include file="valida.jsp" %>
-    <head>
+<%@include file="valida.jsp" %>
+<head>
     <meta charset="utf-8">
     <title>Chamados - SIS CENTRAL REL</title>
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/chamados.css">
+    <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css ">
 </head>
 
 <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
@@ -25,46 +26,83 @@
         %><%@include file= 'barra_atendente.jsp' %> 
         <% }%>
 
-        <body>
-            <!-- Table -->
-            <c:set var="aL" value='${requestScope["atributosList"]}'/>
-            <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
-            <table class="table">
-                <c:set var="jL" value='${requestScope["JoinList"]}'/>
 
-                <c:set var="where" value='${requestScope["where"]}'/>
-                <c:set var="pesquisa" value='${requestScope["pesquisa"]}'/>
-                <c:set var="c" value='${requestScope["contadores"]}'/>
-                <c:set var="i" value='${0}'/>
-                <thead> 
-                    <tr> 
-                        <c:forEach items="${sq.getTitulosList(aL,jL)}" var="titulo">
+        <!-- Table -->
+
+        <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
+        <div class="container">                        <br>
+
+            <div  class="panel panel-default">
+
+
+                <!-- Default panel contents -->
+                <div class="panel-heading" style="text-align: center;"><strong>Relatorio por Usuário</div>
+                <br><div  style="text-align: right ;margin-right: 10px;" class="panel-default"> 
 
 
 
+                    <form method="POST"  action="ExcelServlet"> <input type="submit" class="btn  btn-success  " value="Exportar" />
 
-                            <th><c:out value="${titulo.toString()}"></c:out></th>
-
-
-
-
-                        </c:forEach>
-                    </tr> 
-                </thead><tbody>
-
-                    <c:forEach items="${sq.RelatorioUsuario(aL,jL, where,pesquisa)}" var="consulta">
-                        <tr>    
-
-                            ${consulta.toString()}
+                        <table class="table">
 
 
+                            <c:set var="nome" value='${requestScope["nome"]}'/>
+                            <input type="hidden" name="usuario" id="usuario"  value="${requestScope["nome"]}"/>
 
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
 
-        </body>
+                            <thead class=" btn-toolbar "> 
+                                <tr> 
+                                    <th >Lista</th>
+                                    <th>PID</th>
+                                    <th><label >N° Chamado</label></th>
+                                    <th><label >Data de abertura</label> </th>
+                                    <th> <label >Duração</label></th>
+                                    <th><label >Observação</label></th>
+                                </tr> 
+
+                            </thead><tbody>
+
+
+                                <c:forEach items="${sq.RelatorioUsuario(param.nome)}" var="consulta">
+                                    <tr>  
+                                        <td class="active">   
+                                            <a href=chamados_respostas.jsp?servico=<c:out value='${consulta.getLista() }'/>"><c:out value='${consulta.getLista() }'/></a>
+
+
+                                            <input type="hidden" value='<c:out value="${consulta.getLista() }"/>' name="lista" id="lista">
+                                        </td>
+                                        <td>    <input type="hidden" value='<c:out value="${consulta.getPID() }"/>' name="pid" id="pid">  
+                                            <a href="relatorio_pid.jsp?pid=<c:out value='${consulta.getPID() }'/>"><c:out value='${consulta.getPID() }'/></a>
+
+                                        </td>
+                                        <td class="active">   
+                                            <input type="hidden" value='<c:out value="${consulta.getChamado() }"/>' name="chamado" id="chamado">
+                                            <c:out value="${consulta.getChamado() }"/>
+                                        </td>
+                                        <td  >   
+                                            <input type="hidden" value='<c:out value="${consulta.getDataAbertura() }"/>' name="data" id="data">
+                                            <c:out value="${consulta.getDataAbertura() }"/>
+                                        </td>
+                                        <td class="active">   
+                                            <input type="hidden" value='<c:out value="${consulta.getDuracao() }"/>' name="duracao" id="duracao">
+                                            <c:out value="${consulta.getDuracao() }"/>
+                                        </td>
+                                        <td >  <input type="hidden" value=' <c:out value="${consulta.getObs() }"/>' name="obs" id="obs"> 
+                                            <c:out value="${consulta.getObs() }"/>
+                                        </td>
+
+
+
+
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table></form>
+                </div>
+            </div>
+        </div>
+
+
 
         <%@include file="footer.html" %>
 
@@ -77,7 +115,7 @@
 
 </body>
 
-</html>
+
 
 <%}%>
 </html>

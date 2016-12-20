@@ -13,6 +13,14 @@
     <servlet-mapping>
         <servlet-name>ActionServlet</servlet-name>
         <url-pattern>/ActionServlet/*</url-pattern>
+    </servlet-mapping>  
+    <servlet>
+        <servlet-name>ExcelServlet</servlet-name>
+        <servlet-class>br.com.minicom.scr.servlet.ExcelServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ExcelServlet</servlet-name>
+        <url-pattern>/ExcelServlet/*</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>InvalidaServlet</servlet-name>

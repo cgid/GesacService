@@ -19,13 +19,13 @@
         </script>
         <script>
             $(document).ready(function () {
-         var iSolicitacao = $('#idSolicitacao').val();
+                var iSolicitacao = $('#idSolicitacao').val();
                 $.get('servicoHandler.jsp', {iSolicitacao: iSolicitacao}, function (responseText) {
                     console.log(responseText);
                     $("#observacao").val(responseText);
                 });
-                $("#idSolicitacao2").val(iSolicitacao);      
-        var data = new Date();
+                $("#idSolicitacao2").val(iSolicitacao);
+                var data = new Date();
                 var ano = data.getFullYear();
                 var mes = data.getMonth() + 1;
                 var hora = data.getHours();
@@ -55,8 +55,8 @@
                 $('#dt_chamado_aberto').val(data);
                 var contador2 = 0;
                 var contador = 0;
-               
-               
+
+
                 $('#botaoeditar').click(function (event) {
 
                     contador++;
@@ -120,7 +120,7 @@
                     var cep = $('#cep').val();
                     var complemento = $('#complemento').val();
                     $.get('ActionServlet', {pid: pid, descricao: descricao, cep: cep, ibge: ibge, complemento: complemento, numero: numero, bairro: bairro}, function (responseText) {
-$.get
+                        $.get
                         $('#sucess').show().text(responseText);
                         $('#divtabform').show();
                         $('#editarendereco').hide("now");
@@ -185,7 +185,6 @@ $.get
                     style: "width:350; margin-left:10; text-transform:uppercase;",
                     placeholder: "Digite o contato",
                     id: "contatonovo",
-                 
                     name: "contatonovo"
 
                 })
@@ -207,7 +206,6 @@ $.get
                     class: "form-control",
                     type: "email",
                     style: "width:350;  margin-left:10;",
-                    
                     placeholder: "DIGITE O EMAIL",
                     id: "emailnovo",
                     name: "emailnovo"
@@ -268,17 +266,33 @@ $.get
                                         <label for="nome">PID:&nbsp;</label><c:out value="${consulta.getCodPid()}"/>
                                     </div>
                                     <div  >
-                                        <label for="nome"> Descrição:&nbsp;</label><c:out value="${consulta.getNomeEstabelecimento()}"/><br>
+                                        <label for="nome"> Descrição:&nbsp;</label><c:out value="${consulta.getNomeEstabelecimento()}"/>
+                                        <img src="edit.png" height="30" width="30">
+                                         <input style="width:50%; display: inline;" type="hidden" name="bairro" id="bairro" class="form-control"><br>
 
+                                        <label for="nome">Endereço:&nbsp;</label><c:out value="${consulta.getDescricao()}"/>
+                                        <img src="edit.png" height="30" width="30">
+                                        <input style="width:50%; display: inline;" type="hidden" name="bairro" id="bairro" class="form-control"><br>
 
-
-                                        <label for="nome">Endereço:&nbsp;</label><c:out value="${consulta.getDescricao()}"/><br>
-
-                                        <label for="nome">Numero:&nbsp;</label><c:out value="${consulta.getNumero()}"/><br>
-                                        <label for="nome">Complemento:&nbsp;</label><c:out value="${consulta.getComplemento()}"/><br>
-                                        <label for="nome">Bairro:&nbsp;</label><c:out value="${consulta.getBairro()}"/><br>                                      
-                                        <label for="nome">Municipio:&nbsp;</label><c:out value="${consulta.getNomeMunicipio()}"/><br>
-                                        <label for="nome">UF:&nbsp;</label><c:out value="${consulta.getUf()}"/><br>
+                                        <label for="nome">Numero:&nbsp;</label><c:out value="${consulta.getNumero()}"/>
+                                        <img src="edit.png" height="30" width="30">
+                                        <input style="width:50%; display: inline;" type="hidden" name="bairro" id="bairro" class="form-control"><br>
+                                        
+                                        <label for="nome">Complemento:&nbsp;</label><c:out value="${consulta.getComplemento()}"/>
+                                        <img src="edit.png" height="30" width="30">
+                                        <input style="width:50%; display: inline;" type="hidden" name="bairro" id="bairro" class="form-control"><br>
+                                        
+                                        <label for="nome">Bairro:&nbsp;</label><c:out value="${consulta.getBairro()}"/>  
+                                        <img src="edit.png" height="30" width="30">
+                                        <input style="width:50%; display: inline;" type="hidden" name="bairro" id="bairro" class="form-control"><br>
+                                        
+                                        <label for="nome">Municipio:&nbsp;</label><c:out value="${consulta.getNomeMunicipio()}"/>
+                                        <img src="edit.png" height="30" width="30">
+                                        <input style="width:50%; display: inline;" type="hidden" name="bairro" id="bairro" class="form-control"><br>
+                                        
+                                        <label for="nome">UF:&nbsp;</label><c:out value="${consulta.getUf()}"/>
+                                        <img src="edit.png" height="30" width="30">
+                                        <input style="width:50%; display: inline;" type="hidden" name="bairro" id="bairro" class="form-control"><br>
 
 
                                         <button id="botaoeditar" type="button" class="ui-btn-inline btn btn-primary">Editar endereço </button>

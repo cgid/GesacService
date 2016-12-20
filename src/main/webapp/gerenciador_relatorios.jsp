@@ -63,11 +63,10 @@
 
 
                         });
-                        $(document.getElementById('radio_chdo')).click(function (event) {
-                            $("#where").attr({required: true, placeholder: "Id do chamado"});
+                        $(document.getElementById('radio_servico')).click(function (event) {
+                            $("#where").attr({required: true, placeholder: "numero do Servico"});
                             $("#where").show();
-                            $("#div_chamado").show();
-                            $("#div_usuario").hide();
+                           
 
 
                         });
@@ -124,6 +123,9 @@
 
                             <!--<input type="radio" name="radio" id="rad_estado" value="2"/>estado-->
                             <label class="radio-inline" style="margin-top: 2px;">
+                                <input style="" type="radio" name="radio" class="magic-radio" id="radio_servico" value="servico"/>
+                                <strong>Servico</strong>
+                            </label>   <label class="radio-inline" style="margin-top: 2px;">
                                 <input style="" type="radio" name="radio" class="magic-radio" id="radio_pid" value="pid"/>
                                 <strong>PID</strong>
                             </label>
