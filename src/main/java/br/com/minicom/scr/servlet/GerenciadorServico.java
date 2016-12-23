@@ -56,7 +56,7 @@ public class GerenciadorServico extends HttpServlet {
         int usuario, idServico;
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        Servico servico = null;
+        Servico servico=new Servico();
         if (request.getParameter("id") != null) {
             idServico = Integer.parseInt(request.getParameter("id"));
         } else {
@@ -84,10 +84,11 @@ public class GerenciadorServico extends HttpServlet {
             usuario = Integer.parseInt(String.valueOf(ses.getAttribute("usuarioid")));
             
             if (op.contains("encerrar")) {
-                System.out.println(op + 13);
+                System.out.println(idServico);
                 try {
-                    servico.setIdServico(idServico);
-                    equery.encerraServico(servico);
+                    Servico servico1= (Servico) equery.select(servico,idServico);
+                    
+                    equery.encerraServico(servico1);
                     equery.close();
                 } catch (SQLException ex) {
                     equery.close();

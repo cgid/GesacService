@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class ConnectionFactory {
 
     private static final String USER = "root";
-    private static final String PASS = "root";
+    private static final String PASS = "";
     private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost/SisCentralRel?autoReconnect=true&useSSL=false";
 

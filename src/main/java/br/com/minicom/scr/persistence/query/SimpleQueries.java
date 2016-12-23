@@ -464,10 +464,17 @@ public class SimpleQueries implements Queries<Entity> {
             stmt = conn.createStatement();
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
+                String situacao = rs.getString(4);
+                if (situacao.equals("0")) {
+                    situacao = "Inválido";
+                } else {
+                    situacao = "Válido";
+                }
+
                 consultas.add(new ConsultaContatos(rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getString(4),
+                        situacao,
                         rs.getString(5),
                         rs.getString(6)
                 ));
@@ -564,8 +571,7 @@ public class SimpleQueries implements Queries<Entity> {
                 + "    endereco.complemento,\n"
                 + "    municipio.nome_municipio,\n"
                 + "    municipio.uf,\n"
-                + "    municipio.cod_IBGE,\n"
-                + "    solicitacoes.id_solicitacao\n"
+                + "    municipio.cod_IBGE\n"
                 + "    \n"
                 + "    \n"
                 + "FROM \n"
@@ -596,8 +602,7 @@ public class SimpleQueries implements Queries<Entity> {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10)
+                        rs.getString(9)
                 ));
 
             }
@@ -621,8 +626,7 @@ public class SimpleQueries implements Queries<Entity> {
                 + "    endereco_novo.complemento,\n"
                 + "    municipio.nome_municipio,\n"
                 + "    municipio.uf,\n"
-                + "    municipio.cod_IBGE,\n"
-                + "    solicitacoes.id_solicitacao\n"
+                + "    municipio.cod_IBGE\n"
                 + "    \n"
                 + "    \n"
                 + "FROM \n"
@@ -653,8 +657,7 @@ public class SimpleQueries implements Queries<Entity> {
                         rs.getString(6),
                         rs.getString(7),
                         rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10)
+                        rs.getString(9)
                 ));
 
             }
@@ -778,6 +781,10 @@ public class SimpleQueries implements Queries<Entity> {
         if (e.getTableName().equals("Solicitacoes")) {
             sql = "select * from " + e.getTableName() + " where  " + e.getColumnName(6) + "= '" + String.valueOf(e.getCell(6).getValue()) + "' and " + e.getColumnName(7) + "= '" + String.valueOf(e.getCell(7).getValue()) + "';";
 
+        }
+        if (e.getTableName().equals("Endereco")) {
+            sql = "select * from " + e.getTableName() + " where  " + e.getColumnName(7) + "= '" + String.valueOf(e.getCell(7).getValue()) + "';";
+            System.err.println(sql);
         }
 
         rs = stmt.executeQuery(sql);
@@ -991,59 +998,63 @@ public class SimpleQueries implements Queries<Entity> {
         return CAList;
     }
 
-    public List<ChamadoeRespostas> ChamadosERespostas(int servico) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("SELECT COUNT(perguntas.id_perguntas) from perguntas WHERE perguntas.servico_id_servico=?");
-        ps.setInt(1, servico);
-        int qtdPerguntas = 0;
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            qtdPerguntas = rs.getInt(1);
-        }
+    public List<ChamadoeRespostas> ChamadosERespostas(String servico) throws SQLException {
         List<ChamadoeRespostas> CAList = new ArrayList<>();
-        PreparedStatement ps2 = conn.prepareStatement("SELECT DISTINCT(chamado.id_chamado),\n"
+        PreparedStatement ps2;
+        PreparedStatement ps = conn.prepareStatement(""
+                + "SELECT DISTINCT(chamado.id_chamado),\n"
                 + "pid.cod_pid,\n"
                 + "pid.nome_estabelecimento,\n"
-                + " chamado.observacao,\n"
-                + " respostas.id_Respostas,\n"
-                + " respostas.Resposta FROM pid\n"
+                + " chamado.observacao\n"
+                + " FROM pid\n"
                 + " INNER JOIN solicitacoes  on (pid.cod_pid = solicitacoes.PID_cod_pid)\n"
                 + " INNER JOIN servico  on	(solicitacoes.Servico_id_servico=servico.id_servico)\n"
                 + " INNER JOIN   chamado  on (solicitacoes.id_solicitacao=chamado.Solicitacoes_id_solicitacao)\n"
                 + " INNER JOIN  respostas  on (chamado.id_chamado= respostas.chamado_cod_chamado)\n"
                 + " INNER JOIN  contato  on (pid.cod_pid=contato.PID_cod_pid)\n"
                 + " \n"
-                + " WHERE   servico.id_servico=?");
+                + " WHERE   servico.id_servico=? order by chamado.id_chamado desc");
 
-        System.out.println(ps2.toString());
-        ps2.setInt(1, servico);
-        int i = 0;
-        int ii = 0;
-        ResultSet rs2 = ps2.executeQuery();
-        List<String> list = new ArrayList<>();
-        while (rs2.next()) {
-            ChamadoeRespostas cr = new ChamadoeRespostas();
-            cr.setPid(rs2.getString("cod_pid"));
-            cr.setEstabelecimento(rs2.getString(3));
-            cr.setObs(rs2.getString("observacao"));
+        ps.setString(1, servico);
+        System.out.println(ps.toString());
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            ChamadoeRespostas chs = new ChamadoeRespostas();
+            chs.setChamado(rs.getString(1));
+            chs.setPid(rs.getString(2));
+            chs.setEstabelecimento(rs.getString(3));
+            chs.setObs(rs.getString(4));
+            ps2 = conn.prepareStatement(""
+                    + "SELECT DISTINCT(chamado.id_chamado),\n"
+                    + " respostas.id_Respostas,"
+                    + " respostas.Resposta"
+                    + " FROM pid\n"
+                    + " INNER JOIN solicitacoes  on (pid.cod_pid = solicitacoes.PID_cod_pid)\n"
+                    + " INNER JOIN servico  on	(solicitacoes.Servico_id_servico=servico.id_servico)\n"
+                    + " INNER JOIN   chamado  on (solicitacoes.id_solicitacao=chamado.Solicitacoes_id_solicitacao)\n"
+                    + " INNER JOIN  respostas  on (chamado.id_chamado= respostas.chamado_cod_chamado)\n"
+                    + " INNER JOIN  contato  on (pid.cod_pid=contato.PID_cod_pid)\n"
+                    + " \n"
+                    + " WHERE   servico.id_servico=? and chamado.id_chamado=? ");
 
-            list.add(rs2.getString(6));
-            i++;
-            if (i % qtdPerguntas == 0) {
-                ii++;
-                System.out.println(i);
+            ps2.setString(1, servico);
+            ps2.setString(2, chs.getChamado());
+            System.out.println(ps2.toString());
+            rs2 = ps2.executeQuery();
+            List<String> list = new ArrayList<>();
 
-                cr.setRepostas(list);
+            while (rs2.next()) {
 
-                System.out.println(cr.toString());
-                System.out.println("LISTA: " + list.toString());
-                System.out.println("TAMANHO DA LISTA " + list.size());
-
-                CAList.add(cr);
-                list = new ArrayList<>();
+                list.add(rs2.getString(3));
             }
-
+            rs2.close();
+            ps2.close();
+            chs.setRepostas(list);
+            CAList.add(chs);
         }
-        System.out.println("tamanho do list" + ii);
+
+        rs.close();
+        conn.close();
         System.out.println("tamanho do list" + CAList.size());
         System.out.println("TO STRING " + CAList.toString());
         return CAList;
@@ -1056,11 +1067,9 @@ public class SimpleQueries implements Queries<Entity> {
 
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-            if (rs.getString("pergunta").length() > 30) {
-                titulos.add(rs.getString("pergunta").substring(0, 20)+"...");
-            } else {
-                titulos.add(rs.getString("pergunta"));
-            }
+
+            titulos.add(rs.getString("pergunta"));
+
         }
 
         return titulos;

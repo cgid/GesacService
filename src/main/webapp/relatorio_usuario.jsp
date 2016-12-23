@@ -37,17 +37,18 @@
 
                 <!-- Default panel contents -->
                 <div class="panel-heading" style="text-align: center;"><strong>Relatorio por Usuário</div>
+                <div class="panel-heading" style="text-align: center;"><strong>${param.nome}</div>
                 <br><div  style="text-align: right ;margin-right: 10px;" class="panel-default"> 
 
 
 
                     <form method="POST"  action="ExcelServlet"> <input type="submit" class="btn  btn-success  " value="Exportar" />
-
+                        <input type="hidden" id="relatorio" name="relatorio" value="usuario">
                         <table class="table">
 
 
                             <c:set var="nome" value='${requestScope["nome"]}'/>
-                            <input type="hidden" name="usuario" id="usuario"  value="${requestScope["nome"]}"/>
+                            <input type="hidden" name="usuario" id="usuario"  value="<c:out value='${param.nome}'/>"/>
 
 
                             <thead class=" btn-toolbar "> 
@@ -66,13 +67,13 @@
                                 <c:forEach items="${sq.RelatorioUsuario(param.nome)}" var="consulta">
                                     <tr>  
                                         <td class="active">   
-                                            <a href=chamados_respostas.jsp?servico=<c:out value='${consulta.getLista() }'/>"><c:out value='${consulta.getLista() }'/></a>
+                                            <a  target="_blank"  href="chamados_respostas.jsp?servico=<c:out value='${consulta.getLista() }'/>"><c:out value='${consulta.getLista() }'/></a>
 
 
                                             <input type="hidden" value='<c:out value="${consulta.getLista() }"/>' name="lista" id="lista">
                                         </td>
                                         <td>    <input type="hidden" value='<c:out value="${consulta.getPID() }"/>' name="pid" id="pid">  
-                                            <a href="relatorio_pid.jsp?pid=<c:out value='${consulta.getPID() }'/>"><c:out value='${consulta.getPID() }'/></a>
+                                            <a  target="_blank"  href="relatorio_pid.jsp?pid=<c:out value='${consulta.getPID() }'/>"><c:out value='${consulta.getPID() }'/></a>
 
                                         </td>
                                         <td class="active">   

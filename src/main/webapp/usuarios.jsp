@@ -90,8 +90,8 @@
                                 <div hidden="true"  class="alert alert-success" id="sucesso" role="alert" >
                                 </div>
                                 <td>
-                                    <div data-role="main" > 
-                                        <c:out value="${usuario2.getCell(1).getValue()}"/>
+                                    <div data-role="main" > <a href="relatorio_usuario.jsp?nome=<c:out value="${usuario2.getCell(1).getValue()}"/> ">      <c:out value="${usuario2.getCell(1).getValue()}"/> </a>
+                                        
                                     </div>
 
 
@@ -99,7 +99,8 @@
 
                                 <td>
 
-                                    <div data-role="main" ">
+                                    <div data-role="main" >
+
                                         <c:out value="${usuario2.getCell(2).getValue()}"/> 
                                     </div>
                                 </td> 

@@ -108,12 +108,14 @@ public class ChamadoSrv extends HttpServlet {
                 for (int i = 0; i < invalidos.length; i++) {
                     Log_contato lc = new Log_contato();
                     lc.setIdUsuario(Integer.parseInt(String.valueOf(ses.getAttribute("usuarioid"))));
+                    Telefone telefone2 = new Telefone();
                     Telefone telefone = new Telefone();
-                    telefone = (Telefone) equery.select(telefone, Integer.parseInt(invalidos[i]));
+                    telefone = (Telefone) equery.select(telefone2, Integer.parseInt(invalidos[i]));
                     telefone.setSituacao(0);
-                    lc.setIdContato(Integer.parseInt(String.valueOf(telefone.getCell(0).getValue())));
+                    lc.setIdContato(Integer.parseInt(String.valueOf(telefone.getCell(3).getValue())));
                     lc.setOperacao("invalidou");
                     System.out.println("TELEFONE INVALIDADO");
+                    System.out.println(lc.toString());
                     equery.update(telefone);
                     equery.insert(lc);
                     contador++;

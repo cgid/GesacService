@@ -19,10 +19,9 @@ public class ChamadoEnderecos {
             complemento,
             nomeMunicipio,
             uf,
-            ibge,
-            id_solicitacao;
+            ibge, id_solicitacao;
 
-    public ChamadoEnderecos(String codPid, String nomeEstabelecimento, String descricao, String numero, String bairro, String complemento, String nomeMunicipio, String uf, String ibge, String id_solicitacao) {
+    public ChamadoEnderecos(String codPid, String nomeEstabelecimento, String descricao, String numero, String bairro, String complemento, String nomeMunicipio, String uf, String ibge) {
         this.codPid = codPid;
         this.nomeEstabelecimento = nomeEstabelecimento;
         this.descricao = descricao;
@@ -32,7 +31,29 @@ public class ChamadoEnderecos {
         this.nomeMunicipio = nomeMunicipio;
         this.uf = uf;
         this.ibge = ibge;
-        this.id_solicitacao = id_solicitacao;
+
+    }
+
+    public ChamadoEnderecos(String codPid, String nomeEstabelecimento, String descricao, String numero, String bairro, String complemento, String nomeMunicipio, String uf, String ibge,String solicitacao) {
+        this.codPid = codPid;
+        this.nomeEstabelecimento = nomeEstabelecimento;
+        this.descricao = descricao;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.complemento = complemento;
+        this.nomeMunicipio = nomeMunicipio;
+        this.uf = uf;
+        this.ibge = ibge;
+        this.id_solicitacao = solicitacao;
+
+    }
+
+    public String getId_solicitacao() {
+        return id_solicitacao;
+    }
+
+    public void setId_solicitacao(String solicitacao) {
+        this.id_solicitacao = solicitacao;
     }
 
     public String getIbge() {
@@ -43,7 +64,6 @@ public class ChamadoEnderecos {
         this.ibge = ibge;
     }
 
-  
     public String getNumero() {
         return numero;
     }
@@ -108,11 +128,4 @@ public class ChamadoEnderecos {
         this.uf = uf;
     }
 
-    public String getId_solicitacao() {
-        return id_solicitacao;
-    }
-
-    public void setId_solicitacao(String id_solicitacao) {
-        this.id_solicitacao = id_solicitacao;
-    }
 }

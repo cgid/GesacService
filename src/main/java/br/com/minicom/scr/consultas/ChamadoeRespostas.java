@@ -16,16 +16,17 @@ public class ChamadoeRespostas {
     public ChamadoeRespostas() {
     }
 
-    public ChamadoeRespostas(String pid, String estabelecimento, String obs, String reposta1, String reposta2, String reposta3, String reposta4, String reposta5, String reposta6, String reposta7, String reposta8) {
+    public ChamadoeRespostas(String pid, String estabelecimento, String obs, String chamado, List<String> repostas) {
         this.pid = pid;
         this.estabelecimento = estabelecimento;
         this.obs = obs;
-       
+        this.chamado = chamado;
+        this.repostas = repostas;
     }
 
     @Override
     public String toString() {
-        return "ChamadoeRespostas{" + "pid=" + pid + ", estabelecimento=" + estabelecimento + ", obs=" + obs + ", repostas=" + repostas.size() + '}';
+        return "ChamadoeRespostas{" + "pid=" + pid + ", estabelecimento=" + estabelecimento + ", obs=" + obs + ", chamado=" + chamado + ", repostas=" + repostas + '}';
     }
 
     public String getPid() {
@@ -57,10 +58,19 @@ public class ChamadoeRespostas {
     }
 
     public void setRepostas(List<String> repostas) {
-        this.repostas = repostas;
+        
+            this.repostas=repostas;
+         
     }
 
-    
-    String pid, estabelecimento, obs;
-            List<String> repostas;
+    public String getChamado() {
+        return chamado;
+    }
+
+    public void setChamado(String chamado) {
+        this.chamado = chamado;
+    }
+
+    String pid, estabelecimento, obs, chamado;
+    List<String> repostas;
 }

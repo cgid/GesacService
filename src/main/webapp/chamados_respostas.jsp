@@ -46,48 +46,72 @@
 
 
 
-            <table class="table-hover" >
 
-                <thead class="btn-toolbar" >
-                <th>pid</th>
-                <th>estabelecimento</th>
-                <th>Obs</th>
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading" style="text-align: center;"><strong>USUÁRIOS</strong></div>
 
-                <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
-                <c:forEach items="${sq.getTitulosList(param.servico)}" var="contato">
-                    <th><label style="width: 100px"><c:out value="${contato.toString()}"/></label></th>
-                        </c:forEach>
+                <form method="POST"  action="ExcelServlet"> <input style="margin-left: 100px;" type="submit" class="btn  btn-success  " value="Exportar" />
+                    <table class="table-hover table-responsive table-bordered" >
+                        <input type="hidden" id="relatorio" name="relatorio" value="servico">
+                        <input type="hidden" id="lista" name="lista" value="<c:out value='${param.servico}'/>">
+                        <input type="hidden" id="titulo" name="titulo" value="PID">
+                        <input type="hidden" id="titulo" name="titulo" value="Estabelecimento">
+                        <input type="hidden" id="titulo" name="titulo" value="Obs">
+                        <thead class="btn-toolbar" >
+                        <th style="margin-left: 100px;width: 100px"><label style="margin-left: 20px;">PID</label></th>
+                        <th style="margin-left: 100px;width: 100px"><label style="margin-left: 20px;">Estabelecimento</label></th>
+                        <th style="margin-left: 100px;width: 100px"><label style="margin-left: 20px;">Obs</label></th>
 
-                </thead>
-
-
-                <tbody >
-
-                    <c:forEach items="${sq.ChamadosERespostas(param.servico)}" var="contato">
-
-                        <tr >
-
-
-
-
-                            <td style="width: 50px;"> <a href="relatorio_pid.jsp?pid=<c:out value='${contato.getPid() }'/>"><c:out value='${contato.getPid() }'/></a></td>
-                            <td style="width: 50px;"> <c:out value="${contato.getEstabelecimento() }"/></td>
-                             <td style="width: 50px;"> <c:out value="${contato.getObs() }"/></td>
-                            <c:forEach items="${contato.getRepostas()}" var="teste">
-                                <td style="width: 50px;"> <p style="width: 50px;"><c:out value="${teste.toString() }"/></p></td>
+                        <jsp:useBean id="sq" class="br.com.minicom.scr.persistence.query.SimpleQueries"/>
+                        <c:forEach items="${sq.getTitulosList(param.servico)}" var="contato">
+                            <input type="hidden" id="titulo" name="titulo" value="<c:out value='${contato.toString()}'/>">
+                            <th style="margin-left: 100px;width: 100px"><label style="margin-left: 10px;width: 100px"><c:out value="${contato.toString()}"/></label></th>
                             </c:forEach>
 
+                        </thead>
 
 
-                        </tr> 
+                        <tbody >
+                            <c:set var="i" value="0"/>
+                            <c:forEach items="${sq.ChamadosERespostas(param.servico)}" var="contato">
+
+                                <tr >
 
 
-                    </c:forEach>
-
-                </tbody>
-            </table>
 
 
+                                    <td style="width: 50px;">
+                                        <input type="hidden" id="chamado" name="chamado" value="<c:out value='${contato.getChamado() }'/>">
+                                        <input type="hidden" id="pid" name="pid" value="<c:out value='${contato.getPid() }'/>">
+                                        <a  target="_blank"  style="margin-left: 20px;width: 100px" href="relatorio_pid.jsp?pid=<c:out value='${contato.getPid() }'/>"><c:out value='${contato.getPid() }'/></a>
+                                    </td>
+                                    <td style="width: 50px;"> <input type="hidden" id="Estabelecimento" name="Estabelecimento" value="<c:out value='${contato.getEstabelecimento() }'/>">
+                                        <p style="margin-left: 20px;width: 100px"> <c:out value="${contato.getEstabelecimento() }"/></p>
+                                    </td>
+                                    <td style=" margin-left: 10px;width: 50px;"><input type="hidden" id="Obs" name="Obs" value="<c:out value='${contato.getObs() }'/>">
+                                        <p style="margin-left: 20px;width: 100px"> <c:out value="${contato.getObs() }"/></p>
+                                    </td>
+                                    <c:forEach items="${contato.getRepostas()}" var="respostas">
+
+                                        <td style="margin-left: 120px;width: 110px"> <input type="hidden" id="respostas<c:out value='${i }'/>" name="respostas<c:out value='${i }'/>" value="<c:out value='${respostas.toString() }'/>">
+                                            <p style="margin-right:  20px;width: 110px"><c:out value="${respostas }"/></p>
+                                        </td>
+                                    </c:forEach>
+
+
+
+                                </tr> 
+
+                                <c:set var="i" value="${i+1}"/>
+                            </c:forEach>
+
+                        </tbody>
+                    </table>
+
+
+                </form>
+            </div>
 
 
 

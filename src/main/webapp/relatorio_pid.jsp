@@ -168,17 +168,30 @@
 
                                         <td>    <c:out value="${contato.getTelefone()}"/>  
                                         </td>   
-                                        <td id="<c:out value='${contato.getId()}'/>">
-                                            <input type="hidden" name="situacao" id="situacao<c:out value='${contato.getId()}'/>"  value='<c:out value="${contato.getSituacao()}"/>' >
-                                            <c:out value="${contato.getSituacao()}"/>
+                                        <td >
+                                            <input type="hidden" name="situacao" id="situacao<c:out value='${contato.getId()}'/>"  value="<c:out value='${contato.getSituacao()}'/>" >
+                                            <p id="<c:out value='${contato.getId()}'/>"><c:out value="${contato.getSituacao()}"/></p>
                                         </td> 
-                                    </tr>
+                                        <!--                            <script>
+                                                                                    $(document).ready(function () {
+                                                                                        var situ = document.getElementById("#situacao<c:out value='${contato.getId()}'/>");
+                                                                                                console.log(situ);
+                                        
+                                                                                        if ($(situ).val()).contains("0") )
+                                                                                        {
+                                                                                            $("<c:out value='${contato.getId()}'/>").text("Invalido");
+                                                                                        } else {
+                                                                                            $("<c:out value='${contato.getId()}'/>").text("Valido");
+                                                                                        }
+                                                                                    });</script>-->
+
+                                </tr>
 
 
 
 
 
-                                </c:forEach>
+                            </c:forEach>
 
                             </tbody>
                         </table>  <table class="table"> <thead> 
@@ -193,14 +206,14 @@
                                 </tr>  
                             </thead>     <tbody>
                                 <c:forEach items="${sq.selectChamadoPorPid(param.pid)}" var="contato">
-                                    <tr> <td> <a href=chamados_respostas.jsp?servico=<c:out value='${contato.getServico()}'/>"><c:out value='${contato.getServico()}'/></a>
-                                           
+                                    <tr> <td> <a target="_blank" href="chamados_respostas.jsp?servico=<c:out value='${contato.getServico()}'/>"><c:out value='${contato.getServico()}'/></a>
+
 
                                         </td>  
 
 
 
-                                        <td>   <a href="relatorio_usuario.jsp?nome=<c:out value='${contato.getUsuario()}'/> "> <c:out value="${contato.getUsuario()}"/> </a>
+                                        <td>   <a  target="_blank"  href="relatorio_usuario.jsp?nome=<c:out value='${contato.getUsuario()}'/> "> <c:out value="${contato.getUsuario()}"/> </a>
                                         </td>   
                                         <td>   <c:out value="${contato.getDuracao()}"/> 
                                         </td>    
